@@ -11,61 +11,59 @@
     <body>
         <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
         <script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=b3865883078ce339c7b2bde521765d87&libraries=services"></script>
-        <h1>정보 입력창</h1>
+        <h1 style="text-align: center">정보 입력창</h1>
         <fieldset>
             <legend style="font-size: 25;font-weight: bold">지역</legend>
-            <input type="button" onclick="DaumPostcode()" value="주소 검색">
+            <input type="button" onclick="DaumPostcode()" value="주소 검색"><br>
         </fieldset>
         <fieldset>
-				<legend style="font-size: 25;font-weight: bold">거주형태</legend>
-				<input type="radio" id="rdPink" name="rdColors" value="#ffc0cb" checked><label for="rdPink">원룸</label>
-				<input type="radio" id="rdRed" name="rdColors" value="#ff0000"><label for="rdRed">투룸</label>
-				<input type="radio" id="rdOrange" name="rdColors" value="#ffa500"><label for="rdOrange">오피스텔</label>
-				<input type="radio" id="rdYellow" name="rdColors" value="#ffff00"><label for="rdYellow">아파트</label>
-				<input type="radio" id="rdGreen" name="rdColors" value="#008000"><label for="rdGreen">무관</label>
+            <legend style="font-size: 25;font-weight: bold">거주형태</legend><!-- life form -->
+            <div id="life_form">
+				<input type="radio" id="lfOne" name="lifeForm" value="lfOne" checked><label for="lfOne">원룸</label>
+				<input type="radio" id="lfTwo" name="lifeForm" value="lfTwo"><label for="lfTwo">투룸</label>
+				<input type="radio" id="lfOffice" name="lifeForm" value="lfOffice"><label for="lfOffice">오피스텔</label>
+				<input type="radio" id="lfApartment" name="lifeForm" value="lfApartment"><label for="lfApartment">아파트</label>
+                <input type="radio" id="lfNone" name="lifeForm" value="lfNone"><label for="lfNone">무관</label>
+            </div>
         </fieldset>
         <fieldset>
-            <legend style="font-size: 25;font-weight: bold">매매형태</legend>
-            <div>
-                <input type="radio" name="trade">월세</input>
-                <input type="radio" name="trade">전세</input>
-                <input type="radio" name="trade">매매</input>
-                <input type="radio" name="trade">무관</input>
+            <legend style="font-size: 25;font-weight: bold">매매형태</legend><!-- trade form -->
+            <div id="trade_form">
+                <input type="radio" id="tfMonth" name="tradeForm" value="tfMonth" checked><label for="tfMonth">월세</label>
+                <input type="radio" id="tfJeon" name="tradeForm" value="tfJeon"><label for="tfJeon">전세</label>
+                <input type="radio" id="tfPurchase" name="tradeForm" value="tfPurchase"><label for="tfPurchase">매매</label>
+                <input type="radio" id="tfNone" name="tradeForm" value="tfNone"><label for="tfNone">무관</label>
             </div>
-            <input type="range">매매가</input>
-            <input type="range">월세</input>
-            <input type="range">보증금</input>
+            <div id="trade_form_range">
+                <input type="range" id="valuePurchase" min="0" max="10000000000" step="100000000" value="300000000" name="valuePurchase">매매가</input><br>
+                <input type="range" id="valueMonth" min="0" max="10000000" step="100000" value="1000000" name="valueMonth">월세</input><br>
+                <input type="range" id="valueDeposit" min="0" max="100000000" step="1000000" value="10000000" name="valueDeposit">보증금</input>
+            </div>
         </fieldset>
         <fieldset>
-            <legend style="font-size: 25;font-weight: bold">추가 정보</legend>
-            <div>
-                <h>성별</h>
-                <div>
-                <input type="radio" name="sex">남</input>
-                <input type="radio" name="sex">여</input>
-                </div>
+            <legend style="font-size: 25;font-weight: bold">추가 정보</legend><!-- additional information -->
+            <div id="gender">
+                <h>성별</h><br> <!-- gender -->
+                <input type="radio" id="gMale" name="gender" value="male" checked><label for="gMale">남자</label>
+                <input type="radio" id="gFemale" name="gender" value="female"><label for="gFemale">여자</label>
+                <input type="radio" id="gNone" name="gender" value="none"><label for="gNone">무관</label>
             </div>
-            <div>
-                <h>연령</h>
-                <div>
-                <input type="range" name="age">세</input>
-                </div>
+            <div id="age">
+                <h>연령</h><br> <!-- age -->
+                <input type="range" id="aiAge" name="age" min="20" max="90" step="10" value="30">세</input>
             </div>
-            <div>
-                <h>노인</h>
-                <div>
-                    <input type="radio" name="old">있음</input>
-                    <input type="radio" name="old">없음</input>
-                </div>
+            <div id="elder">
+                <h>노인</h><br> <!-- elder -->
+                <input type="radio" id="eYes" name="old" value="yes"><label for="eYes">있음</label>
+                <input type="radio" id="eNo" name="old" value="no" checked><label for="eNo">없음</label>
             </div>
-            <div>
-                <h>반려견</h>
-                <div>
-                    <input type="radio" name="dog">있음</input>
-                    <input type="radio" name="dog">없음</input>
-                </div>
+            <div id="dog">
+                <h>반려견</h><br> <!-- dog -->
+                <input type="radio" id="dYes" name="dog" value="yes"><label for="dYes">있음</label>
+                <input type="radio" id="dNo" name="dog" value="no" checked><label for="dNo">없음</label>
             </div>
         </fieldset>
+        <button onclick="CheckValues()">확인</button>
         <script>
             function DaumPostcode(){
                 new daum.Postcode({
@@ -73,11 +71,25 @@
                         var addr = data.address;
                         geocoder.addressSearch(data.address, function(results, status){
                             if(status === daum.maps.services.Status.OK){
-                                alert("ok");
+                                console.log("ok");
                             }
                         });
                     }
                 }).open();
+            }
+            function CheckValues(){
+                var lf=$("input:radio[name=lifeForm]:checked").val();
+                var tf=$("input:radio[name=tradeForm]:checked").val();
+                var tfvp=$("#valuePurchase").val();
+                var tfvm=$("#valueMonth").val();
+                var tfvd=$("#valueDeposit").val();
+                var aig=$("input:radio[name=gender]:checked").val();
+                var aia=$("#aiAge").val();
+                var aie=$("input:radio[name=old]:checked").val();
+                var aid=$("input:radio[name=dog]:checked").val();
+                alert("거주 형태 : " + lf + "\n매물 형태 : " + tf + "\n매매가 : " + 
+                tfvp + "\n월세 : " + tfvm + "\n보증금 : " + tfvd + "\n성별 : " + aig + 
+                "\n나이 : " + aia + "\n노인 : " + aie + "\n반려동물 : " + aid);
             }
         </script>
     </body>
