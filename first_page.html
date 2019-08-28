@@ -1,0 +1,85 @@
+<HTML:5>
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>First Page</title>
+        <script src="js/jquery.js"></script>
+    </head>
+    <body>
+        <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
+        <script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=b3865883078ce339c7b2bde521765d87&libraries=services"></script>
+        <h1>정보 입력창</h1>
+        <fieldset>
+            <legend style="font-size: 25;font-weight: bold">지역</legend>
+            <input type="button" onclick="DaumPostcode()" value="주소 검색">
+        </fieldset>
+        <fieldset>
+				<legend style="font-size: 25;font-weight: bold">거주형태</legend>
+				<input type="radio" id="rdPink" name="rdColors" value="#ffc0cb" checked><label for="rdPink">원룸</label>
+				<input type="radio" id="rdRed" name="rdColors" value="#ff0000"><label for="rdRed">투룸</label>
+				<input type="radio" id="rdOrange" name="rdColors" value="#ffa500"><label for="rdOrange">오피스텔</label>
+				<input type="radio" id="rdYellow" name="rdColors" value="#ffff00"><label for="rdYellow">아파트</label>
+				<input type="radio" id="rdGreen" name="rdColors" value="#008000"><label for="rdGreen">무관</label>
+        </fieldset>
+        <fieldset>
+            <legend style="font-size: 25;font-weight: bold">매매형태</legend>
+            <div>
+                <input type="radio" name="trade">월세</input>
+                <input type="radio" name="trade">전세</input>
+                <input type="radio" name="trade">매매</input>
+                <input type="radio" name="trade">무관</input>
+            </div>
+            <input type="range">매매가</input>
+            <input type="range">월세</input>
+            <input type="range">보증금</input>
+        </fieldset>
+        <fieldset>
+            <legend style="font-size: 25;font-weight: bold">추가 정보</legend>
+            <div>
+                <h>성별</h>
+                <div>
+                <input type="radio" name="sex">남</input>
+                <input type="radio" name="sex">여</input>
+                </div>
+            </div>
+            <div>
+                <h>연령</h>
+                <div>
+                <input type="range" name="age">세</input>
+                </div>
+            </div>
+            <div>
+                <h>노인</h>
+                <div>
+                    <input type="radio" name="old">있음</input>
+                    <input type="radio" name="old">없음</input>
+                </div>
+            </div>
+            <div>
+                <h>반려견</h>
+                <div>
+                    <input type="radio" name="dog">있음</input>
+                    <input type="radio" name="dog">없음</input>
+                </div>
+            </div>
+        </fieldset>
+        <script>
+            function DaumPostcode(){
+                new daum.Postcode({
+                    oncomplete: function(data){
+                        var addr = data.address;
+                        geocoder.addressSearch(data.address, function(results, status){
+                            if(status === daum.maps.services.Status.OK){
+                                alert("ok");
+                            }
+                        });
+                    }
+                }).open();
+            }
+        </script>
+    </body>
+    </html>
+</HTML:5>
