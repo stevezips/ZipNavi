@@ -10,11 +10,14 @@
     </head>
     <body>
         <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
-        <script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=b3865883078ce339c7b2bde521765d87&libraries=services"></script>
+        <script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=fb926e363d9a87e9712ed240cb75a7b0&libraries=services"></script>
         <h1 style="text-align: center">정보 입력창</h1>
         <fieldset>
             <legend style="font-size: 25;font-weight: bold">지역</legend>
-            <input type="button" onclick="DaumPostcode()" value="주소 검색"><br>
+            <div>
+                <input type="text" id="sample_address" placeholder="주소"><br>
+                <input type="button" onclick="DaumPostcode()" value="주소 검색">
+            </div>
         </fieldset>
         <fieldset>
             <legend style="font-size: 25;font-weight: bold">거주형태</legend><!-- life form -->
@@ -65,13 +68,17 @@
         </fieldset>
         <button onclick="CheckValues()">확인</button>
         <script>
+            var geocoder = new daum.maps.services.Geocoder();
             function DaumPostcode(){
                 new daum.Postcode({
                     oncomplete: function(data){
                         var addr = data.address;
-                        geocoder.addressSearch(data.address, function(results, status){
+                        document.getElementById("sample_address").value = addr;
+                        geocoder.addressSearch(data.address, function(results, status) {
                             if(status === daum.maps.services.Status.OK){
-                                console.log("ok");
+                                var result = results[0];
+                                var coords = new daum.maps.LatLng(result.y, result.x);
+                                console.log(coords);
                             }
                         });
                     }
