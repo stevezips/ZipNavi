@@ -9,49 +9,132 @@
         <script src="js/jquery.js"></script>
     </head>
     <body>
-        <h1>안녕하세요</h1>
-        <div id="map" style="width:500px;height:400px;"></div>
+        <script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=fb926e363d9a87e9712ed240cb75a7b0&libraries=services"></script>
+        <style>
+            #wrapper{
+                border: 1px solid #FFBB00;
+                width: 95%;
+                height: 80%;
+                padding: 10px;
+                top: 10%;
+                left: 5px;
+                position: absolute;
+                overflow: hidden;
+            }
+            #kakao_map{
+                margin-right: 1%;
+                float: left;
+                width: 75%;
+                height: 95%;
+                padding: 10px;
+            }
+            #filter_box{
+                border: 1px solid #487BE1;
+                width: 20%;
+                height: 95%;
+                float: left;
+                padding: 10px;
+            }
+        </style>
+        <h1>ZIPNAVI</h1>
+        <div id="wrapper">
+            <div id="kakao_map" class="map_div"></div>
+            <div id="filter_box" class="filter_div">
+                <h1 style="font-size: 25;font-weight: bold">주소</h1>
+                <input type="text" id="sample_address" placeholder="주소" style="margin-right: 5px;">
+                <input type="button" onclick="DaumPostcode()" value="주소 검색">
+
+                <h1 style="font-size: 25;font-weight: bold">거주 형태</h1>
+                <input type="radio" id="lfOne" name="lifeForm" value="lfOne"><label for="lfOne">원룸</label>
+				<input type="radio" id="lfTwo" name="lifeForm" value="lfTwo"><label for="lfTwo">투룸</label>
+				<input type="radio" id="lfOffice" name="lifeForm" value="lfOffice"><label for="lfOffice">오피스텔</label>
+				<input type="radio" id="lfApartment" name="lifeForm" value="lfApartment"><label for="lfApartment">아파트</label>
+                <input type="radio" id="lfNone" name="lifeForm" value="lfNone"><label for="lfNone">무관</label>
+
+                <h1 style="font-size: 25;font-weight: bold">매매 형태</h1>
+                <input type="radio" id="tfMonth" name="tradeForm" value="tfMonth"><label for="tfMonth">월세</label>
+                <input type="radio" id="tfJeon" name="tradeForm" value="tfJeon"><label for="tfJeon">전세</label>
+                <input type="radio" id="tfPurchase" name="tradeForm" value="tfPurchase"><label for="tfPurchase">매매</label>
+                <input type="radio" id="tfNone" name="tradeForm" value="tfNone"><label for="tfNone">무관</label>
+
+                <input type="range" id="valuePurchase" min="0" max="10000000000" step="100000000" value="300000000" name="valuePurchase">매매가</input><br>
+                <input type="range" id="valueMonth" min="0" max="10000000" step="100000" value="1000000" name="valueMonth">월세</input><br>
+                <input type="range" id="valueDeposit" min="0" max="100000000" step="1000000" value="10000000" name="valueDeposit">보증금</input>
+
+                <h1 style="font-size: 25;font-weight: bold">성별</h1>
+                <input type="radio" id="gMale" name="gender" value="gMale"><label for="gMale">남자</label>
+                <input type="radio" id="gFemale" name="gender" value="gFemale"><label for="gFemale">여자</label>
+                <input type="radio" id="gNone" name="gender" value="gNone"><label for="gNone">무관</label>
+
+                <h1 style="font-size: 25;font-weight: bold">연령</h1>
+                <input type="range" id="aiAge" name="age" min="20" max="90" step="10" value="30">세</input>
+
+                <h1 style="font-size: 25;font-weight: bold">노인</h1>
+                <input type="radio" id="eYes" name="old" value="eYes"><label for="eYes">있음</label>
+                <input type="radio" id="eNo" name="old" value="eNo"><label for="eNo">없음</label>
+
+                <h1 style="font-size: 25;font-weight: bold">반려견</h1>
+                <input type="radio" id="dYes" name="dog" value="dYes"><label for="dYes">있음</label>
+                <input type="radio" id="dNo" name="dog" value="dNo"><label for="dNo">없음</label>
+            </div>
+        </div>
+        <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
         <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=fb926e363d9a87e9712ed240cb75a7b0"></script>
         <script>
-            var container = document.getElementById('map');            
+            var search, getData, container, options, map;
+            window.onload = function(){
+                search = window.location.search;
+                getData = _GET(search);
+                $("#"+getData.lf).attr('checked', 'checked');
+                $("#"+getData.tf).attr('checked', 'checked');
+                $("#valuePurchase").val(getData.tfvp);
+                $("#valueMonth").val(getData.tfvm);
+                $("#valueDeposit").val(getData.tfvd);
+                $("#"+getData.aig).attr('checked', 'checked');
+                $("#aiAge").val(getData.aia);
+                $("#"+getData.aie).attr('checked', 'checked');
+                $("#"+getData.aid).attr('checked', 'checked');
+                panTo();
+            };
+            var container = document.getElementById("kakao_map");
             var options = {
-                center: new kakao.maps.LatLng(37.539020, 127.101045),
+                center: new kakao.maps.LatLng(33.450701, 126.570667),
                 level: 3
             };
             var map = new kakao.maps.Map(container, options);
-            resizeMap();
-            relayout();
-            var mapTypeControl = new kakao.maps.MapTypeControl();
-            var zoomControl = new kakao.maps.ZoomControl();
-
-            var markerPosition = new kakao.maps.LatLng(37.539020, 127.101045);
-            var marker = new kakao.maps.Marker({
-                position: markerPosition
-            });
-            marker.setMap(map);
-
-            var iwContent = '<div style="padding:5px;">우리집</div>';
-            var infowindow = new kakao.maps.InfoWindow({
-                content: iwContent
-            });
-
-            kakao.maps.event.addListener(marker, 'mouseover', function(){
-                infowindow.open(map, marker);
-            });
-            kakao.maps.event.addListener(marker, 'mouseout', function(){
-                infowindow.close();
-            });
-            function resizeMap() {
-                var container = document.getElementById('map');
-                container.style.width = window.innerWidth;
-                container.style.height = window.innerHeight;
+            function _GET(search){
+                var obj = {};
+                var uri = decodeURI(search);
+                uri=uri.slice(1,uri.length);
+                var param = uri.split('&');
+                for(var i = 0; i < param.length; i++){
+                    var devide = param[i].split('=');
+                    obj[devide[0]] = devide[1];
+                }
+                return obj;
             }
-            function relayout(){
-                map.relayout();
+            function panTo() {
+                search = window.location.search;
+                getData = _GET(search);
+                var moveLatLon = new kakao.maps.LatLng(getData.y, getData.x);
+                map.panTo(moveLatLon);            
             }
-            
-            map.addControl(mapTypeControl, kakao.maps.ControlPosition.TOPRIGHT);
-            map.addControl(zoomControl, kakao.maps.ControlPosition.TOPRIGHT);
+            var geocoder = new daum.maps.services.Geocoder();
+            function DaumPostcode(){
+                new daum.Postcode({
+                    oncomplete: function(data){
+                        var addr = data.address;
+                        document.getElementById("sample_address").value = addr;
+                        geocoder.addressSearch(data.address, function(results, status) {
+                            if(status === daum.maps.services.Status.OK){
+                                var result = results[0];
+                                var moveLatLon = new kakao.maps.LatLng(result.y, result.x);
+                                map.panTo(moveLatLon);
+                            }
+                        });
+                    }
+                }).open();
+            }
         </script>
     </body>
     </html>

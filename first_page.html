@@ -15,7 +15,7 @@
         <fieldset>
             <legend style="font-size: 25;font-weight: bold">지역</legend>
             <div>
-                <input type="text" id="sample_address" placeholder="주소"><br>
+                <input type="text" id="sample_address" placeholder="주소" style="margin-right: 5px;">
                 <input type="button" onclick="DaumPostcode()" value="주소 검색">
             </div>
         </fieldset>
@@ -47,9 +47,9 @@
             <legend style="font-size: 25;font-weight: bold">추가 정보</legend><!-- additional information -->
             <div id="gender">
                 <h>성별</h><br> <!-- gender -->
-                <input type="radio" id="gMale" name="gender" value="male" checked><label for="gMale">남자</label>
-                <input type="radio" id="gFemale" name="gender" value="female"><label for="gFemale">여자</label>
-                <input type="radio" id="gNone" name="gender" value="none"><label for="gNone">무관</label>
+                <input type="radio" id="gMale" name="gender" value="gMale" checked><label for="gMale">남자</label>
+                <input type="radio" id="gFemale" name="gender" value="gFemale"><label for="gFemale">여자</label>
+                <input type="radio" id="gNone" name="gender" value="gNone"><label for="gNone">무관</label>
             </div>
             <div id="age">
                 <h>연령</h><br> <!-- age -->
@@ -57,18 +57,20 @@
             </div>
             <div id="elder">
                 <h>노인</h><br> <!-- elder -->
-                <input type="radio" id="eYes" name="old" value="yes"><label for="eYes">있음</label>
-                <input type="radio" id="eNo" name="old" value="no" checked><label for="eNo">없음</label>
+                <input type="radio" id="eYes" name="old" value="eYes"><label for="eYes">있음</label>
+                <input type="radio" id="eNo" name="old" value="eNo" checked><label for="eNo">없음</label>
             </div>
             <div id="dog">
                 <h>반려견</h><br> <!-- dog -->
-                <input type="radio" id="dYes" name="dog" value="yes"><label for="dYes">있음</label>
-                <input type="radio" id="dNo" name="dog" value="no" checked><label for="dNo">없음</label>
+                <input type="radio" id="dYes" name="dog" value="dYes"><label for="dYes">있음</label>
+                <input type="radio" id="dNo" name="dog" value="dNo" checked><label for="dNo">없음</label>
             </div>
         </fieldset>
-        <button onclick="CheckValues()">확인</button>
+        <button id="btnConfirm" onclick="openChildWindow()" style="margin-top: 10px;" disabled=true>확인</button>
         <script>
             var geocoder = new daum.maps.services.Geocoder();
+            var coords, lf, tf, tfvp, tfvm, tfvd, aig, aia, aie, aid, coordX, coordY;
+            var windowObj;
             function DaumPostcode(){
                 new daum.Postcode({
                     oncomplete: function(data){
@@ -77,26 +79,42 @@
                         geocoder.addressSearch(data.address, function(results, status) {
                             if(status === daum.maps.services.Status.OK){
                                 var result = results[0];
-                                var coords = new daum.maps.LatLng(result.y, result.x);
+                                coords = new daum.maps.LatLng(result.y, result.x);
+                                coordY = result.y;
+                                coordX = result.x;
                                 console.log(coords);
+                                $("#btnConfirm").attr('disabled', false);
                             }
                         });
                     }
                 }).open();
             }
             function CheckValues(){
-                var lf=$("input:radio[name=lifeForm]:checked").val();
-                var tf=$("input:radio[name=tradeForm]:checked").val();
-                var tfvp=$("#valuePurchase").val();
-                var tfvm=$("#valueMonth").val();
-                var tfvd=$("#valueDeposit").val();
-                var aig=$("input:radio[name=gender]:checked").val();
-                var aia=$("#aiAge").val();
-                var aie=$("input:radio[name=old]:checked").val();
-                var aid=$("input:radio[name=dog]:checked").val();
+                lf=$("input:radio[name=lifeForm]:checked").val();
+                tf=$("input:radio[name=tradeForm]:checked").val();
+                tfvp=$("#valuePurchase").val();
+                tfvm=$("#valueMonth").val();
+                tfvd=$("#valueDeposit").val();
+                aig=$("input:radio[name=gender]:checked").val();
+                aia=$("#aiAge").val();
+                aie=$("input:radio[name=old]:checked").val();
+                aid=$("input:radio[name=dog]:checked").val();
                 alert("거주 형태 : " + lf + "\n매물 형태 : " + tf + "\n매매가 : " + 
                 tfvp + "\n월세 : " + tfvm + "\n보증금 : " + tfvd + "\n성별 : " + aig + 
                 "\n나이 : " + aia + "\n노인 : " + aie + "\n반려동물 : " + aid);
+            }
+            function openChildWindow(){
+                lf=$("input:radio[name=lifeForm]:checked").val();
+                tf=$("input:radio[name=tradeForm]:checked").val();
+                tfvp=$("#valuePurchase").val();
+                tfvm=$("#valueMonth").val();
+                tfvd=$("#valueDeposit").val();
+                aig=$("input:radio[name=gender]:checked").val();
+                aia=$("#aiAge").val();
+                aie=$("input:radio[name=old]:checked").val();
+                aid=$("input:radio[name=dog]:checked").val();
+                window.open("win_ob1_test.html?x=" + coordX + "&y=" + coordY + "&lf=" + lf + "&tf=" + tf + "&tfvp=" + tfvp + 
+                "&tfvm=" + tfvm + "&tfvd=" + tfvd + "&aig=" + aig + "&aia=" + aia + "&aie=" + aie + "&aid=" + aid, '_self');
             }
         </script>
     </body>
