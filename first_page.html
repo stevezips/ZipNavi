@@ -16,7 +16,7 @@
             <legend style="font-size: 25;font-weight: bold">지역</legend>
             <div>
                 <input type="text" id="sample_address" placeholder="주소" style="margin-right: 5px;">
-                <input type="button" onclick="DaumPostcode()" value="주소 검색">
+                <input type="button" onclick="SearchAddress()" value="주소 검색">
             </div>
         </fieldset>
         <fieldset>
@@ -71,7 +71,18 @@
             var geocoder = new daum.maps.services.Geocoder();
             var coords, lf, tf, tfvp, tfvm, tfvd, aig, aia, aie, aid, coordX, coordY;
             var windowObj;
-            function DaumPostcode(){
+            function SearchAddress(){
+                var addr = $("#sample_address").val();
+                geocoder.addressSearch(addr, function(results, status){
+                    if(status === kakao.maps.services.Status.OK){
+                        var coords = new kakao.maps.LatLng(results[0].y, results[0].x);
+                        coordY = results[0].y;
+                        coordX = results[0].x;
+                        $("#btnConfirm").attr('disabled', false);
+                    }
+                });
+            }
+            /*function DaumPostcode(){
                 new daum.Postcode({
                     oncomplete: function(data){
                         var addr = data.address;
@@ -88,7 +99,7 @@
                         });
                     }
                 }).open();
-            }
+            }*/
             function CheckValues(){
                 lf=$("input:radio[name=lifeForm]:checked").val();
                 tf=$("input:radio[name=tradeForm]:checked").val();

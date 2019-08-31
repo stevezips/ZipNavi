@@ -42,7 +42,7 @@
             <div id="filter_box" class="filter_div">
                 <h1 style="font-size: 25;font-weight: bold">주소</h1>
                 <input type="text" id="sample_address" placeholder="주소" style="margin-right: 5px;">
-                <input type="button" onclick="DaumPostcode()" value="주소 검색">
+                <input type="button" onclick="SearchAddress()" value="주소 검색">
 
                 <h1 style="font-size: 25;font-weight: bold">거주 형태</h1>
                 <input type="radio" id="lfOne" name="lifeForm" value="lfOne"><label for="lfOne">원룸</label>
@@ -55,7 +55,7 @@
                 <input type="radio" id="tfMonth" name="tradeForm" value="tfMonth"><label for="tfMonth">월세</label>
                 <input type="radio" id="tfJeon" name="tradeForm" value="tfJeon"><label for="tfJeon">전세</label>
                 <input type="radio" id="tfPurchase" name="tradeForm" value="tfPurchase"><label for="tfPurchase">매매</label>
-                <input type="radio" id="tfNone" name="tradeForm" value="tfNone"><label for="tfNone">무관</label>
+                <input type="radio" id="tfNone" name="tradeForm" value="tfNone"><label for="tfNone">무관</label><br>
 
                 <input type="range" id="valuePurchase" min="0" max="10000000000" step="100000000" value="300000000" name="valuePurchase">매매가</input><br>
                 <input type="range" id="valueMonth" min="0" max="10000000" step="100000" value="1000000" name="valueMonth">월세</input><br>
@@ -120,7 +120,18 @@
                 map.panTo(moveLatLon);            
             }
             var geocoder = new daum.maps.services.Geocoder();
-            function DaumPostcode(){
+
+            function SearchAddress(){
+                var addr = $("#sample_address").val();
+                geocoder.addressSearch(addr, function(results, status){
+                    if(status === kakao.maps.services.Status.OK){
+                        var result = results[0];
+                        var moveLatLon = new kakao.maps.LatLng(result.y, result.x);
+                        map.panTo(moveLatLon);
+                    }
+                });
+            }
+            /*function DaumPostcode(){
                 new daum.Postcode({
                     oncomplete: function(data){
                         var addr = data.address;
@@ -134,7 +145,7 @@
                         });
                     }
                 }).open();
-            }
+            }*/
         </script>
     </body>
     </html>
