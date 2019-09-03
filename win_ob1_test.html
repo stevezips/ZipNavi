@@ -12,7 +12,7 @@
         <script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=fb926e363d9a87e9712ed240cb75a7b0&libraries=services"></script>
         <style>
             #wrapper{
-                border: 1px solid #FFBB00;
+                border: 10px solid #FFBB00;
                 width: 95%;
                 height: 80%;
                 padding: 10px;
@@ -36,7 +36,7 @@
                 padding: 10px;
             }
         </style>
-        <h1>ZIPNAVI</h1>
+        <img src="./logo.png" style="width: 200px; height:100px;">
         <div id="wrapper">
             <div id="kakao_map" class="map_div"></div>
             <div id="filter_box" class="filter_div">
@@ -128,6 +128,9 @@
                         var result = results[0];
                         var moveLatLon = new kakao.maps.LatLng(result.y, result.x);
                         map.panTo(moveLatLon);
+                    }
+                    else{
+                        alert("해당 정보가 없습니다!!");
                     }
                 });
             }
