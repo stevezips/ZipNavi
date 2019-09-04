@@ -82,6 +82,8 @@
         <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=fb926e363d9a87e9712ed240cb75a7b0"></script>
         <script>
             var search, getData, container, options, map;
+            var coordX, coordY, address_name;
+            var infowindow = new kakao.maps.InfoWindow({zIndex:1});
             window.onload = function(){
                 search = window.location.search;
                 getData = _GET(search);
@@ -95,6 +97,7 @@
                 $("#"+getData.aie).attr('checked', 'checked');
                 $("#"+getData.aid).attr('checked', 'checked');
                 panTo();
+                displayMarker(getData.x, getData.y);
             };
             var container = document.getElementById("kakao_map");
             var options = {
@@ -127,12 +130,29 @@
                     if(status === kakao.maps.services.Status.OK){
                         var result = results[0];
                         var moveLatLon = new kakao.maps.LatLng(result.y, result.x);
+                        coordX = result.x; coordY = result.y;
+                        address_name = result.address_name;
+                        displayMarker(result.y, result.x);
                         map.panTo(moveLatLon);
                     }
                     else{
                         alert("해당 정보가 없습니다!!");
                     }
                 });
+            }
+            function displayMarker(x, y){
+                var marker = new kakao.maps.Marker({
+                    map: map,
+                    position: new kakao.maps.LatLng(y, x)
+                    });
+                    coordX = x; coordY = y;
+                    // 마커에 클릭이벤트를 등록합니다
+                    kakao.maps.event.addListener(marker, 'click', function() {
+                        // 마커를 클릭하면 장소명이 인포윈도우에 표출됩니다
+                        infowindow.setContent('<div style="padding:5px;font-size:12px;">' + "임시정보" + '</div>');
+                        infowindow.open(map, marker);
+                        openChildWindow();
+                    });
             }
             /*function DaumPostcode(){
                 new daum.Postcode({
@@ -149,6 +169,39 @@
                     }
                 }).open();
             }*/
+            /*
+            function CheckValues(){
+                lf=$("input:radio[name=lifeForm]:checked").val();
+                tf=$("input:radio[name=tradeForm]:checked").val();
+                tfvp=$("#valuePurchase").val();
+                tfvm=$("#valueMonth").val();
+                tfvd=$("#valueDeposit").val();
+                aig=$("input:radio[name=gender]:checked").val();
+                aia=$("#aiAge").val();
+                aie=$("input:radio[name=old]:checked").val();
+                aid=$("input:radio[name=dog]:checked").val();
+                alert("거주 형태 : " + lf + "\n매물 형태 : " + tf + "\n매매가 : " + 
+                tfvp + "\n월세 : " + tfvm + "\n보증금 : " + tfvd + "\n성별 : " + aig + 
+                "\n나이 : " + aia + "\n노인 : " + aie + "\n반려동물 : " + aid);
+            }
+            */
+            function openChildWindow(){
+                //임시 데이터임
+                //실제 데이터로는 마커를 클릭했을 때 그 마커(부동산 매물)의
+                //이름, 매매가, 월세, 전세, 보증금 등의 특징들을 다음 창으로 보내야함
+                //
+                lf=$("input:radio[name=lifeForm]:checked").val();
+                tf=$("input:radio[name=tradeForm]:checked").val();
+                tfvp=$("#valuePurchase").val();
+                tfvm=$("#valueMonth").val();
+                tfvd=$("#valueDeposit").val();
+                aig=$("input:radio[name=gender]:checked").val();
+                aia=$("#aiAge").val();
+                aie=$("input:radio[name=old]:checked").val();
+                aid=$("input:radio[name=dog]:checked").val();
+                window.open("third_page.html?x=" + coordX + "&y=" + coordY + "&lf=" + lf + "&tf=" + tf + "&tfvp=" + tfvp + 
+                "&tfvm=" + tfvm + "&tfvd=" + tfvd + "&aig=" + aig + "&aia=" + aia + "&aie=" + aie + "&aid=" + aid +"&address_name=" + address_name, '_self');
+            }
         </script>
     </body>
     </html>
