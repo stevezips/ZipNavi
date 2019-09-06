@@ -16,72 +16,153 @@
                 border: #007ac3 5px solid; 
                 text-align: left; 
                 padding-left: 10px; 
+                margin-right: 10px;
                 vertical-align: middle; 
                 width: 600px; height: 50px;
+            }
+            .container{
+                height: 100%;
+                display: flex;
+                overflow: auto;
+                overflow-y: scroll;
+                scroll-snap-type: y mandatory;
+            }
+            .item{
+                overflow: hidden;
+                height:100%;
+                scroll-snap-align: start;
             }
         </style>
         <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
         <script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=fb926e363d9a87e9712ed240cb75a7b0&libraries=services"></script>
-        <div id="logo_panel" style="width: 100%; height:30%; text-align: center;">
-            <input type="image" src="main_logo.png" style="height: 100%;">
-        </div>
-        <div id="address_search_panel" style="width: 100%; text-align: center;">
-            <input type="text" id="sample_address" class="address_search" placeholder="주소를 입력하세요">
-            <input type="image" onclick="SearchAddress()" src="zoom_2.png" style="vertical-align: middle; width: 30px; height: 30px;" onfocus="this.blur()"><br>
-            <h id="txt_address" style="font-size: 18px; font-weight: bold; font-style: italic; color: #007ac3;"> </h>
-        </div>
-        <fieldset>
-            <legend style="font-size: 25;font-weight: bold">거주형태</legend><!-- life form -->
-            <div id="life_form">
-				<input type="radio" id="lfOne" name="lifeForm" value="lfOne" checked><label for="lfOne">원룸</label>
-				<input type="radio" id="lfTwo" name="lifeForm" value="lfTwo"><label for="lfTwo">투룸</label>
-				<input type="radio" id="lfOffice" name="lifeForm" value="lfOffice"><label for="lfOffice">오피스텔</label>
-				<input type="radio" id="lfApartment" name="lifeForm" value="lfApartment"><label for="lfApartment">아파트</label>
-                <input type="radio" id="lfNone" name="lifeForm" value="lfNone"><label for="lfNone">무관</label>
-            </div>
-        </fieldset>
-        <fieldset>
-            <legend style="font-size: 25;font-weight: bold">매매형태</legend><!-- trade form -->
-            <div id="trade_form">
-                <input type="radio" id="tfMonth" name="tradeForm" value="tfMonth" checked><label for="tfMonth">월세</label>
-                <input type="radio" id="tfJeon" name="tradeForm" value="tfJeon"><label for="tfJeon">전세</label>
-                <input type="radio" id="tfPurchase" name="tradeForm" value="tfPurchase"><label for="tfPurchase">매매</label>
-                <input type="radio" id="tfNone" name="tradeForm" value="tfNone"><label for="tfNone">무관</label>
-            </div>
-            <div id="trade_form_range">
-                <input type="range" id="valuePurchase" min="0" max="10000000000" step="100000000" value="300000000" name="valuePurchase">매매가</input><br>
-                <input type="range" id="valueMonth" min="0" max="10000000" step="100000" value="1000000" name="valueMonth">월세</input><br>
-                <input type="range" id="valueDeposit" min="0" max="100000000" step="1000000" value="10000000" name="valueDeposit">보증금</input>
-            </div>
-        </fieldset>
-        <fieldset>
-            <legend style="font-size: 25;font-weight: bold">추가 정보</legend><!-- additional information -->
-            <div id="gender">
-                <h>성별</h><br> <!-- gender -->
-                <input type="radio" id="gMale" name="gender" value="gMale" checked><label for="gMale">남자</label>
-                <input type="radio" id="gFemale" name="gender" value="gFemale"><label for="gFemale">여자</label>
-                <input type="radio" id="gNone" name="gender" value="gNone"><label for="gNone">무관</label>
-            </div>
-            <div id="age">
-                <h>연령</h><br> <!-- age -->
-                <input type="range" id="aiAge" name="age" min="20" max="90" step="10" value="30">세</input>
-            </div>
-            <div id="elder">
-                <h>노인</h><br> <!-- elder -->
-                <input type="radio" id="eYes" name="old" value="eYes"><label for="eYes">있음</label>
-                <input type="radio" id="eNo" name="old" value="eNo" checked><label for="eNo">없음</label>
-            </div>
-            <div id="dog">
-                <h>반려견</h><br> <!-- dog -->
-                <input type="radio" id="dYes" name="dog" value="dYes"><label for="dYes">있음</label>
-                <input type="radio" id="dNo" name="dog" value="dNo" checked><label for="dNo">없음</label>
-            </div>
-        </fieldset>
-        <button id="btnConfirm" onclick="openChildWindow()" style="margin-top: 10px;" disabled=true>확인</button>
+        <main id="container">
+            <section class="main_screen">
+                <div id="team_logo_panel" style="width:100%; height:10%; text-align: left; position: fixed;" >
+                    <input type="image" src="team_logo(2).png" style="height:100%;" disabled="true">
+                </div>
+                <div id="logo_panel" style="padding-top:10%; width: 100%; height:60%; text-align: center;">
+                    <input type="image" src="team_logo.png" style="height: 80%;" disabled="true">
+                </div>
+                <div id="search_method_panel" style="margin-top: 25px; width: 100%; height:30%; text-align: center;">
+                    <div id="check_my_house_panel" style="width: 50%; height:100%; text-align: center; float: left;">
+                        <input id="check_my_house" type="image" src="check_my_house.png" onfocus="this.blur()" onclick="moveMine()"
+                        onmouseover="this.src='check_my_house_white.png'" onmouseout="this.src='check_my_house.png'">
+                    </div>
+                    <div id="check_other_house_panel" style="width: 50%; height:100%; text-align: center; float: right;">
+                        <input id="check_others_house" type="image" src="check_others_house.png" onfocus="this.blur()" onclick="moveOthers()"
+                        onmouseover="this.src='check_others_house_white.png'" onmouseout="this.src='check_others_house.png'">
+                    </div>
+                </div>
+            </section>
+            <section id="first_screen">
+                <div id="first_screen_first_line" style="padding-top:15%; height:10%; text-align: center;">
+                    <input type="image" src="first_screen_first_line.png" disabled="true">
+                </div>
+                <div id="first_screen_second_line"style="height:10%; text-align:center;">
+                    <input type="image" src="first_screen_second_line.png"disabled="true">
+                </div>
+                <div id="first_screen_third_line"style="height:10%; text-align:center;">
+                    <input type="image" src="first_screen_third_line.png"disabled="true">
+                </div>
+                <div id="first_screen_fourth_line"style="height:10%; text-align:center;">
+                    <input type="image" src="first_screen_fourth_line.png"disabled="true">
+                </div>
+                <div id="zipfund_search_area" style="height: 20%; text-align: center;">
+                    <h1 style="font-size: 30px; font-weight: bold; font-style: italic; color: #ffffff;">아직 방법을 몰라서 안하는 중</h1>
+                </div>
+                <div id="zipfund_search_button" style="height:30%; text-align: center;">
+
+                </div>
+            </section>
+            <section id="second_screen">
+                    <div id="second_screen_first_line" style="padding-top:15%; height:10%; text-align: center;">
+                        <input type="image" src="second_screen_first_line.png" disabled="true">
+                    </div>
+                    <div id="second_screen_second_line"style="height:10%; text-align:center;">
+                        <input type="image" src="second_screen_second_line.png"disabled="true">
+                    </div>
+                    <div id="second_screen_third_line"style="height:10%; text-align:center;">
+                        <input type="image" src="second_screen_third_line.png"disabled="true">
+                    </div>
+                    <div id="second_screen_fourth_line"style="height:10%; text-align:center;">
+                        <input type="image" src="second_screen_fourth_line.png"disabled="true">
+                    </div>
+                    <div id="address_search_panel" style="margin-top: 25px; width: 100%; height: 30%; text-align: center;">
+                        <input type="text" id="sample_address" class="address_search" placeholder="찾고자 하는 지역의 '구', '동'을 입력하세요.">
+                        <input type="image" onclick="SearchAddress()" src="zoom_2.png" style="vertical-align: middle; width: 30px; height: 30px;" onfocus="this.blur()"><br>
+                        <h1 id="txt_address" style="font-size: 18px; font-weight: bold; font-style: italic; color: #007ac3;"> </h1>
+                    </div>
+                </section>
+            <section id="item2" class="item" style="height:0%">
+                <div id="area_panel" style="text-align: center; padding-top: 5%;">
+                    <h1 style="font-size: 30px;">거래 형태</h1>
+                </div>
+                <fieldset>
+                    <legend style="font-size: 25;font-weight: bold">거주형태</legend><!-- life form -->
+                    <div id="life_form">
+                        <input type="radio" id="lfOne" name="lifeForm" value="lfOne" checked><label for="lfOne">원룸</label>
+                        <input type="radio" id="lfTwo" name="lifeForm" value="lfTwo"><label for="lfTwo">투룸</label>
+                        <input type="radio" id="lfOffice" name="lifeForm" value="lfOffice"><label for="lfOffice">오피스텔</label>
+                        <input type="radio" id="lfApartment" name="lifeForm" value="lfApartment"><label for="lfApartment">아파트</label>
+                        <input type="radio" id="lfNone" name="lifeForm" value="lfNone"><label for="lfNone">무관</label>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <legend style="font-size: 25;font-weight: bold">매매형태</legend><!-- trade form -->
+                    <div id="trade_form">
+                        <input type="radio" id="tfMonth" name="tradeForm" value="tfMonth" checked><label for="tfMonth">월세</label>
+                        <input type="radio" id="tfJeon" name="tradeForm" value="tfJeon"><label for="tfJeon">전세</label>
+                        <input type="radio" id="tfPurchase" name="tradeForm" value="tfPurchase"><label for="tfPurchase">매매</label>
+                        <input type="radio" id="tfNone" name="tradeForm" value="tfNone"><label for="tfNone">무관</label>
+                    </div>
+                    <div id="trade_form_range">
+                        <input type="range" id="valuePurchase" min="0" max="10000000000" step="100000000" value="300000000" name="valuePurchase">매매가</input><br>
+                        <input type="range" id="valueMonth" min="0" max="10000000" step="100000" value="1000000" name="valueMonth">월세</input><br>
+                        <input type="range" id="valueDeposit" min="0" max="100000000" step="1000000" value="10000000" name="valueDeposit">보증금</input>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <legend style="font-size: 25;font-weight: bold">추가 정보</legend><!-- additional information -->
+                    <div id="gender">
+                        <h>성별</h><br> <!-- gender -->
+                        <input type="radio" id="gMale" name="gender" value="gMale" checked><label for="gMale">남자</label>
+                        <input type="radio" id="gFemale" name="gender" value="gFemale"><label for="gFemale">여자</label>
+                        <input type="radio" id="gNone" name="gender" value="gNone"><label for="gNone">무관</label>
+                    </div>
+                    <div id="age">
+                        <h>연령</h><br> <!-- age -->
+                        <input type="range" id="aiAge" name="age" min="20" max="90" step="10" value="30">세</input>
+                    </div>
+                    <div id="elder">
+                        <h>노인</h><br> <!-- elder -->
+                        <input type="radio" id="eYes" name="old" value="eYes"><label for="eYes">있음</label>
+                        <input type="radio" id="eNo" name="old" value="eNo" checked><label for="eNo">없음</label>
+                    </div>
+                    <div id="dog">
+                        <h>반려견</h><br> <!-- dog -->
+                        <input type="radio" id="dYes" name="dog" value="dYes"><label for="dYes">있음</label>
+                        <input type="radio" id="dNo" name="dog" value="dNo" checked><label for="dNo">없음</label>
+                    </div>
+                </fieldset>
+                <button id="btnConfirm" onclick="openChildWindow()" style="margin-top: 10px;" disabled=true>확인</button>
+            </section>
+            
+            
+        </main>
+        
+        
         <script>
             var geocoder = new daum.maps.services.Geocoder();
             var coords, lf, tf, tfvp, tfvm, tfvd, aig, aia, aie, aid, coordX, coordY;
             var windowObj;
+            function moveMine(){
+                var offset=$("#first_screen").offset();
+                $("html body").animate({scrollTop:offset.top}, 500);
+            }
+            function moveOthers(){
+                var offset=$("#second_screen").offset();
+                $("html body").animate({scrollTop:offset.top}, 500);
+            }
             function SearchAddress(){
                 var addr = $("#sample_address").val();
                 geocoder.addressSearch(addr, function(results, status){
@@ -92,6 +173,14 @@
                         $("#txt_address").html("<h>" + results[0].address_name + "</h>");
                         $("#txt_address").text = results[0].address_name;
                         $("#btnConfirm").attr('disabled', false);
+                        var offset=$("#item2").offset();
+                        $("html body").animate({scrollTop:offset.top},500);
+                        openChildWindow();
+                    }
+                    else{
+                        $("#txt_address").html("<h>" + "결과를 찾지 못했습니다" + "</h>");
+                        $("#btnConfirm").attr('disabled', true);
+                        $("#btnConfirm").fadeOut();
                     }
                 });
             }
