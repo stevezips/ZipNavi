@@ -6,7 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <title>First Page</title>
-        <script src="js/jquery.js"></script>
+        <script src="../js/jquery.js"></script>
     </head>
     <body style="background-color: #474747">
         <style>
@@ -36,60 +36,58 @@
         <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
         <script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=fb926e363d9a87e9712ed240cb75a7b0&libraries=services"></script>
         <main id="container">
-            <section class="main_screen">
+            <section id="main_screen">
                 <div id="team_logo_panel" style="width:100%; height:10%; text-align: left; position: fixed;" >
-                    <input type="image" src="team_logo(2).png" style="height:100%;" disabled="true">
+                    <input type="image" src="../images/team_logo(2).png" style="height:100%;" onclick="moveTop()">
                 </div>
                 <div id="logo_panel" style="padding-top:10%; width: 100%; height:60%; text-align: center;">
-                    <input type="image" src="team_logo.png" style="height: 80%;" disabled="true">
+                    <input type="image" src="../images/team_logo.png" style="height: 80%;" disabled="true">
                 </div>
                 <div id="search_method_panel" style="margin-top: 25px; width: 100%; height:30%; text-align: center;">
                     <div id="check_my_house_panel" style="width: 50%; height:100%; text-align: center; float: left;">
-                        <input id="check_my_house" type="image" src="check_my_house.png" onfocus="this.blur()" onclick="moveMine()"
-                        onmouseover="this.src='check_my_house_white.png'" onmouseout="this.src='check_my_house.png'">
+                        <input id="check_my_house" type="image" src="../images/check_my_house.png" onfocus="this.blur()" onclick="moveMine()"
+                        onmouseover="this.src='../images/check_my_house_white.png'" onmouseout="this.src='../images/check_my_house.png'">
                     </div>
                     <div id="check_other_house_panel" style="width: 50%; height:100%; text-align: center; float: right;">
-                        <input id="check_others_house" type="image" src="check_others_house.png" onfocus="this.blur()" onclick="moveOthers()"
-                        onmouseover="this.src='check_others_house_white.png'" onmouseout="this.src='check_others_house.png'">
+                        <input id="check_others_house" type="image" src="../images/check_others_house.png" onfocus="this.blur()" onclick="moveOthers()"
+                        onmouseover="this.src='../images/check_others_house_white.png'" onmouseout="this.src='../images/check_others_house.png'">
                     </div>
                 </div>
             </section>
             <section id="first_screen">
                 <div id="first_screen_first_line" style="padding-top:15%; height:10%; text-align: center;">
-                    <input type="image" src="first_screen_first_line.png" disabled="true">
+                    <input type="image" src="../images/first_screen_first_line.png" disabled="true">
                 </div>
                 <div id="first_screen_second_line"style="height:10%; text-align:center;">
-                    <input type="image" src="first_screen_second_line.png"disabled="true">
+                    <input type="image" src="../images/first_screen_second_line.png"disabled="true">
                 </div>
                 <div id="first_screen_third_line"style="height:10%; text-align:center;">
-                    <input type="image" src="first_screen_third_line.png"disabled="true">
+                    <input type="image" src="../images/first_screen_third_line.png"disabled="true">
                 </div>
                 <div id="first_screen_fourth_line"style="height:10%; text-align:center;">
-                    <input type="image" src="first_screen_fourth_line.png"disabled="true">
+                    <input type="image" src="../images/first_screen_fourth_line.png"disabled="true">
                 </div>
                 <div id="zipfund_search_area" style="height: 20%; text-align: center;">
                     <h1 style="font-size: 30px; font-weight: bold; font-style: italic; color: #ffffff;">아직 방법을 몰라서 안하는 중</h1>
                 </div>
                 <div id="zipfund_search_button" style="height:30%; text-align: center;">
-
-                </div>
             </section>
             <section id="second_screen">
                     <div id="second_screen_first_line" style="padding-top:15%; height:10%; text-align: center;">
-                        <input type="image" src="second_screen_first_line.png" disabled="true">
+                        <input type="image" src="../images/second_screen_first_line.png" disabled="true">
                     </div>
                     <div id="second_screen_second_line"style="height:10%; text-align:center;">
-                        <input type="image" src="second_screen_second_line.png"disabled="true">
+                        <input type="image" src="../images/second_screen_second_line.png"disabled="true">
                     </div>
                     <div id="second_screen_third_line"style="height:10%; text-align:center;">
-                        <input type="image" src="second_screen_third_line.png"disabled="true">
+                        <input type="image" src="../images/second_screen_third_line.png"disabled="true">
                     </div>
                     <div id="second_screen_fourth_line"style="height:10%; text-align:center;">
-                        <input type="image" src="second_screen_fourth_line.png"disabled="true">
+                        <input type="image" src="../images/second_screen_fourth_line.png"disabled="true">
                     </div>
                     <div id="address_search_panel" style="margin-top: 25px; width: 100%; height: 30%; text-align: center;">
                         <input type="text" id="sample_address" class="address_search" placeholder="찾고자 하는 지역의 '구', '동'을 입력하세요.">
-                        <input type="image" onclick="SearchAddress()" src="zoom_2.png" style="vertical-align: middle; width: 30px; height: 30px;" onfocus="this.blur()"><br>
+                        <input type="image" onclick="SearchAddress()" src="../images/zoom_2.png" style="vertical-align: middle; width: 30px; height: 30px;" onfocus="this.blur()"><br>
                         <h1 id="txt_address" style="font-size: 18px; font-weight: bold; font-style: italic; color: #007ac3;"> </h1>
                     </div>
                 </section>
@@ -146,15 +144,15 @@
                 </fieldset>
                 <button id="btnConfirm" onclick="openChildWindow()" style="margin-top: 10px;" disabled=true>확인</button>
             </section>
-            
-            
         </main>
-        
-        
         <script>
             var geocoder = new daum.maps.services.Geocoder();
             var coords, lf, tf, tfvp, tfvm, tfvd, aig, aia, aie, aid, coordX, coordY;
             var windowObj;
+            function moveTop(){
+                var offset=$("#main_screen").offset();
+                $("html body").animate({scrollTop:offset.top}, 500);
+            }
             function moveMine(){
                 var offset=$("#first_screen").offset();
                 $("html body").animate({scrollTop:offset.top}, 500);
@@ -183,38 +181,6 @@
                         $("#btnConfirm").fadeOut();
                     }
                 });
-            }
-            /*function DaumPostcode(){
-                new daum.Postcode({
-                    oncomplete: function(data){
-                        var addr = data.address;
-                        document.getElementById("sample_address").value = addr;
-                        geocoder.addressSearch(data.address, function(results, status) {
-                            if(status === daum.maps.services.Status.OK){
-                                var result = results[0];
-                                coords = new daum.maps.LatLng(result.y, result.x);
-                                coordY = result.y;
-                                coordX = result.x;
-                                console.log(coords);
-                                $("#btnConfirm").attr('disabled', false);
-                            }
-                        });
-                    }
-                }).open();
-            }*/
-            function CheckValues(){
-                lf=$("input:radio[name=lifeForm]:checked").val();
-                tf=$("input:radio[name=tradeForm]:checked").val();
-                tfvp=$("#valuePurchase").val();
-                tfvm=$("#valueMonth").val();
-                tfvd=$("#valueDeposit").val();
-                aig=$("input:radio[name=gender]:checked").val();
-                aia=$("#aiAge").val();
-                aie=$("input:radio[name=old]:checked").val();
-                aid=$("input:radio[name=dog]:checked").val();
-                alert("거주 형태 : " + lf + "\n매물 형태 : " + tf + "\n매매가 : " + 
-                tfvp + "\n월세 : " + tfvm + "\n보증금 : " + tfvd + "\n성별 : " + aig + 
-                "\n나이 : " + aia + "\n노인 : " + aie + "\n반려동물 : " + aid);
             }
             function openChildWindow(){
                 lf=$("input:radio[name=lifeForm]:checked").val();
