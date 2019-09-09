@@ -8,7 +8,7 @@
         <title>First Page</title>
         <script src="../js/jquery.js"></script>
     </head>
-    <body style="background-color: #474747">
+    <body style="background-color: #131313; overflow: hidden;">
         <style>
             .address_search{
                 font-size: 20px;
@@ -32,6 +32,17 @@
                 height:100%;
                 scroll-snap-align: start;
             }
+            .select_area_box {
+                border: 1px solid #000000;
+                border-radius: 5px;
+                font-size: 19px;
+                height: 40px;
+                line-height: 40px;
+            }
+            .select_area_box:focus {
+                outline: none
+            }
+        
         </style>
         <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
         <script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=fb926e363d9a87e9712ed240cb75a7b0&libraries=services"></script>
@@ -40,7 +51,7 @@
                 <div id="team_logo_panel" style="width:100%; height:10%; text-align: left; position: fixed;" >
                     <input type="image" src="../images/team_logo(2).png" style="height:100%;" onclick="moveTop()">
                 </div>
-                <div id="logo_panel" style="padding-top:10%; width: 100%; height:60%; text-align: center;">
+                <div id="logo_panel" style="padding-top:10%; width: 100%; height:50%; text-align: center;">
                     <input type="image" src="../images/team_logo.png" style="height: 80%;" disabled="true">
                 </div>
                 <div id="search_method_panel" style="margin-top: 25px; width: 100%; height:30%; text-align: center;">
@@ -68,29 +79,63 @@
                     <input type="image" src="../images/first_screen_fourth_line.png"disabled="true">
                 </div>
                 <div id="zipfund_search_area" style="height: 20%; text-align: center;">
-                    <h1 style="font-size: 30px; font-weight: bold; font-style: italic; color: #ffffff;">아직 방법을 몰라서 안하는 중</h1>
+                    <select id="select_area_province" class="select_area_box">
+                        <option value disabled class selected="selected">시/도 선택</option>]
+                        <option label="서울특별시" value="1">서울특별시</option>
+                        <option label="부산광역시" value="2">부산광역시</option>
+                        <option label="대구광역시" value="3">대구광역시</option>
+                        <option label="인천광역시" value="4">인천광역시</option>
+                        <option label="광주광역시" value="5">광주광역시</option>
+                        <option label="대전광역시" value="6">대전광역시</option>
+                        <option label="울산광역시" value="7">울산광역시</option>
+                        <option label="세종특별자치시" value="8">세종특별자치시</option>
+                        <option label="경기도" value="9">경기도</option>
+                        <option label="강원도" value="10">강원도</option>
+                        <option label="충청북도" value="11">충청북도</option>
+                        <option label="충청남도" value="12">충청남도</option>
+                        <option label="전라북도" value="13">전라북도</option>
+                        <option label="전라남도" value="14">전라남도</option>
+                        <option label="경상북도" value="15">경상북도</option>
+                        <option label="경상남도" value="16">경상남도</option>
+                        <option label="제주특별자치도" value="17">제주특별자치도</option>
+                    </select>
+                    <select id="select_area_city" class="select_area_box">
+                        <option value disabled class selected="selected">시/군/구 선택</option>
+                    </select>
+                    <select id="select_area_town" class="select_area_box">
+                        <option value disabled class selected="selected">읍/면/동 선택</option>
+                    </select>
+                    <select id="select_area_apart" class="select_area_box">
+                        <option value disabled class selected="selected">아파트 선택</option>
+                    </select>
+                    <select id="select_area_dong" class="select_area_box">
+                        <option value disabled class selected="selected">동 선택</option>
+                    </select>
+                    <select id="select_area_ho" class="select_area_box">
+                        <option value disabled class selected="selected">호 선택</option>
+                    </select>
                 </div>
                 <div id="zipfund_search_button" style="height:30%; text-align: center;">
             </section>
             <section id="second_screen">
-                    <div id="second_screen_first_line" style="padding-top:15%; height:10%; text-align: center;">
-                        <input type="image" src="../images/second_screen_first_line.png" disabled="true">
-                    </div>
-                    <div id="second_screen_second_line"style="height:10%; text-align:center;">
-                        <input type="image" src="../images/second_screen_second_line.png"disabled="true">
-                    </div>
-                    <div id="second_screen_third_line"style="height:10%; text-align:center;">
-                        <input type="image" src="../images/second_screen_third_line.png"disabled="true">
-                    </div>
-                    <div id="second_screen_fourth_line"style="height:10%; text-align:center;">
-                        <input type="image" src="../images/second_screen_fourth_line.png"disabled="true">
-                    </div>
-                    <div id="address_search_panel" style="margin-top: 25px; width: 100%; height: 30%; text-align: center;">
-                        <input type="text" id="sample_address" class="address_search" placeholder="찾고자 하는 지역의 '구', '동'을 입력하세요.">
-                        <input type="image" onclick="SearchAddress()" src="../images/zoom_2.png" style="vertical-align: middle; width: 30px; height: 30px;" onfocus="this.blur()"><br>
-                        <h1 id="txt_address" style="font-size: 18px; font-weight: bold; font-style: italic; color: #007ac3;"> </h1>
-                    </div>
-                </section>
+                <div id="second_screen_first_line" style="padding-top:15%; height:10%; text-align: center;">
+                    <input type="image" src="../images/second_screen_first_line.png" disabled="true">
+                </div>
+                <div id="second_screen_second_line"style="height:10%; text-align:center;">
+                    <input type="image" src="../images/second_screen_second_line.png"disabled="true">
+                </div>
+                <div id="second_screen_third_line"style="height:10%; text-align:center;">
+                    <input type="image" src="../images/second_screen_third_line.png"disabled="true">
+                </div>
+                <div id="second_screen_fourth_line"style="height:10%; text-align:center;">
+                    <input type="image" src="../images/second_screen_fourth_line.png"disabled="true">
+                </div>
+                <div id="address_search_panel" style="margin-top: 25px; width: 100%; height: 30%; text-align: center;">
+                    <input type="text" id="sample_address" class="address_search" placeholder="찾고자 하는 지역의 '구', '동'을 입력하세요.">
+                    <input type="image" onclick="SearchAddress()" src="../images/zoom_2.png" style="vertical-align: middle; width: 30px; height: 30px;" onfocus="this.blur()"><br>
+                    <h1 id="txt_address" style="font-size: 18px; font-weight: bold; font-style: italic; color: #007ac3;"> </h1>
+                </div>
+            </section>
             <section id="item2" class="item" style="height:0%">
                 <div id="area_panel" style="text-align: center; padding-top: 5%;">
                     <h1 style="font-size: 30px;">거래 형태</h1>
@@ -149,6 +194,101 @@
             var geocoder = new daum.maps.services.Geocoder();
             var coords, lf, tf, tfvp, tfvm, tfvd, aig, aia, aie, aid, coordX, coordY;
             var windowObj;
+            $('#select_area_province').change(function(){
+                $.ajax({
+                    url: "http://test-apis.zipdata.co/address/city/" + $('#select_area_province').val(),
+                    contentType: "application/json",
+                    dataType: 'json',
+                    success: function(result){
+                        $('#select_area_city').empty();
+                        $('#select_area_city').append(`<option value disabled class selected="selected">시/군/구 선택</option>`);
+                        $('#select_area_town').empty();
+                        $('#select_area_town').append(`<option value disabled class selected="selected">읍/면/동 선택</option>`);
+                        $('#select_area_apart').empty();
+                        $('#select_area_apart').append(`<option value disabled class selected="selected">아파트 선택</option>`);
+                        $('#select_area_dong').empty();
+                        $('#select_area_dong').append(`<option value disabled class selected="selected">동 선택</option>`);
+                        $('#select_area_ho').empty();
+                        $('#select_area_ho').append(`<option value disabled class selected="selected">호 선택</option>`);
+                        result.code.map((value) => {
+                            var option = $(`<option value=${value.id}>` + value.name +"</option>");
+                            $('#select_area_city').append(option);
+                        })
+                    }
+                })
+            });
+            $('#select_area_city').change(function(){
+                $.ajax({
+                    url: "http://test-apis.zipdata.co/address/district/" + $('#select_area_city').val(),
+                    contentType: "application/json",
+                    dataType: 'json',
+                    success: function(result){
+                        $('#select_area_town').empty();
+                        $('#select_area_town').append(`<option value disabled class selected="selected">읍/면/동 선택</option>`);
+                        $('#select_area_apart').empty();
+                        $('#select_area_apart').append(`<option value disabled class selected="selected">아파트 선택</option>`);
+                        $('#select_area_dong').empty();
+                        $('#select_area_dong').append(`<option value disabled class selected="selected">동 선택</option>`);
+                        $('#select_area_ho').empty();
+                        $('#select_area_ho').append(`<option value disabled class selected="selected">호 선택</option>`);
+                        result.code.map((value) => {
+                            var option = $(`<option value=${value.id}>` + value.name + "</option>");
+                            $('#select_area_town').append(option);
+                        })
+                    }
+                })
+            });
+            $('#select_area_town').change(function(){
+                $.ajax({
+                    url: "http://test-apis.zipdata.co/address/apartment/" + $('#select_area_town').val(),
+                    contentType: "application/json",
+                    dataType: 'json',
+                    success: function(result){
+                        $('#select_area_apart').empty();
+                        $('#select_area_apart').append(`<option value disabled class selected="selected">아파트 선택</option>`);
+                        $('#select_area_dong').empty();
+                        $('#select_area_dong').append(`<option value disabled class selected="selected">동 선택</option>`);
+                        $('#select_area_ho').empty();
+                        $('#select_area_ho').append(`<option value disabled class selected="selected">호 선택</option>`);
+                        result.code.map((value) => {
+                            var option = $(`<option value=${value.id}>` + value.name + "</option>");
+                            $('#select_area_apart').append(option);
+                        })
+                    }
+                })
+            });
+            $('#select_area_apart').change(function(){
+                $.ajax({
+                    url: "http://test-apis.zipdata.co/address/dong/" + $('#select_area_apart').val(),
+                    contentType: "application/json",
+                    dataType: 'json',
+                    success: function(result){
+                        $('#select_area_dong').empty();
+                        $('#select_area_dong').append(`<option value disabled class selected="selected">동 선택</option>`);
+                        $('#select_area_ho').empty();
+                        $('#select_area_ho').append(`<option value disabled class selected="selected">호 선택</option>`);
+                        result.code.map((value) => {
+                            var option = $(`<option value=${value.id}>` + value.name + "</option>");
+                            $('#select_area_dong').append(option);
+                        })
+                    }
+                })
+            });
+            $('#select_area_dong').change(function(){
+                $.ajax({
+                    url: "http://test-apis.zipdata.co/address/ho/" + $('#select_area_dong').val(),
+                    contentType: "application/json",
+                    dataType: 'json',
+                    success: function(result){
+                        $('#select_area_ho').empty();
+                        $('#select_area_ho').append(`<option value disabled class selected="selected">호 선택</option>`);
+                        result.code.map((value) => {
+                            var option = $(`<option value=${value.id}>` + value.name + "</option>");
+                            $('#select_area_ho').append(option);
+                        })
+                    }
+                })
+            })
             function moveTop(){
                 var offset=$("#main_screen").offset();
                 $("html body").animate({scrollTop:offset.top}, 500);
