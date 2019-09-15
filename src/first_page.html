@@ -49,7 +49,7 @@
         <main id="container">
             <section id="main_screen">
                 <div id="team_logo_panel" style="width:100%; height:10%; text-align: left; position: fixed;" >
-                    <input type="image" src="../images/team_logo(2).png" style="height:100%;" onclick="moveTop()">
+                    <input type="image" src="../images/project_logo.png" style="height:100%;" onclick="moveTop()">
                 </div>
                 <div id="logo_panel" style="padding-top:10%; width: 100%; height:50%; text-align: center;">
                     <input type="image" src="../images/team_logo.png" style="height: 80%;" disabled="true">
@@ -82,23 +82,23 @@
                 <div id="zipfund_search_area" style="height: 20%; text-align: center;">
                     <select id="select_area_province" class="select_area_box">
                         <option value disabled class selected="selected">시/도 선택</option>]
-                        <option label="서울특별시" value="1">서울특별시</option>
-                        <option label="부산광역시" value="2">부산광역시</option>
-                        <option label="대구광역시" value="3">대구광역시</option>
-                        <option label="인천광역시" value="4">인천광역시</option>
-                        <option label="광주광역시" value="5">광주광역시</option>
-                        <option label="대전광역시" value="6">대전광역시</option>
-                        <option label="울산광역시" value="7">울산광역시</option>
-                        <option label="세종특별자치시" value="8">세종특별자치시</option>
-                        <option label="경기도" value="9">경기도</option>
-                        <option label="강원도" value="10">강원도</option>
-                        <option label="충청북도" value="11">충청북도</option>
-                        <option label="충청남도" value="12">충청남도</option>
-                        <option label="전라북도" value="13">전라북도</option>
-                        <option label="전라남도" value="14">전라남도</option>
-                        <option label="경상북도" value="15">경상북도</option>
-                        <option label="경상남도" value="16">경상남도</option>
-                        <option label="제주특별자치도" value="17">제주특별자치도</option>
+                        <option label="서울특별시" value="11">서울특별시</option>
+                        <option label="부산광역시" value="26">부산광역시</option>
+                        <option label="대구광역시" value="27">대구광역시</option>
+                        <option label="인천광역시" value="28">인천광역시</option>
+                        <option label="광주광역시" value="29">광주광역시</option>
+                        <option label="대전광역시" value="30">대전광역시</option>
+                        <option label="울산광역시" value="31">울산광역시</option>
+                        <option label="세종특별자치시" value="41">세종특별자치시</option>
+                        <option label="경기도" value="42">경기도</option>
+                        <option label="강원도" value="43">강원도</option>
+                        <option label="충청북도" value="44">충청북도</option>
+                        <option label="충청남도" value="45">충청남도</option>
+                        <option label="전라북도" value="46">전라북도</option>
+                        <option label="전라남도" value="47">전라남도</option>
+                        <option label="경상북도" value="48">경상북도</option>
+                        <option label="경상남도" value="50">경상남도</option>
+                        <option label="제주특별자치도" value="36">제주특별자치도</option>
                     </select>
                     <select id="select_area_city" class="select_area_box">
                         <option value disabled class selected="selected">시/군/구 선택</option>
@@ -109,11 +109,8 @@
                     <select id="select_area_apart" class="select_area_box">
                         <option value disabled class selected="selected">아파트 선택</option>
                     </select>
-                    <select id="select_area_dong" class="select_area_box">
-                        <option value disabled class selected="selected">동 선택</option>
-                    </select>
-                    <select id="select_area_ho" class="select_area_box">
-                        <option value disabled class selected="selected">호 선택</option>
+                    <select id="select_area_meter" class="select_area_box">
+                        <option value disabled class selected="selected">평방미터 선택</option>
                     </select>
                     <input type="image" onclick="SearchApartment()" src="../images/zoom_2.png" style="vertical-align: middle; width: 30px; height: 30px;" onfocus="this.blur()"><br>
                 </div>
@@ -198,7 +195,7 @@
             var windowObj;
             $('#select_area_province').change(function(){
                 $.ajax({
-                    url: "http://test-apis.zipdata.co/address/city/" + $('#select_area_province').val(),
+                    url: "http://admin.zipfund.co/api/address/city/" + $('#select_area_province').val(),
                     contentType: "application/json",
                     dataType: 'json',
                     success: function(result){
@@ -208,12 +205,10 @@
                         $('#select_area_town').append(`<option value disabled class selected="selected">읍/면/동 선택</option>`);
                         $('#select_area_apart').empty();
                         $('#select_area_apart').append(`<option value disabled class selected="selected">아파트 선택</option>`);
-                        $('#select_area_dong').empty();
-                        $('#select_area_dong').append(`<option value disabled class selected="selected">동 선택</option>`);
-                        $('#select_area_ho').empty();
-                        $('#select_area_ho').append(`<option value disabled class selected="selected">호 선택</option>`);
-                        result.code.map((value) => {
-                            var option = $(`<option value=${value.id}>` + value.name +"</option>");
+                        $('#select_area_meter').empty();
+                        $('#select_area_meter').append(`<option value disabled class selected="selected">평방미터 선택</option>`);
+                        result.codes.map((value) => {
+                            var option = $(`<option value=${value.code}>` + value.name +"</option>");
                             $('#select_area_city').append(option);
                         })
                     }
@@ -221,7 +216,7 @@
             });
             $('#select_area_city').change(function(){
                 $.ajax({
-                    url: "http://test-apis.zipdata.co/address/district/" + $('#select_area_city').val(),
+                    url: "http://admin.zipfund.co/api/address/district/" + $('#select_area_city').val(),
                     contentType: "application/json",
                     dataType: 'json',
                     success: function(result){
@@ -229,12 +224,10 @@
                         $('#select_area_town').append(`<option value disabled class selected="selected">읍/면/동 선택</option>`);
                         $('#select_area_apart').empty();
                         $('#select_area_apart').append(`<option value disabled class selected="selected">아파트 선택</option>`);
-                        $('#select_area_dong').empty();
-                        $('#select_area_dong').append(`<option value disabled class selected="selected">동 선택</option>`);
-                        $('#select_area_ho').empty();
-                        $('#select_area_ho').append(`<option value disabled class selected="selected">호 선택</option>`);
-                        result.code.map((value) => {
-                            var option = $(`<option value=${value.id}>` + value.name + "</option>");
+                        $('#select_area_meter').empty();
+                        $('#select_area_meter').append(`<option value disabled class selected="selected">평방미터 선택</option>`);
+                        result.codes.map((value) => {
+                            var option = $(`<option value=${value.code}>` + value.name + "</option>");
                             $('#select_area_town').append(option);
                         })
                     }
@@ -242,18 +235,16 @@
             });
             $('#select_area_town').change(function(){
                 $.ajax({
-                    url: "http://test-apis.zipdata.co/address/apartment/" + $('#select_area_town').val(),
+                    url: "http://admin.zipfund.co/api/address/apartment/" + $('#select_area_town').val(),
                     contentType: "application/json",
                     dataType: 'json',
                     success: function(result){
                         $('#select_area_apart').empty();
                         $('#select_area_apart').append(`<option value disabled class selected="selected">아파트 선택</option>`);
-                        $('#select_area_dong').empty();
-                        $('#select_area_dong').append(`<option value disabled class selected="selected">동 선택</option>`);
-                        $('#select_area_ho').empty();
-                        $('#select_area_ho').append(`<option value disabled class selected="selected">호 선택</option>`);
-                        result.code.map((value) => {
-                            var option = $(`<option value=${value.id}>` + value.name + "</option>");
+                        $('#select_area_meter').empty();
+                        $('#select_area_meter').append(`<option value disabled class selected="selected">평방미터 선택</option>`);
+                        result.codes.map((value) => {
+                            var option = $(`<option value=${value.code}>` + value.name + "</option>");
                             $('#select_area_apart').append(option);
                         })
                     }
@@ -261,36 +252,19 @@
             });
             $('#select_area_apart').change(function(){
                 $.ajax({
-                    url: "http://test-apis.zipdata.co/address/dong/" + $('#select_area_apart').val(),
+                    url: "http://admin.zipfund.co/api/address/unit_type/" + $('#select_area_apart').val(),
                     contentType: "application/json",
                     dataType: 'json',
                     success: function(result){
-                        $('#select_area_dong').empty();
-                        $('#select_area_dong').append(`<option value disabled class selected="selected">동 선택</option>`);
-                        $('#select_area_ho').empty();
-                        $('#select_area_ho').append(`<option value disabled class selected="selected">호 선택</option>`);
-                        result.code.map((value) => {
-                            var option = $(`<option value=${value.id}>` + value.name + "</option>");
-                            $('#select_area_dong').append(option);
+                        $('#select_area_meter').empty();
+                        $('#select_area_meter').append(`<option value disabled class selected="selected">평방미터 선택</option>`);
+                        result.codes.map((value) => {
+                            var option = $(`<option value=${value.code}>` + value.name + "</option>");
+                            $('#select_area_meter').append(option);
                         })
                     }
                 })
             });
-            $('#select_area_dong').change(function(){
-                $.ajax({
-                    url: "http://test-apis.zipdata.co/address/ho/" + $('#select_area_dong').val(),
-                    contentType: "application/json",
-                    dataType: 'json',
-                    success: function(result){
-                        $('#select_area_ho').empty();
-                        $('#select_area_ho').append(`<option value disabled class selected="selected">호 선택</option>`);
-                        result.code.map((value) => {
-                            var option = $(`<option value=${value.id}>` + value.name + "</option>");
-                            $('#select_area_ho').append(option);
-                        })
-                    }
-                })
-            })
             function moveTop(){
                 var offset=$("#main_screen").offset();
                 $("html body").animate({scrollTop:offset.top}, 500);

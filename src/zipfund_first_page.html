@@ -1,0 +1,90 @@
+<HTML:5>
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>ZIPFUND FIRST PAGE</title>
+        <script src="../js/jquery.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/rangeslider.js/2.3.2/rangeslider.css">
+    </head>
+    <body style="background-color: #474747; overflow:hidden;">
+        <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
+        <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=fb926e363d9a87e9712ed240cb75a7b0"></script>
+        <script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=fb926e363d9a87e9712ed240cb75a7b0&libraries=services"></script>
+        <script type="text/javascript" src="../rangeslider.js-2.3.0/rangeslider.min.js"></script>
+        <style>
+            #kakao_map{
+                position: absolute;
+                width: 100%;
+                height: 100%;
+                float: left;
+                z-index: 1;
+            }
+            #wrapper{
+                position: absolute;
+                width:100%;
+                height:100%;
+                text-align: center;    
+            }
+            #filter_box{
+                position: relative;
+                top: 50%;
+                margin-top: -300px;
+                z-index: 2;
+                width: 400px;
+                height: 600px;
+                background: #131313;
+                margin-right: 50px;
+                float: right;
+            }
+            .age_range_slider{
+                margin-left: 20px;
+                margin-right: 20px;
+            }
+            .rangeslider--horizontal {
+                height: 15px;
+                width: 360px;
+                margin-left: 20px;
+                margin-right: 20px;
+            }
+            .rangeslider__fill {
+                background: #007ac3;
+                position: absolute;
+            }
+            .rangeslider__handle {
+                width: 30px;
+                height: 30px;
+            }
+            .rangeslider__handle:after {
+                width: 15px;
+                height: 15px;
+            }
+        </style>
+        <img src="../images/project_logo.png" style="height: 10%; position: fixed; z-index: 3;">
+        <div id="wrapper">
+            <div id="kakao_map" class="map_div"></div>
+            <div id="filter_box">
+                <h1 style="color: white;">연령</h1><br>
+                <input id="age_range_slider" type="range" min="20" max="60" step="10" value="20">
+                <h1 style="color: white;">성별</h1><br>
+                <h1 style="color: white;">노인</h1><br>
+                <h1 style="color: white;">반려동물</h1><br>
+                <h1 style="color: white;">활동 반경</h1><br>
+                <input id="active_range_slider" type="range" min="1" max="3" step="0.5" value="3">
+            </div>
+        </div>
+        <script>
+            $('input[type="range"]').rangeslider({polyfill: false});
+            //$('#age_range_slider').rangeslider({polyfill: false});
+            var container = document.getElementById("kakao_map");
+            var options = {
+                center: new kakao.maps.LatLng(33.450701, 126.570667),
+                level: 3
+            };
+            var map = new kakao.maps.Map(container, options);
+        </script>
+    </body>
+    </html>
+</HTML:5>
