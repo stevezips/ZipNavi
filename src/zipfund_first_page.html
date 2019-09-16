@@ -38,6 +38,7 @@
                 background: #131313;
                 margin-right: 50px;
                 float: right;
+                border-radius: 5%;
             }
             .age_range_slider{
                 margin-left: 20px;
@@ -61,22 +62,101 @@
                 width: 15px;
                 height: 15px;
             }
+            .radio {
+                margin: 16px 0;
+                display: block;
+                cursor: pointer;
+            }
+            .radio input {
+                display: none;
+            }
+            .radio input + span {
+                line-height: 22px;
+                height: 22px;
+                padding-left: 22px;
+                position: relative;
+            }
+            .radio input + span:not(:empty) {
+                padding-left: 30px;
+            }
+            .radio input + span:before, .radio input + span:after {
+                content: '';
+                width: 22px;
+                height: 22px;
+                display: block;
+                border-radius: 50%;
+                left: 0;
+                top: 0;
+                position: absolute;
+            }
+            .radio input + span:before {
+                background: #D1D7E3;
+                transition: background 0.2s ease, -webkit-transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 2);
+                transition: background 0.2s ease, transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 2);
+                transition: background 0.2s ease, transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 2), -webkit-transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 2);
+            }
+            .radio input + span:after {
+                background: #fff;
+                -webkit-transform: scale(0.78);
+                        transform: scale(0.78);
+                transition: -webkit-transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.4);
+                transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.4);
+                transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.4), -webkit-transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.4);
+            }
+            .radio input:checked + span:before {
+                -webkit-transform: scale(1.04);
+                        transform: scale(1.04);
+                background: #007ac3;
+            }
+            .radio input:checked + span:after {
+                -webkit-transform: scale(0.4);
+                        transform: scale(0.4);
+                transition: -webkit-transform .3s ease;
+                transition: transform .3s ease;
+                transition: transform .3s ease, -webkit-transform .3s ease;
+            }
+            .radio:hover input + span:before {
+                -webkit-transform: scale(0.92);
+                        transform: scale(0.92);
+            }
+            .radio:hover input + span:after {
+                -webkit-transform: scale(0.74);
+                        transform: scale(0.74);
+            }
+            .radio:hover input:checked + span:after {
+                -webkit-transform: scale(0.4);
+                        transform: scale(0.4);
+            }
+
         </style>
         <img src="../images/project_logo.png" style="height: 10%; position: fixed; z-index: 3;">
         <div id="wrapper">
             <div id="kakao_map" class="map_div"></div>
             <div id="filter_box">
-                <h1 style="color: white;">연령</h1><br>
+                <h style="color: white;">연령</h><br>
+                <h id="age_show" style="color: white;">20대</h>
                 <input id="age_range_slider" type="range" min="20" max="60" step="10" value="20">
-                <h1 style="color: white;">성별</h1><br>
-                <h1 style="color: white;">노인</h1><br>
-                <h1 style="color: white;">반려동물</h1><br>
-                <h1 style="color: white;">활동 반경</h1><br>
+                <h style="color: white;">성별</h><br>
+                    <label class="radio">
+                        <input type="radio" name="r" id="male_button" value="male" checked>
+                        <span style="color:white;">남성</span>
+                    </label>
+                    <label class="radio">
+                        <input type="radio" name="r" id="female_button" value="female">
+                        <span style="color:white;">여성</span>
+                    </label>
+                
+                <h style="color: white;">노인</h><br>
+                <h style="color: white;">반려동물</h><br>
+                <h style="color: white;">활동 반경</h><br>
                 <input id="active_range_slider" type="range" min="1" max="3" step="0.5" value="3">
             </div>
         </div>
         <script>
             $('input[type="range"]').rangeslider({polyfill: false});
+            $('#age_range_slider').change(function(){
+                $("#age_show").html("<h>" + $('#age_range_slider').val() + "대</h>");
+            })
             //$('#age_range_slider').rangeslider({polyfill: false});
             var container = document.getElementById("kakao_map");
             var options = {
