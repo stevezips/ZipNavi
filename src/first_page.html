@@ -312,17 +312,7 @@
                 });
             }
             function openChildWindow(){
-                lf=$("input:radio[name=lifeForm]:checked").val();
-                tf=$("input:radio[name=tradeForm]:checked").val();
-                tfvp=$("#valuePurchase").val();
-                tfvm=$("#valueMonth").val();
-                tfvd=$("#valueDeposit").val();
-                aig=$("input:radio[name=gender]:checked").val();
-                aia=$("#aiAge").val();
-                aie=$("input:radio[name=old]:checked").val();
-                aid=$("input:radio[name=dog]:checked").val();
-                window.open("win_ob1_test.html?x=" + coordX + "&y=" + coordY + "&lf=" + lf + "&tf=" + tf + "&tfvp=" + tfvp + 
-                "&tfvm=" + tfvm + "&tfvd=" + tfvd + "&aig=" + aig + "&aia=" + aia + "&aie=" + aie + "&aid=" + aid, '_self');
+                window.open("zipnavi_first_page.html?x=" + coordX + "&y=" + coordY, '_self');
             }
         </script>
     </body>
