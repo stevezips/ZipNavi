@@ -36,6 +36,7 @@
                 width: 400px;
                 height: 600px;
                 background: #131313;
+                opacity: 0.9;
                 margin-right: 50px;
                 float: right;
                 border-radius: 5%;
@@ -46,7 +47,7 @@
             }
             .rangeslider--horizontal {
                 height: 15px;
-                width: 360px;
+                width: 300px;
                 margin-left: 20px;
                 margin-right: 20px;
             }
@@ -127,36 +128,128 @@
                 -webkit-transform: scale(0.4);
                         transform: scale(0.4);
             }
+            a {
+                -webkit-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+                -moz-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+                -ms-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+                -o-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+                transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+                display: block;
+                margin: 20px auto;
+                max-width: 180px;
+                text-decoration: none;
+                border-radius: 4px;
+                padding: 20px 30px;
+            }
 
+            a.button {
+                color: rgba(255, 255, 255, 0.85);
+                box-shadow: white 0 0px 0px 2px inset;
+            }
+
+            a.button:hover {
+                color: rgba(255, 255, 255, 0.85);
+                box-shadow: #007ac3 0 0px 0px 40px inset;
+            }
         </style>
         <img src="../images/project_logo.png" style="height: 10%; position: fixed; z-index: 3;">
         <div id="wrapper">
             <div id="kakao_map" class="map_div"></div>
             <div id="filter_box">
-                <h style="color: white;">연령</h><br>
-                <h id="age_show" style="color: white;">20대</h>
-                <input id="age_range_slider" type="range" min="20" max="60" step="10" value="20">
-                <h style="color: white;">성별</h><br>
+                <div style="margin-top: 50px;">
+                    <h style="color: white; font-weight: bold; font-size: 20px;">연령</h><br>
+                </div>
+                <div style="display: flex; margin-top: 10px;">
+                    <input id="age_range_slider" type="range" min="20" max="60" step="10" value="20">
+                    <h id="age_show" style="color: white;">20대</h>
+                </div>
+                <div style="margin-top: 25px;">
+                    <h style="color: white; font-weight: bold; font-size: 20px;">성별</h><br>
+                </div>
+                <div style="display: flex; justify-content: center;">
                     <label class="radio">
                         <input type="radio" name="r" id="male_button" value="male" checked>
-                        <span style="color:white;">남성</span>
+                        <span style="color:white; margin-right: 20px;">남성</span>
                     </label>
                     <label class="radio">
                         <input type="radio" name="r" id="female_button" value="female">
                         <span style="color:white;">여성</span>
                     </label>
-                
-                <h style="color: white;">노인</h><br>
-                <h style="color: white;">반려동물</h><br>
-                <h style="color: white;">활동 반경</h><br>
-                <input id="active_range_slider" type="range" min="1" max="3" step="0.5" value="3">
+                </div>
+                <div style="margin-top: 25px;">
+                    <h style="color: white; font-weight: bold; font-size: 20px;">노인</h><br>
+                </div>
+                <div style="display: flex; justify-content: center;">
+                    <label class="radio">
+                        <input type="radio" name="r1" id="old_yes" value="yes" checked>
+                        <span style="color:white; margin-right: 20px;">있음</span>
+                    </label>
+                    <label class="radio">
+                        <input type="radio" name="r1" id="old_no" value="no">
+                        <span style="color:white;">없음</span>
+                    </label>
+                </div>
+                <div style="margin-top: 25px;">
+                    <h style="color: white; font-weight: bold; font-size: 20px;">반려동물</h><br>
+                </div>
+                <div style="display: flex; justify-content: center;">
+                    <label class="radio">
+                        <input type="radio" name="r2" id="dog_yes" value="yes" checked>
+                        <span style="color:white; margin-right: 20px;">있음</span>
+                    </label>
+                    <label class="radio">
+                        <input type="radio" name="r2" id="dog_no" value="no">
+                        <span style="color:white;">없음</span>
+                    </label>
+                </div>
+                <div style="margin-top: 25px;">
+                    <h style="color: white; font-weight: bold; font-size: 20px;">활동 반경</h><br>
+                </div>
+                <div style="display: flex; margin-top: 10px;">
+                    <input id="active_range_slider" type="range" min="0.5" max="3" step="0.5" value="3">
+                    <h id="active_show" style="color: white;">3km</h>
+                </div>
+                <div>
+                    <a href="#" class="button">검색해보기</a>
+                </div>
             </div>
         </div>
         <script>
+            var circle;
             $('input[type="range"]').rangeslider({polyfill: false});
-            $('#age_range_slider').change(function(){
+
+            $('#age_range_slider').on('input', function(){
                 $("#age_show").html("<h>" + $('#age_range_slider').val() + "대</h>");
             })
+
+            $('#active_range_slider').on('input', function(){
+                $("#active_show").html("<h>" + $('#active_range_slider').val() + "km</h>");
+                circle.setMap(null);
+                circle = new kakao.maps.Circle({
+                    center : new kakao.maps.LatLng(33.450701, 126.570667),  // 원의 중심좌표 입니다 
+                    radius: $('#active_range_slider').val() * 1000, // 미터 단위의 원의 반지름입니다 
+                    strokeWeight: 3, // 선의 두께입니다 
+                    strokeColor: '#007ac3', // 선의 색깔입니다
+                    strokeOpacity: 1, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
+                    strokeStyle: 'dashed', // 선의 스타일 입니다
+                    fillColor: '#CFE7FF', // 채우기 색깔입니다
+                    fillOpacity: 0.7  // 채우기 불투명도 입니다   
+                });
+                circle.setMap(map);
+            })
+            circle = new kakao.maps.Circle({
+                center : new kakao.maps.LatLng(33.450701, 126.570667),  // 원의 중심좌표 입니다 
+                radius: 3000, // 미터 단위의 원의 반지름입니다 
+                strokeWeight: 3, // 선의 두께입니다 
+                strokeColor: '#007ac3', // 선의 색깔입니다
+                strokeOpacity: 1, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
+                strokeStyle: 'dashed', // 선의 스타일 입니다
+                fillColor: '#CFE7FF', // 채우기 색깔입니다
+                fillOpacity: 0.7  // 채우기 불투명도 입니다   
+            });
+            window.onload = function(){
+                circle.setMap(map);
+            };
             //$('#age_range_slider').rangeslider({polyfill: false});
             var container = document.getElementById("kakao_map");
             var options = {
