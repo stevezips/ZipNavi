@@ -1,0 +1,320 @@
+<HTML:5>
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>ZIPFUND FIRST PAGE</title>
+        <script src="../js/jquery.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/rangeslider.js/2.3.2/rangeslider.css">
+    </head>
+    <body style="background-color: #474747; overflow:hidden;">
+        <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
+        <script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=fb926e363d9a87e9712ed240cb75a7b0&libraries=services"></script>
+        <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=fb926e363d9a87e9712ed240cb75a7b0"></script>
+        <script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=fb926e363d9a87e9712ed240cb75a7b0&libraries=services"></script>
+        <script type="text/javascript" src="../rangeslider.js-2.3.0/rangeslider.min.js"></script>
+        <style>
+            .address_search{
+                font-size: 20px;
+                font-weight: bold;
+                border: #007ac3 5px solid; 
+                text-align: left; 
+                padding-left: 10px; 
+                margin-right: 10px;
+                vertical-align: middle; 
+                width: 600px; height: 50px;
+            }
+            #kakao_map{
+                position: absolute;
+                width: 100%;
+                height: 100%;
+                float: left;
+                z-index: 1;
+            }
+            #wrapper{
+                position: absolute;
+                width:100%;
+                height:100%;
+                text-align: center;    
+            }
+            #filter_box{
+                position: relative;
+                top: 50%;
+                margin-top: -300px;
+                z-index: 2;
+                width: 400px;
+                height: 600px;
+                background: #131313;
+                opacity: 0.9;
+                margin-right: 50px;
+                float: right;
+                border-radius: 5%;
+            }
+            .age_range_slider{
+                margin-left: 20px;
+                margin-right: 20px;
+            }
+            .rangeslider--horizontal {
+                height: 15px;
+                width: 300px;
+                margin-left: 20px;
+                margin-right: 20px;
+            }
+            .rangeslider__fill {
+                background: #007ac3;
+                position: absolute;
+            }
+            .rangeslider__handle {
+                width: 30px;
+                height: 30px;
+            }
+            .rangeslider__handle:after {
+                width: 15px;
+                height: 15px;
+            }
+            .radio {
+                margin: 16px 0;
+                display: block;
+                cursor: pointer;
+            }
+            .radio input {
+                display: none;
+            }
+            .radio input + span {
+                line-height: 22px;
+                height: 22px;
+                padding-left: 22px;
+                position: relative;
+            }
+            .radio input + span:not(:empty) {
+                padding-left: 30px;
+            }
+            .radio input + span:before, .radio input + span:after {
+                content: '';
+                width: 22px;
+                height: 22px;
+                display: block;
+                border-radius: 50%;
+                left: 0;
+                top: 0;
+                position: absolute;
+            }
+            .radio input + span:before {
+                background: #D1D7E3;
+                transition: background 0.2s ease, -webkit-transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 2);
+                transition: background 0.2s ease, transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 2);
+                transition: background 0.2s ease, transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 2), -webkit-transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 2);
+            }
+            .radio input + span:after {
+                background: #fff;
+                -webkit-transform: scale(0.78);
+                        transform: scale(0.78);
+                transition: -webkit-transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.4);
+                transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.4);
+                transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.4), -webkit-transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.4);
+            }
+            .radio input:checked + span:before {
+                -webkit-transform: scale(1.04);
+                        transform: scale(1.04);
+                background: #007ac3;
+            }
+            .radio input:checked + span:after {
+                -webkit-transform: scale(0.4);
+                        transform: scale(0.4);
+                transition: -webkit-transform .3s ease;
+                transition: transform .3s ease;
+                transition: transform .3s ease, -webkit-transform .3s ease;
+            }
+            .radio:hover input + span:before {
+                -webkit-transform: scale(0.92);
+                        transform: scale(0.92);
+            }
+            .radio:hover input + span:after {
+                -webkit-transform: scale(0.74);
+                        transform: scale(0.74);
+            }
+            .radio:hover input:checked + span:after {
+                -webkit-transform: scale(0.4);
+                        transform: scale(0.4);
+            }
+            a {
+                -webkit-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+                -moz-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+                -ms-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+                -o-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+                transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+                display: block;
+                margin: 20px auto;
+                max-width: 180px;
+                text-decoration: none;
+                border-radius: 4px;
+                padding: 20px 30px;
+            }
+
+            a.button {
+                color: rgba(255, 255, 255, 0.85);
+                box-shadow: white 0 0px 0px 2px inset;
+            }
+
+            a.button:hover {
+                color: rgba(255, 255, 255, 0.85);
+                box-shadow: #007ac3 0 0px 0px 40px inset;
+            }
+        </style>
+        <img src="../images/project_logo.png" style="height: 10%; position: fixed; z-index: 3;">
+        <div id="address_search_panel" style="position: fixed; margin-top: 30px; width: 100%; text-align: center; z-index: 3;">
+            <input type="text" id="sample_address" class="address_search" placeholder="찾고자 하는 지역의 '구', '동'을 입력하세요.">
+            <input type="image" onclick="SearchAddress()" src="../images/zoom_2.png" style="vertical-align: middle; width: 30px; height: 30px;" onfocus="this.blur()"><br>
+            <h1 id="txt_address" style="font-size: 18px; font-weight: bold; font-style: italic; color: #007ac3;"> </h1>
+        </div>
+        <div id="wrapper">
+            <div id="kakao_map" class="map_div"></div>
+            <div id="filter_box">
+                <div style="margin-top: 50px;">
+                    <h style="color: white; font-weight: bold; font-size: 20px;">연령</h><br>
+                </div>
+                <div style="display: flex; margin-top: 10px;">
+                    <input id="age_range_slider" type="range" min="20" max="60" step="10" value="20">
+                    <h id="age_show" style="color: white;">20대</h>
+                </div>
+                <div style="margin-top: 25px;">
+                    <h style="color: white; font-weight: bold; font-size: 20px;">성별</h><br>
+                </div>
+                <div style="display: flex; justify-content: center;">
+                    <label class="radio">
+                        <input type="radio" name="r" id="male_button" value="male" checked>
+                        <span style="color:white; margin-right: 20px;">남성</span>
+                    </label>
+                    <label class="radio">
+                        <input type="radio" name="r" id="female_button" value="female">
+                        <span style="color:white;">여성</span>
+                    </label>
+                </div>
+                <div style="margin-top: 25px;">
+                    <h style="color: white; font-weight: bold; font-size: 20px;">노인</h><br>
+                </div>
+                <div style="display: flex; justify-content: center;">
+                    <label class="radio">
+                        <input type="radio" name="r1" id="old_yes" value="yes" checked>
+                        <span style="color:white; margin-right: 20px;">있음</span>
+                    </label>
+                    <label class="radio">
+                        <input type="radio" name="r1" id="old_no" value="no">
+                        <span style="color:white;">없음</span>
+                    </label>
+                </div>
+                <div style="margin-top: 25px;">
+                    <h style="color: white; font-weight: bold; font-size: 20px;">반려동물</h><br>
+                </div>
+                <div style="display: flex; justify-content: center;">
+                    <label class="radio">
+                        <input type="radio" name="r2" id="dog_yes" value="yes" checked>
+                        <span style="color:white; margin-right: 20px;">있음</span>
+                    </label>
+                    <label class="radio">
+                        <input type="radio" name="r2" id="dog_no" value="no">
+                        <span style="color:white;">없음</span>
+                    </label>
+                </div>
+                <div style="margin-top: 25px;">
+                    <h style="color: white; font-weight: bold; font-size: 20px;">활동 반경</h><br>
+                </div>
+                <div style="display: flex; margin-top: 10px;">
+                    <input id="active_range_slider" type="range" min="0.5" max="3" step="0.5" value="3">
+                    <h id="active_show" style="color: white;">3km</h>
+                </div>
+                <div>
+                    <a href="#" class="button">검색해보기</a>
+                </div>
+            </div>
+        </div>
+        <script>
+            var circle;
+            var x, y;
+            $('input[type="range"]').rangeslider({polyfill: false});
+
+            $('#age_range_slider').on('input', function(){
+                $("#age_show").html("<h>" + $('#age_range_slider').val() + "대</h>");
+            })
+            $('#active_range_slider').on('input', function(){
+                $("#active_show").html("<h>" + $('#active_range_slider').val() + "km</h>");
+                circle.setMap(null);
+                if(x){
+                    circle = new kakao.maps.Circle({
+                    center : new kakao.maps.LatLng(y, x),  // 원의 중심좌표 입니다 
+                    radius: $('#active_range_slider').val() * 1000, // 미터 단위의 원의 반지름입니다 
+                    strokeWeight: 3, // 선의 두께입니다 
+                    strokeColor: '#007ac3', // 선의 색깔입니다
+                    strokeOpacity: 1, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
+                    strokeStyle: 'dashed', // 선의 스타일 입니다
+                    fillColor: '#CFE7FF', // 채우기 색깔입니다
+                    fillOpacity: 0.7  // 채우기 불투명도 입니다   
+                    });
+                }
+                else{
+                    circle = new kakao.maps.Circle({
+                    center : new kakao.maps.LatLng(33.450701, 126.570667),  // 원의 중심좌표 입니다 
+                    radius: $('#active_range_slider').val() * 1000, // 미터 단위의 원의 반지름입니다 
+                    strokeWeight: 3, // 선의 두께입니다 
+                    strokeColor: '#007ac3', // 선의 색깔입니다
+                    strokeOpacity: 1, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
+                    strokeStyle: 'dashed', // 선의 스타일 입니다
+                    fillColor: '#CFE7FF', // 채우기 색깔입니다
+                    fillOpacity: 0.7  // 채우기 불투명도 입니다   
+                    });
+                }
+                circle.setMap(map);
+            })
+            circle = new kakao.maps.Circle({
+                center : new kakao.maps.LatLng(33.450701, 126.570667),  // 원의 중심좌표 입니다 
+                radius: 3000, // 미터 단위의 원의 반지름입니다 
+                strokeWeight: 3, // 선의 두께입니다 
+                strokeColor: '#007ac3', // 선의 색깔입니다
+                strokeOpacity: 1, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
+                strokeStyle: 'dashed', // 선의 스타일 입니다
+                fillColor: '#CFE7FF', // 채우기 색깔입니다
+                fillOpacity: 0.7  // 채우기 불투명도 입니다   
+            });
+            window.onload = function(){
+                circle.setMap(map);
+            };
+            //$('#age_range_slider').rangeslider({polyfill: false});
+            var container = document.getElementById("kakao_map");
+            var options = {
+                center: new kakao.maps.LatLng(33.450701, 126.570667),
+                level: 3
+            };
+            var map = new kakao.maps.Map(container, options);
+            var geocoder = new daum.maps.services.Geocoder();
+            function SearchAddress(){
+                var addr = $("#sample_address").val();
+                geocoder.addressSearch(addr, function(results, status){
+                    if(status === kakao.maps.services.Status.OK){
+                        y = results[0].y;
+                        x = results[0].x;
+                        var moveLatLon = new kakao.maps.LatLng(y, x);
+                        map.panTo(moveLatLon);
+                        circle.setMap(null);
+                            circle = new kakao.maps.Circle({
+                            center : new kakao.maps.LatLng(y, x),  // 원의 중심좌표 입니다 
+                            radius: $('#active_range_slider').val() * 1000, // 미터 단위의 원의 반지름입니다 
+                            strokeWeight: 3, // 선의 두께입니다 
+                            strokeColor: '#007ac3', // 선의 색깔입니다
+                            strokeOpacity: 1, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
+                            strokeStyle: 'dashed', // 선의 스타일 입니다
+                            fillColor: '#CFE7FF', // 채우기 색깔입니다
+                            fillOpacity: 0.7  // 채우기 불투명도 입니다   
+                            });
+                        circle.setMap(map);
+                    }
+                    else{
+                        $("#txt_address").html("<h>" + "결과를 찾지 못했습니다" + "</h>");
+                    }
+                });
+            }
+        </script>
+    </body>
+    </html>
+</HTML:5>
