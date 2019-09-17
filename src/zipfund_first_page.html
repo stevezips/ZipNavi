@@ -309,6 +309,40 @@
         </div>
         <script>
             var circle;
+            search = window.location.search;
+            getData = _GET(search);
+            var x, y;
+            $.ajax({
+                    url: "http://admin.zipfund.co/api/address/apartment_info/" + getData.info,
+                    contentType: "application/json",
+                    dataType: 'json',
+                    success: function(result){
+                        x = result.map_info.x;
+                        y = result.map_info.y;
+                        circle = new kakao.maps.Circle({
+                        center : new kakao.maps.LatLng(y, x),  // 원의 중심좌표 입니다 
+                        radius: 3000, // 미터 단위의 원의 반지름입니다 
+                        strokeWeight: 3, // 선의 두께입니다 
+                        strokeColor: '#007ac3', // 선의 색깔입니다
+                        strokeOpacity: 1, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
+                        strokeStyle: 'dashed', // 선의 스타일 입니다
+                        fillColor: '#CFE7FF', // 채우기 색깔입니다
+                        fillOpacity: 0.7  // 채우기 불투명도 입니다   
+                        });
+                    }
+                });
+
+            function _GET(search){
+                var obj = {};
+                var uri = decodeURI(search);
+                uri=uri.slice(1,uri.length);
+                var param = uri.split('&');
+                for(var i = 0; i < param.length; i++){
+                    var devide = param[i].split('=');
+                    obj[devide[0]] = devide[1];
+                }
+                return obj;
+            }
             $('input[type="range"]').rangeslider({polyfill: false});
 
             $('#age_range_slider').on('input', function(){
@@ -319,7 +353,7 @@
                 $("#active_show").html("<h>" + $('#active_range_slider').val() + "km</h>");
                 circle.setMap(null);
                 circle = new kakao.maps.Circle({
-                    center : new kakao.maps.LatLng(33.450701, 126.570667),  // 원의 중심좌표 입니다 
+                    center : new kakao.maps.LatLng(y, x),  // 원의 중심좌표 입니다 
                     radius: $('#active_range_slider').val() * 1000, // 미터 단위의 원의 반지름입니다 
                     strokeWeight: 3, // 선의 두께입니다 
                     strokeColor: '#007ac3', // 선의 색깔입니다
@@ -330,19 +364,25 @@
                 });
                 circle.setMap(map);
             })
-            circle = new kakao.maps.Circle({
-                center : new kakao.maps.LatLng(33.450701, 126.570667),  // 원의 중심좌표 입니다 
-                radius: 3000, // 미터 단위의 원의 반지름입니다 
-                strokeWeight: 3, // 선의 두께입니다 
-                strokeColor: '#007ac3', // 선의 색깔입니다
-                strokeOpacity: 1, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
-                strokeStyle: 'dashed', // 선의 스타일 입니다
-                fillColor: '#CFE7FF', // 채우기 색깔입니다
-                fillOpacity: 0.7  // 채우기 불투명도 입니다   
-            });
+            
             window.onload = function(){
-                circle.setMap(map);
+                this.circle.setMap(map);
+                console.log("on load");
+                $.ajax({
+                    url: "http://admin.zipfund.co/api/address/apartment_info/" + getData.info,
+                    contentType: "application/json",
+                    dataType: 'json',
+                    success: function(result){
+                        x = result.map_info.x;
+                        y = result.map_info.y;
+                    }
+                });
+                panTo();
             };
+            function panTo() {
+                var moveLatLon = new kakao.maps.LatLng(y, x);
+                map.panTo(moveLatLon);            
+            }
             //$('#age_range_slider').rangeslider({polyfill: false});
             var container = document.getElementById("kakao_map");
             var options = {

@@ -262,11 +262,11 @@
                 </div>
                 <div style="display: flex; justify-content: center;">
                     <label class="radio">
-                        <input type="radio" name="r" id="male_button" value="male" checked>
+                        <input type="radio" name="gender_radio" id="male_button" value="male" checked>
                         <span style="color:white; margin-right: 20px;">남성</span>
                     </label>
                     <label class="radio">
-                        <input type="radio" name="r" id="female_button" value="female">
+                        <input type="radio" name="gender_radio" id="female_button" value="female">
                         <span style="color:white;">여성</span>
                     </label>
                 </div>
@@ -275,11 +275,11 @@
                 </div>
                 <div style="display: flex; justify-content: center;">
                     <label class="radio">
-                        <input type="radio" name="r1" id="old_yes" value="yes" checked>
+                        <input type="radio" name="old_radio" id="old_yes" value="yes" checked>
                         <span style="color:white; margin-right: 20px;">있음</span>
                     </label>
                     <label class="radio">
-                        <input type="radio" name="r1" id="old_no" value="no">
+                        <input type="radio" name="old_radio" id="old_no" value="no">
                         <span style="color:white;">없음</span>
                     </label>
                 </div>
@@ -303,11 +303,11 @@
                 </div>
                 <div style="display: flex; justify-content: center;">
                     <label class="radio">
-                        <input type="radio" name="r2" id="dog_yes" value="yes" checked>
+                        <input type="radio" name="dog_radio" id="dog_yes" value="yes" checked>
                         <span style="color:white; margin-right: 20px;">있음</span>
                     </label>
                     <label class="radio">
-                        <input type="radio" name="r2" id="dog_no" value="no">
+                        <input type="radio" name="dog_radio" id="dog_no" value="no">
                         <span style="color:white;">없음</span>
                     </label>
                 </div>
@@ -319,15 +319,14 @@
                     <h id="active_show" style="color: white;">3km</h>
                 </div>
                 <div>
-                    <a href="#" class="button">검색해보기</a>
+                    <a href="#" class="button" onclick="searchMyArea()">검색해보기</a>
                 </div>
             </div>
         </div>
         <script>
             var circle;
-            var x, y;
+            var x, y = 0;
             var addr;
-            
             $('input[type="range"]').rangeslider({polyfill: false});
 
             $('#age_range_slider').on('input', function(){
@@ -369,6 +368,8 @@
             window.onload = function(){
                 search = window.location.search;
                 getData = _GET(search);
+                y = getData.y;
+                x = getData.x;
                 console.log(getData.y, getData.x);
                 markerPosition = new kakao.maps.LatLng(getData.y, getData.x);
                 panTo();
@@ -425,11 +426,22 @@
                 var moveLatLon = new kakao.maps.LatLng(getData.y, getData.x);
                 map.panTo(moveLatLon);            
             }
-            /*
+            
             function searchMyArea(){
-                window.open("zipnavi_first_page.html?x=")
+                var age = $('#age_range_slider').val();
+                var gender = $("input:radio[name=gender_radio]:checked").val();
+                var old = $("input:radio[name=old_radio]:checked").val();
+                var high = $("input:checkbox[id=check_high]").is(":checked")==true;
+                var midd = $("input:checkbox[id=check_middle]").is(":checked")==true;
+                var elem = $("input:checkbox[id=check_elementary]").is(":checked")==true; 
+                var kind = $("input:checkbox[id=check_child]").is(":checked")==true;
+                var dog = $("input:radio[name=dog_radio]:checked").val();
+                var active = $('#active_range_slider').val();
+                //console.log(x, y, age, gender, old, high, midd, elem, kind, dog, active);
+                window.open("zipnavi_second_page.html?x=" + x + "&y=" + y + "&age=" + age + "&gender=" + gender + "&old=" + old + 
+                "&high=" + high + "&midd=" + midd + "&elem=" + elem + "&kind=" + kind + "&dog=" + dog + "&active=" + active, '_self');
             }
-            */
+            
         </script>
     </body>
     </html>

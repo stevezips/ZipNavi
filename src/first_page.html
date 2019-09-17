@@ -278,17 +278,17 @@
                 $("html body").animate({scrollTop:offset.top}, 500);
             }
             function SearchApartment(){
-                var value = $('#select_area_ho').val();
-                $.post("http://test-apis.zipdata.co/search/nearby/", 
-                { 
-                    "ho" : value, 
-                    "key" : "JOhy3OOrJMUVOTlipuloR6v4FA7F0FDs", 
-                    "search_range" : 500, 
-                    "max_error" : 10
-                }, 
-                function(data){
-                    console.log("x = " + data.map.x + ", y = " + data.map.y);
-                },"json");
+                var value = $('#select_area_meter').val();
+                console.log(value);
+                $.ajax({
+                    url: "http://admin.zipfund.co/api/address/apartment_info/" + $('#select_area_meter').val(),
+                    contentType: "application/json",
+                    dataType: 'json',
+                    success: function(result){
+                        window.open("zipfund_first_page.html?info=" + value, '_self');
+                        console.log(result.map_info.x, result.map_info.y);
+                    }
+                });
             }
             function SearchAddress(){
                 var addr = $("#sample_address").val();
