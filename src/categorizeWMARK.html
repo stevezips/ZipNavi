@@ -133,9 +133,8 @@ function searchPlaces() {
     // 지도에 표시되고 있는 마커를 제거합니다
     removeMarker();
     
-    if(currCategory == 'PM9'){
-        ps.categorySearch('HP8', placesSearchCB, {useMapBounds:true});
-        
+    if(currCategory == 'HP8'){
+        ps.categorySearch('PM9', placesSearchCB, {useMapBounds:true});    
     }
     else if(currCategory == 'SC4'){
         ps.categorySearch('PS3', placesSearchCB, {useMapBounds:true});
@@ -160,7 +159,9 @@ function placesSearchCB(data, status, pagination) {
         displayPlaces(data);
         // console.log(data);
         for(var i = 0; i < data.length; i++){
-            console.log(data.length);
+            console.log(currCategory + " " +data.length);
+            console.log(data[i].category_name);
+            console.log(data[i].address_name);
         }  
         console.log(data);
     } else if (status === kakao.maps.services.Status.ZERO_RESULT) {
@@ -176,8 +177,6 @@ function displayPlaces(places) {
     // 몇번째 카테고리가 선택되어 있는지 얻어옵니다
     // 이 순서는 스프라이트 이미지에서의 위치를 계산하는데 사용됩니다
     var order = document.getElementById(currCategory).getAttribute('data-order');
-
-    
 
     for ( var i=0; i<places.length; i++ ) {
             // 마커를 생성하고 지도에 표시합니다
