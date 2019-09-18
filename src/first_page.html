@@ -46,7 +46,7 @@
         </style>
         <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
         <script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=fb926e363d9a87e9712ed240cb75a7b0&libraries=services"></script>
-        <main id="container">   //브라우저 전체가 CONTAINER
+        <main id="container">
             <section id="main_screen">
                 <div id="team_logo_panel" style="width:100%; height:10%; text-align: left; position: fixed;" >
                     <input type="image" src="../images/project_logo.png" style="height:100%;" onclick="moveTop()">
@@ -55,16 +55,10 @@
                     <input type="image" src="../images/team_logo.png" style="height: 80%;" disabled="true">
                 </div>
                 <div id="search_method_panel" style="margin-top: 0px; width: 100%; height:10%; text-align: center;">
-                    /*
-                    우리집
-                    */
                     <div id="check_my_house_panel" style="width: 100%; height:100%; text-align: center; float: top;">
                         <input id="check_my_house" type="image" src="../images/check_my_house.png" onfocus="this.blur()" onclick="moveMine()"
                         onmouseover="this.src='../images/check_my_house_white.png'" onmouseout="this.src='../images/check_my_house.png'">
                     </div>
-                    /*
-                    다른 동네
-                    */
                     <div id="check_other_house_panel" style="width: 100%; height:100%; text-align: center; float: bottom;">
                         <input id="check_others_house" type="image" src="../images/check_others_house.png" onfocus="this.blur()" onclick="moveOthers()"
                         onmouseover="this.src='../images/check_others_house_white.png'" onmouseout="this.src='../images/check_others_house.png'">
@@ -85,14 +79,8 @@
                 <div id="first_screen_fourth_line"style="height:10%; text-align:center;">
                     <input type="image" src="../images/first_screen_fourth_line.png"disabled="true">
                 </div>
-                /*
-                zipfund 처음으로 쓰는 부분
-                */
                 <div id="zipfund_search_area" style="height: 20%; text-align: center;"> 
                     <select id="select_area_province" class="select_area_box">
-                        /*
-                        value값으로 활용함. network>preview 에서 볼 수 있음
-                        */
                         <option value disabled class selected="selected">시/도 선택</option>]   
                         <option label="서울특별시" value="11">서울특별시</option>
                         <option label="부산광역시" value="26">부산광역시</option>
