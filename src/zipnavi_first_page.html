@@ -41,10 +41,10 @@
             #filter_box{
                 position: relative;
                 top: 50%;
-                margin-top: -400px;
+                margin-top: -300px;
                 z-index: 2;
                 width: 400px;
-                height: 800px;
+                height: 600px;
                 background: #131313;
                 opacity: 0.9;
                 margin-right: 50px;
@@ -161,84 +161,6 @@
                 color: rgba(255, 255, 255, 0.85);
                 box-shadow: #007ac3 0 0px 0px 40px inset;
             }
-            .checks {position: relative;}
-
-            .checks input[type="checkbox"] {  /* 실제 체크박스는 화면에서 숨김 */
-            position: absolute;
-            width: 1px;
-            height: 1px;
-            padding: 0;
-            margin: -1px;
-            overflow: hidden;
-            clip:rect(0,0,0,0);
-            border: 0
-            }
-            .checks input[type="checkbox"] + label {
-            display: inline-block;
-            position: relative;
-            cursor: pointer;
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
-            }
-            .checks input[type="checkbox"] + label:before {  /* 가짜 체크박스 */
-            content: ' ';
-            display: inline-block;
-            width: 21px;  /* 체크박스의 너비를 지정 */
-            height: 21px;  /* 체크박스의 높이를 지정 */
-            line-height: 21px; /* 세로정렬을 위해 높이값과 일치 */
-            margin: -2px 8px 0 0;
-            text-align: center; 
-            vertical-align: middle;
-            background: #fafafa;
-            border: 1px solid #cacece;
-            border-radius : 3px;
-            box-shadow: 0px 1px 2px rgba(0,0,0,0.05), inset 0px -15px 10px -12px rgba(0,0,0,0.05);
-            }
-
-            .checks.etrans input[type="checkbox"] + label {
-            padding-left: 30px;
-            }
-            .checks.etrans input[type="checkbox"] + label:before {
-            position: absolute;
-            left: 0;
-            top: 0;
-            margin-top: 0;
-            opacity: .6;
-            box-shadow: none;
-            border-color: #6cc0e5;
-            -webkit-transition: all .12s, border-color .08s;
-            transition: all .12s, border-color .08s;
-            }
-
-            .checks.etrans input[type="checkbox"]:checked + label:before {
-            position: absolute;
-            content: "";
-            width: 10px;
-            top: -5px;
-            left: 5px;
-            border-radius: 0;
-            opacity:1; 
-            background: transparent;
-            border-color:transparent #6cc0e5 #6cc0e5 transparent;
-            border-top-color:transparent;
-            border-left-color:transparent;
-            -ms-transform:rotate(45deg);
-            -webkit-transform:rotate(45deg);
-            transform:rotate(45deg);
-            }
-
-            .no-csstransforms .checks.etrans input[type="checkbox"]:checked + label:before {
-            /*content:"\2713";*/
-            content: "\2714";
-            top: 0;
-            left: 0;
-            width: 21px;
-            line-height: 21px;
-            color: #6cc0e5;
-            text-align: center;
-            border: 1px solid #6cc0e5;
-            }
         </style>
         <img src="../images/project_logo.png" style="height: 10%; position: fixed; z-index: 3;">
         <div id="address_search_panel" style="position: fixed; margin-top: 30px; width: 100%; text-align: center; z-index: 3;">
@@ -283,21 +205,6 @@
                     </label>
                 </div>
                 <div style="margin-top: 25px;">
-                    <h style="color: white; font-weight: bold; font-size: 20px;">아이</h><br>
-                </div>
-                <div style="display: flex; justify-content: center;">
-                    <div class="checks etrans" style="margin-top: 10px;">
-                        <input type="checkbox" id="check_high"> 
-                        <label for="check_high" style="color: white;">고등학생</label> 
-                        <input type="checkbox" id="check_middle"> 
-                        <label for="check_middle" style="color: white;">중학생</label>
-                        <input type="checkbox" id="check_elementary"> 
-                        <label for="check_elementary" style="color: white;">초등학생</label>
-                        <input type="checkbox" id="check_child"> 
-                        <label for="check_child" style="color: white;">유아</label>
-                    </div>
-                </div>
-                <div style="margin-top: 25px;">
                     <h style="color: white; font-weight: bold; font-size: 20px;">반려동물</h><br>
                 </div>
                 <div style="display: flex; justify-content: center;">
@@ -324,6 +231,14 @@
         </div>
         <script>
             var circle;
+<<<<<<< HEAD
+<<<<<<< HEAD
+            var x, y;
+=======
+            var x, y = 0;
+            var addr;
+>>>>>>> 385867294749d2db1a9880d002a81b1fa4caf1f2
+=======
             var x, y;
             var addr;
             var address_name;
@@ -385,6 +300,7 @@
                 circle.setMap(map);
             });
 
+>>>>>>> 174ddce1a49f9b2aa645dfe3199407ec80d62e24
             $('input[type="range"]').rangeslider({polyfill: false});
 
             $('#age_range_slider').on('input', function(){
@@ -424,13 +340,21 @@
             })
             
             window.onload = function(){
+<<<<<<< HEAD
+                search = window.location.search;
+                getData = _GET(search);
+                y = getData.y;
+                x = getData.x;
+                console.log(getData.y, getData.x);
+=======
+>>>>>>> 174ddce1a49f9b2aa645dfe3199407ec80d62e24
                 panTo();
                 this.circle.setMap(map);
                 this.marker.setMap(map);
                 searchAddrFromCoords(new kakao.maps.LatLng(y,x), displayCenterInfo);
             };  
             
-            function _GET(search){
+            function _GET(search){  //url에서 
                 var obj = {};
                 var uri = decodeURI(search);
                 uri=uri.slice(1,uri.length);
@@ -473,6 +397,10 @@
                 var moveLatLon = new kakao.maps.LatLng(getData.y, getData.x);
                 map.panTo(moveLatLon);            
             }
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+=======
 
             function searchAddrFromCoords(coords, callback) {
                 // 좌표로 행정동 주소 정보를 요청합니다
@@ -494,6 +422,7 @@
                     }
                 }    
             }
+>>>>>>> 174ddce1a49f9b2aa645dfe3199407ec80d62e24
             
             function searchMyArea(){
                 var age = $('#age_range_slider').val();
@@ -511,6 +440,7 @@
                 "&high=" + high + "&midd=" + midd + "&elem=" + elem + "&kind=" + kind + "&dog=" + dog + "&active=" + active + "&addr=" + address_name, '_self');
             }
             
+>>>>>>> 385867294749d2db1a9880d002a81b1fa4caf1f2
         </script>
     </body>
     </html>

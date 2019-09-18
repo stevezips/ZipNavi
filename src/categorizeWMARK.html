@@ -7,33 +7,127 @@
 .map_wrap, .map_wrap * {margin:0; padding:0;font-family:'Malgun Gothic',dotum,'돋움',sans-serif;font-size:12px;}
 .map_wrap {position:relative;width:100%;height:350px;}
 #category {position:absolute;top:10px;left:10px;border-radius: 5px; border:1px solid #909090;box-shadow: 0 1px 1px rgba(0, 0, 0, 0.4);background: #fff;overflow: hidden;z-index: 2;}
-#category li {float:left;list-style: none;width:50px;px;border-right:1px solid #acacac;padding:6px 0;text-align: center; cursor: pointer;}
-#category li.on {background: #eee;}
-#category li:hover {background: #ffe6e6;border-left:1px solid #acacac;margin-left: -1px;}
-#category li:last-child{margin-right:0;border-right:0;}
-#category li span {display: block;margin:0 auto 3px;width:27px;height: 28px;}
+#category li {
+    float:left;
+    list-style: none;
+    width:50px;px;
+    border-right:1px 
+    solid #acacac;
+    padding:6px 0;
+    text-align: center; 
+    cursor: pointer;
+    }
+#category li.on {
+    background: #eee;
+    }
+#category li:hover {
+    background: #ffe6e6;
+    border-left:1px solid #acacac;
+    margin-left: -1px;
+    }
+#category li:last-child{
+    margin-right:0;
+    border-right:0;
+    }
+#category li span {
+    display: block;
+    margin:0 auto 3px;
+    width:27px;
+    height: 28px;
+    }
 
-#category li .category_bg {background:url(http://t1.daumcdn.net/localimg/localimages/07/mapapidoc/places_category.png) no-repeat;}
+#category li .category_bg {
+    background:url(http://t1.daumcdn.net/localimg/localimages/07/mapapidoc/places_category.png) no-repeat;
+    }
 /* #category li .category_bg {background-image.url(logo.png)} */
-#category li .hospital {background-position: -10px 0;}
-#category li .school {background-position: -10px -36px;}
-#category li .mart {background-position: -10px -72px;}
-#category li .food {background-position: -10px -108px;} 
-#category li .public {background-position: -10px -144px;}
-#category li .metro {background-position: -10px -180px;}
-#category li .culture {background-position: -10px -216px;}
-#category li .travel {background-position : -10px -252px;}
-#category li.on .category_bg {background-position-x:-46px;}
-.placeinfo_wrap {position:absolute;bottom:28px;left:-150px;width:300px;}
-.placeinfo {position:relative;width:100%;border-radius:6px;border: 1px solid #ccc;border-bottom:2px solid #ddd;padding-bottom: 10px;background: #fff;}
-.placeinfo:nth-of-type(n) {border:0; box-shadow:0px 1px 2px #888;}
-.placeinfo_wrap .after {content:'';position:relative;margin-left:-12px;left:50%;width:22px;height:12px;background:url('http://t1.daumcdn.net/localimg/localimages/07/mapapidoc/vertex_white.png')}
-.placeinfo a, .placeinfo a:hover, .placeinfo a:active{color:#fff;text-decoration: none;}
-.placeinfo a, .placeinfo span {display: block;text-overflow: ellipsis;overflow: hidden;white-space: nowrap;}
-.placeinfo span {margin:5px 5px 0 5px;cursor: default;font-size:13px;}
-.placeinfo .title {font-weight: bold; font-size:14px;border-radius: 6px 6px 0 0;margin: -1px -1px 0 -1px;padding:10px; color: #fff;background: #d95050;background: #d95050 url(http://t1.daumcdn.net/localimg/localimages/07/mapapidoc/arrow_white.png) no-repeat right 14px center;}
-.placeinfo .tel {color:#0f7833;}
-.placeinfo .jibun {color:#999;font-size:11px;margin-top:0;}
+#category li .hospital {
+    background-position: -10px 0;
+    }
+#category li .school {
+    background-position: -10px -36px;
+    }
+#category li .mart {
+    background-position: -10px -72px;
+    }
+#category li .food {
+    background-position: -10px -108px;
+    } 
+#category li .public {
+    background-position: -10px -144px;
+    }
+#category li .metro {
+    background-position: -10px -180px;
+    }
+#category li .culture {
+    background-position: -10px -216px;
+    }
+#category li .travel {
+    background-position : -10px -252px;
+    }
+#category li.on .category_bg {
+    background-position-x:-46px;
+    }
+
+
+.placeinfo_wrap {
+    position:absolute;bottom:28px;left:-150px;width:300px;
+    }
+.placeinfo {
+    position:relative;
+    width:100%;
+    border-radius:6px;
+    border: 1px solid #ccc;
+    border-bottom:2px solid #ddd;
+    padding-bottom: 10px;
+    background: #fff;
+    }
+.placeinfo:nth-of-type(n) {
+    border:0; 
+    box-shadow:0px 1px 2px #888;
+    }
+.placeinfo_wrap .after {
+    content:'';
+    position:relative;
+    margin-left:-12px;
+    left:50%;
+    width:22px;
+    height:12px;
+    background:url('http://t1.daumcdn.net/localimg/localimages/07/mapapidoc/vertex_white.png')
+    }
+
+.placeinfo a, .placeinfo a:hover, .placeinfo a:active{
+    color:#fff;
+    text-decoration: none
+    ;}
+.placeinfo a, .placeinfo span {
+    display: block;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    }
+.placeinfo span {
+    margin:5px 5px 0 5px;
+    cursor: default;
+    font-size:13px;
+    }
+.placeinfo .title {
+    font-weight: bold; 
+    font-size:14px;
+    border-radius: 6px 6px 0 0;
+    margin: -1px -1px 0 -1px;
+    padding:10px;
+    color: #fff;
+    background: #d95050;
+    background: #d95050 url(http://t1.daumcdn.net/localimg/localimages/07/mapapidoc/arrow_white.png) no-repeat right 14px center;
+    }
+.placeinfo .tel {
+    color:#0f7833;
+    }
+.placeinfo .jibun {
+    color:#999;
+    font-size:11px;
+    margin-top:0;
+    }
 </style>
 </head>
 <body>
@@ -133,13 +227,14 @@ function searchPlaces() {
     // 지도에 표시되고 있는 마커를 제거합니다
     removeMarker();
     
-    if(currCategory == 'PM9'){
-        ps.categorySearch('HP8', placesSearchCB, {useMapBounds:true});
-        
+    if(currCategory == 'HP8'){
+        //약국제외
+        //ps.categorySearch('PM9', placesSearchCB, {useMapBounds:true}); 
     }
     else if(currCategory == 'SC4'){
         ps.categorySearch('PS3', placesSearchCB, {useMapBounds:true});
-        ps.categorySearch('AC5', placesSearchCB, {useMapBounds:true});
+        //학원제외
+        //ps.categorySearch('AC5', placesSearchCB, {useMapBounds:true});
     }
     else if(currCategory =='MT1'){
         ps.categorySearch('CS2', placesSearchCB, {useMapBounds:true});
@@ -157,11 +252,42 @@ function searchPlaces() {
 function placesSearchCB(data, status, pagination) {
     if (status === kakao.maps.services.Status.OK) {
         // 정상적으로 검색이 완료됐으면 지도에 마커를 표출합니다
-        displayPlaces(data);
-        // console.log(data);
+        // displayPlaces(data);
+        //data[i].category_name 등 해야 뜬다
+        //data.length는 개수
+        //data.category_group_code;
+        //data.category_name;
+        //data.x;
+
+        // categorizingDetailed();
         for(var i = 0; i < data.length; i++){
-            console.log(data.length);
-        }  
+            console.log(data[0].category_group_code);
+        }
+
+        
+        if(currCategory=='HP8'){
+            var temp=0;
+            for(var i = 0 ; i<data.length;i++){
+                if((data[i].category_name)=="의료,건강 > 병원 > 대학병원"){
+                    console.log(data[i].place_name + " 얘는" + "대학병원");
+                    temp+=1;
+                }
+            }
+            console.log(temp);
+        }
+        if(currCategory=='SC4'){
+            var temp = 0;
+            for(var i = 0 ; i<data.length;i++){
+                if((data[i].category_name)=="교육,학문 > 학교 > 고등학교"){
+                    console.log(data[i].place_name + " 얘는" + "고등학교");
+                    temp+=1;
+                }
+            console.log(temp);
+            }
+            
+        }
+        
+        
         console.log(data);
     } else if (status === kakao.maps.services.Status.ZERO_RESULT) {
         // 검색결과가 없는경우 해야할 처리가 있다면 이곳에 작성해 주세요
@@ -170,14 +296,23 @@ function placesSearchCB(data, status, pagination) {
     }
 }
 
+// function categorizingDetailed(){
+//     if(currCategory=='HP8'){
+//         ps.categorySearch('HP8', placesSearchCB, );
+//         for(var i = 0 ; i<data.length;i++){
+//             if((data[i].category_name)=="의료,건강 > 병원 > 대학병원"){
+//                 console.log("대학병원");
+//             }
+//         }
+//     }
+// }
+
 // 지도에 마커를 표출하는 함수입니다
 function displayPlaces(places) {
 
     // 몇번째 카테고리가 선택되어 있는지 얻어옵니다
     // 이 순서는 스프라이트 이미지에서의 위치를 계산하는데 사용됩니다
     var order = document.getElementById(currCategory).getAttribute('data-order');
-
-    
 
     for ( var i=0; i<places.length; i++ ) {
             // 마커를 생성하고 지도에 표시합니다
