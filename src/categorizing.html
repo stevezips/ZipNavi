@@ -10,7 +10,7 @@
             </p>
             <div id="map" style="width:100%;height:1000px;"></div>
 
-            <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=fb926e363d9a87e9712ed240cb75a7b0&libraries=services"></script>
+            <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=fb926e363d9a87e9712ed240cb75a7b0&libraries=services&total_count=1"></script>
             <script>
                 // 마커를 클릭하면 장소명을 표출할 인포윈도우 입니다
                 function category(){
@@ -60,16 +60,34 @@
                 // 관광명소와 숙박
                 codes[12].place_name_1='AT4';   // 관광명소
                 codes[13].place_name_1='AD5';   // 숙박
-            
+                var hospital = [];
+
+                
                 for(var i = 0; i < codes.length; i++){
-                    ps.categorySearch(codes[i].place_name_1, placeSearchCB, {useMapBounds:true});
-                    console.log(codes[i].place_name_1 + " " + codes[i].place_num);
+                    ps.categorySearch(codes[i].place_name_1, placeSearchCB, {
+                        page: 1, size: 15, location: new kakao.maps.LatLng(37.543012, 127.069104),
+                        radius: 500
+                    });
+                    ps.categorySearch(codes[i].place_name_1, placeSearchCB, {
+                        page: 2, size: 15, location: new kakao.maps.LatLng(37.543012, 127.069104),
+                        radius: 500
+                    });
+                    ps.categorySearch(codes[i].place_name_1, placeSearchCB, {
+                        page: 3, size: 15, location: new kakao.maps.LatLng(37.543012, 127.069104),
+                        radius: 500
+                    });
+                    //ps.categorySearch(codes[i].place_name_1, placeSearchCB, {useMapBounds:true});
+                    //console.log(codes[i].place_name_1 + " " + codes[i].place_num);
                 }
                 function placeSearchCB (data, status, pagination) {
                     console.log(data);
                     if (status === kakao.maps.services.Status.OK) {
                         for (var j=0; j<data.length; j++) {
                             displayMarker(data[j]);
+                            console.log(data[j].place_name);
+                            if(data[j].category_group_code == 'SW8' && !hospital.includes(data[j].place_name)){
+                                hospital.push(data[j].place_name);
+                            }
                         }
                         for(var i = 0; i < codes.length; i++){
                             if(data[0].category_group_code == codes[i].place_name_1){
@@ -94,15 +112,14 @@
                         infowindow.setContent('<div style="padding:5px;font-size:12px;">' + place.place_name + '</div>');
                         infowindow.open(map, marker);
                     });
-                    if(place.category_group_code == "PM9"){
-                        codes[1].place_num++;
-                    }
                 }
-                setTimeout(function(){
+                window.onload = function(){
                     for(var i = 0; i < codes.length; i++){
                         console.log(codes[i].place_name_1 + " " + codes[i].place_num);
+                        
                     }
-                }, 3000);
+                    console.log(hospital);
+                }
             </script>
         </body>
     </html>

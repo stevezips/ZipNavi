@@ -8,13 +8,24 @@
         <title>Third Page</title>
         <script src="../js/jquery.js"></script>
     </head>
-    <body style="background-color: #474747; overflow:hidden;">
+    <body style="background-color: #474747; overflow: hidden;">
+        <script src="https://code.highcharts.com/highcharts.js"></script>
+        <script src="https://code.highcharts.com/modules/exporting.js"></script>
+        <script src="https://code.highcharts.com/modules/export-data.js"></script>
         <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
         <script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=fb926e363d9a87e9712ed240cb75a7b0&libraries=services"></script>
         <style>
+            .container{
+                height: 100%;
+                display: flex;
+                overflow: auto;
+                overflow-y: scroll;
+                scroll-snap-type: y mandatory;
+            }
             #kakao_map{
-                width: 100%;
-                height: 400px;
+                margin-left: 5%;
+                width: 90%;
+                height: 500px;
                 z-index: 1;
             }
             #txt_address{
@@ -28,20 +39,35 @@
                 margin-left: -300px;
             }
             #first_page{
-                position:absolute;
-                margin-top: 10%;
-                height: 80%;
+                padding-top: 10%;
+                height:90%;
                 width: 100%;
             }
             #first_page_left{
                 width: 50%;
-                height: 100%;
+                height: 90%;
                 float: left;
             }
             #first_page_right{
                 width: 50%;
-                height: 100%;
+                height: 90%;
                 display:inline-block;
+                text-align: center;
+            }
+            #first_page_bottom{
+                height: 10%;
+                width:100%;
+                text-align: center;
+                float:top;
+            }
+            #first_page_chart{
+                margin-left: 10%;
+                width: 80%;
+                height: 80%;
+            }
+            #second_page_top{
+                text-align: center;
+                float:top;
             }
             .checks {position: relative;}
 
@@ -124,43 +150,82 @@
             .checks.etrans{
                 margin-top: 50px;
             }
+            .highcharts-background{
+                fill: #474747
+            }
+            tspan{
+                font-size: 20px;
+            }
         </style>
-        <img src="../images/project_logo.png" style="position:fixed; height: 10%; float: left;">
-        <div id="address_search_panel" style="position: absolute; height: 10%; width: 100%; text-align: center; z-index: 3;">
-            <h id="txt_address">주소가 들어갈 곳입니다</h>
-        </div>
-        <div id="first_page">
-            <div id="first_page_left">
-                <div id="kakao_map"></div>
-                <div style="display: flex; justify-content: center;">
-                    <div class="checks etrans" style="margin-top: 10px;">
-                        <input type="checkbox" id="check_medical">
-                        <label for="check_medical" style="margin-right: 20px; color: white; font-size: 21px; font-weight:bold;">의료시설</label>
-                        <input type="checkbox" id="check_school">
-                        <label for="check_school" style="margin-right: 20px; color: white; font-size: 21px; font-weight:bold;">교육시설</label>
-                        <input type="checkbox" id="check_market">
-                        <label for="check_market" style="margin-right: 20px; color: white; font-size: 21px; font-weight:bold;">마트 및 편의점</label>
-                        <input type="checkbox" id="check_restaurant">
-                        <label for="check_restaurant" style="margin-right: 20px; color: white; font-size: 21px; font-weight:bold;">음식점 및 카페</label><br><br>
-                        <input type="checkbox" id="check_public">
-                        <label for="check_public" style="margin-right: 20px; color: white; font-size: 21px; font-weight:bold;">공공시설</label>
-                        <input type="checkbox" id="check_subway">
-                        <label for="check_subway" style="margin-right: 40px; color: white; font-size: 21px; font-weight:bold;">지하철</label>
-                        <input type="checkbox" id="check_culture">
-                        <label for="check_culture" style="margin-right: 77px; color: white; font-size: 21px; font-weight:bold;">문화시설</label>
-                        <input type="checkbox" id="check_motel">
-                        <label for="check_motel" style="color: white; font-size: 21px; font-weight:bold;">관광명소 및 숙박</label>
+        <main id="container">
+            <section id="main_screen">
+                <img src="../images/project_logo.png" style="position:fixed; height: 10%; float: left;" onclick="moveTop()">
+                <div id="address_search_panel" style="position: absolute; width: 100%; text-align: center; z-index: 3;">
+                    <h id="txt_address">주소가 들어갈 곳입니다</h>
+                </div>
+                <div id="first_page">
+                    <div id="first_page_left">
+                        <div id="kakao_map"></div>
+                        <div style="display: flex; justify-content: center;">
+                            <div class="checks etrans" style="margin-top: 10px;">
+                                <input type="checkbox" id="check_medical">
+                                <label for="check_medical" style="margin-right: 20px; color: white; font-size: 21px; font-weight:bold;">의료시설</label>
+                                <input type="checkbox" id="check_school">
+                                <label for="check_school" style="margin-right: 20px; color: white; font-size: 21px; font-weight:bold;">교육시설</label>
+                                <input type="checkbox" id="check_market">
+                                <label for="check_market" style="margin-right: 20px; color: white; font-size: 21px; font-weight:bold;">마트 및 편의점</label>
+                                <input type="checkbox" id="check_restaurant">
+                                <label for="check_restaurant" style="margin-right: 20px; color: white; font-size: 21px; font-weight:bold;">음식점 및 카페</label><br><br>
+                                <input type="checkbox" id="check_public">
+                                <label for="check_public" style="margin-right: 20px; color: white; font-size: 21px; font-weight:bold;">공공시설</label>
+                                <input type="checkbox" id="check_subway">
+                                <label for="check_subway" style="margin-right: 40px; color: white; font-size: 21px; font-weight:bold;">지하철</label>
+                                <input type="checkbox" id="check_culture">
+                                <label for="check_culture" style="margin-right: 77px; color: white; font-size: 21px; font-weight:bold;">문화시설</label>
+                                <input type="checkbox" id="check_motel">
+                                <label for="check_motel" style="color: white; font-size: 21px; font-weight:bold;">관광명소 및 숙박</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="first_page_right">
+                        <div id="first_page_chart"></div>
+                    </div>
+                    <div id="first_page_bottom">
+                        <img style="width: 100px; margin-top: -50px;" src="../images/arrow_down.png"
+                        onmouseover="this.src='../images/arrow_down_white.png'" 
+                        onmouseout="this.src='../images/arrow_down.png'"
+                        onclick="moveSecond()">
                     </div>
                 </div>
-            </div>
-            <div id="first_page_right">
-                <h></h>
-            </div>
-        </div>
-
-
-        
-        
+            </section>
+            <section id="second_screen" style="height:100%;">
+                <div id="second_page_top">
+                    <img style="width: 100px;" src="../images/arrow_up.png"
+                        onmouseover="this.src='../images/arrow_up_white.png'" 
+                        onmouseout="this.src='../images/arrow_up.png'"
+                        onclick="moveTop()">
+                </div>
+            <!--
+                <div id="second_screen_first_line" style="padding-top:15%; height:10%; text-align: center;">
+                    <input type="image" src="../images/second_screen_first_line.png" disabled="true">
+                </div>
+                <div id="second_screen_second_line"style="height:10%; text-align:center;">
+                    <input type="image" src="../images/second_screen_second_line.png"disabled="true">
+                </div>
+                <div id="second_screen_third_line"style="height:10%; text-align:center;">
+                    <input type="image" src="../images/second_screen_third_line.png"disabled="true">
+                </div>
+                <div id="second_screen_fourth_line"style="height:10%; text-align:center;">
+                    <input type="image" src="../images/second_screen_fourth_line.png"disabled="true">
+                </div>
+                <div id="address_search_panel" style="margin-top: 25px; width: 100%; height: 30%; text-align: center;">
+                    <input type="text" id="sample_address" class="address_search" placeholder="찾고자 하는 지역의 '구', '동'을 입력하세요.">
+                    <input type="image" onclick="SearchAddress()" src="../images/zoom_2.png" style="vertical-align: middle; width: 30px; height: 30px;" onfocus="this.blur()"><br>
+                    <h1 id="txt_address" style="font-size: 18px; font-weight: bold; font-style: italic; color: #007ac3;"> </h1>
+                </div>
+            -->
+            </section>
+        </main>
         <script>
             //variables of user
             var x, y, age, gender, old, high, midd, elem, kind, dog, active, address_name;
@@ -202,7 +267,180 @@
             marker.setMap(map);
             circle.setMap(map);
             $("#txt_address").html("<h>" + address_name + "</h>");
+            function category(){
+                return {
+                    place_name_1: "",
+                    place_num: 0
+                }
+            }
+            codes = new Array();
+            for(var i = 0; i < 14; i++){
+                codes[i] = new category();
+            }
+            var ps = new kakao.maps.services.Places(map);
 
+            // 병원 관련
+            codes[0].place_name_1="HP8";  // 병원
+            codes[1].place_name_1="PM9";  // 약국
+            var hospital = [];
+            // 학군 관련
+            codes[2].place_name_1='PS3';    // 유치원
+            codes[3].place_name_1='SC4';    // 학교
+            codes[4].place_name_1='AC5';    // 학원
+            var school = [];
+            // 장보기 관련
+            codes[5].place_name_1='MT1';    // 마트
+            codes[6].place_name_1='CS2';    // 편의점
+            var mart = [];
+            // 문화시설
+            codes[7].place_name_1='CT1';    // 문화시설
+            var culture = [];
+            // 음식점과카페
+            codes[8].place_name_1='FD6';    // 음식점
+            codes[9].place_name_1='CE7';    // 카페
+            var restaurant = [];
+            // 공공기관과 지하철
+            codes[10].place_name_1='PO3';   // 공공시설
+            codes[11].place_name_1='SW8';   // 지하철
+            var public_place = [];
+            // 관광명소와 숙박
+            codes[12].place_name_1='AT4';   // 관광명소
+            codes[13].place_name_1='AD5';   // 숙박
+            var travel = [];
+
+            for(var i = 0; i < codes.length; i++){
+                ps.categorySearch(codes[i].place_name_1, placeSearchCB, {
+                    page: 1, size: 15, location: new kakao.maps.LatLng(y, x),
+                    radius: active * 1000
+                });
+                ps.categorySearch(codes[i].place_name_1, placeSearchCB, {
+                    page: 2, size: 15, location: new kakao.maps.LatLng(y, x),
+                    radius: active * 1000
+                });
+                ps.categorySearch(codes[i].place_name_1, placeSearchCB, {
+                    page: 3, size: 15, location: new kakao.maps.LatLng(y, x),
+                    radius: active * 1000
+                });
+            }
+            function placeSearchCB (data, status, pagination) {
+                if (status === kakao.maps.services.Status.OK) {
+                    for (var j=0; j<data.length; j++) {
+                        var obj = {name : data[j].place_name, dist : data[j].distance, x : data[j].x, y : data[j].y};
+                        if(data[j].category_group_code == 'HP8' && !hospital.includes(obj)){
+                            hospital.push(Object.entries(obj));
+                        }
+                        if(data[j].category_group_code == 'PM9' && !hospital.includes(obj)){
+                            hospital.push(Object.entries(obj));
+                        }
+                        if(data[j].category_group_code == 'PS3' && !school.includes(obj)){
+                            school.push(Object.entries(obj));
+                        }
+                        if(data[j].category_group_code == 'SC4' && !school.includes(obj)){
+                            school.push(Object.entries(obj));
+                        }
+                        if(data[j].category_group_code == 'AC5' && !school.includes(obj)){
+                            school.push(Object.entries(obj));
+                        }
+                        if(data[j].category_group_code == 'MT1' && !mart.includes(obj)){
+                            mart.push(Object.entries(obj));
+                        }
+                        if(data[j].category_group_code == 'CS2' && !mart.includes(obj)){
+                            mart.push(Object.entries(obj));
+                        }
+                        if(data[j].category_group_code == 'CT1' && !culture.includes(obj)){
+                            culture.push(Object.entries(obj));
+                        }
+                        if(data[j].category_group_code == 'FD6' && !restaurant.includes(obj)){
+                            restaurant.push(Object.entries(obj));
+                        }
+                        if(data[j].category_group_code == 'CE7' && !restaurant.includes(obj)){
+                            restaurant.push(Object.entries(obj));
+                        }
+                        if(data[j].category_group_code == 'PO3' && !public_place.includes(obj)){
+                            public_place.push(Object.entries(obj));
+                        }
+                        if(data[j].category_group_code == 'SW8' && !public_place.includes(obj)){
+                            public_place.push(Object.entries(obj));
+                        }
+                        if(data[j].category_group_code == 'AT4' && !travel.includes(obj)){
+                            travel.push(Object.entries(obj));
+                        }
+                        if(data[j].category_group_code == 'AD5' && !travel.includes(obj)){
+                            travel.push(Object.entries(obj));
+                        }
+                    }/*
+                    for(var i = 0; i < codes.length; i++){
+                        if(data[0].category_group_code == codes[i].place_name_1){
+                            window.codes[i].place_num = data.length;
+                        }
+                    }*/
+                }
+                return data.length;
+            }
+            
+            window.onload = function(){
+                console.log(hospital);
+                Highcharts.chart('first_page_chart',{
+                chart: {
+                    plotBackgroundColor: null,
+                    plotBorderWidth: null,
+                    plotShadow: false,
+                    type: 'pie'
+                },
+                title: {
+                    text: 'Categories Percentage',
+                    style: {
+                        "color": "#007ac3",
+                        "font-size": "30px",
+                        "fill": "#007ac3"
+                    }
+                },
+                tooltip: {
+                    pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+                },plotOptions: {
+                    pie: {
+                    allowPointSelect: true,
+                    cursor: 'pointer',
+                    dataLabels: {
+                        enabled: false
+                    },
+                    showInLegend: true
+                    }
+                },
+                series: [{
+                    name: 'Categories',
+                    colorByPoint: true,
+                    data: [{
+                    name: '병원',
+                    y: hospital.length,
+                    sliced: true,
+                    selected: true
+                    }, {
+                    name: '학군',
+                    y: school.length
+                    }, {
+                    name: '장보기',
+                    y: mart.length
+                    }, {
+                    name: '문화시설',
+                    y: culture.length
+                    }, {
+                    name: '음식점 및 카페',
+                    y: restaurant.length
+                    }, {
+                    name: '공공시설',
+                    y: public_place.length
+                    }, {
+                    name: '모텔',
+                    y: travel.length
+                    }]
+                }]
+            });
+            }
+            
+
+            
+            
             /*
             _GET : function for get data from url
             return array type
@@ -217,6 +455,14 @@
                     obj[devide[0]] = devide[1];
                 }
                 return obj;
+            }
+            function moveTop(){
+                var offset=$("#main_screen").offset();
+                $("html body").animate({scrollTop:offset.top}, 500);
+            }
+            function moveSecond(){
+                var offset=$("#second_screen").offset();
+                $("html body").animate({scrollTop:offset.top}, 500);
             }
         </script>
     </body>
