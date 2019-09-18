@@ -5,7 +5,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <title>ZIPFUND FIRST PAGE</title>
+        <title>ZIPNAVI FIRST PAGE</title>
         <script src="../js/jquery.js"></script>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/rangeslider.js/2.3.2/rangeslider.css">
     </head>
@@ -13,7 +13,6 @@
         <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
         <script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=fb926e363d9a87e9712ed240cb75a7b0&libraries=services"></script>
         <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=fb926e363d9a87e9712ed240cb75a7b0"></script>
-        <script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=fb926e363d9a87e9712ed240cb75a7b0&libraries=services"></script>
         <script type="text/javascript" src="../rangeslider.js-2.3.0/rangeslider.min.js"></script>
         <style>
             .address_search{
@@ -146,7 +145,7 @@
                 -o-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
                 transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
                 display: block;
-                margin: 20px auto;
+                margin: 60px auto;
                 max-width: 180px;
                 text-decoration: none;
                 border-radius: 4px;
@@ -315,11 +314,11 @@
                     <h style="color: white; font-weight: bold; font-size: 20px;">활동 반경</h><br>
                 </div>
                 <div style="display: flex; margin-top: 10px;">
-                    <input id="active_range_slider" type="range" min="0.5" max="3" step="0.5" value="3">
-                    <h id="active_show" style="color: white;">3km</h>
+                    <input id="active_range_slider" type="range" min="0.5" max="3" step="0.5" value="1">
+                    <h id="active_show" style="color: white;">1km</h>
                 </div>
                 <div>
-                    <a href="#" class="button" onclick="searchMyArea()">검색해보기</a>
+                    <a href="#" class="button" style="font-size: 20px; font-weight:bold;" onclick="searchMyArea()">검색해보기</a>
                 </div>
             </div>
         </div>
@@ -327,6 +326,7 @@
             var circle;
             var x, y;
             var addr;
+            var address_name;
             var marker, markerPosition;
             search = window.location.search;
             getData = _GET(search);
@@ -445,12 +445,13 @@
             var container = document.getElementById("kakao_map");
             var options = {
                 center: new kakao.maps.LatLng(33.450701, 126.570667),
-                level: 3
+                level: 4
             };
             var map = new kakao.maps.Map(container, options);
             var geocoder = new daum.maps.services.Geocoder();
             function SearchAddress(){
                 var addr = $("#sample_address").val();
+                address_name = addr;
                 geocoder.addressSearch(addr, function(results, status){
                     if(status === kakao.maps.services.Status.OK){
                         y = results[0].y;
@@ -487,6 +488,7 @@
                         if (result[i].region_type === 'H') {
                             //$("#txt_address").html("<h>" + result[i].address_name + "</h>");
                             infoDiv.innerHTML = result[i].address_name;
+                            address_name = result[i].address_name;
                             break;
                         }
                     }
@@ -503,9 +505,10 @@
                 var kind = $("input:checkbox[id=check_child]").is(":checked")==true;
                 var dog = $("input:radio[name=dog_radio]:checked").val();
                 var active = $('#active_range_slider').val();
+                var addr = $('#txt_address').val();
                 //console.log(x, y, age, gender, old, high, midd, elem, kind, dog, active);
                 window.open("zipnavi_second_page.html?x=" + x + "&y=" + y + "&age=" + age + "&gender=" + gender + "&old=" + old + 
-                "&high=" + high + "&midd=" + midd + "&elem=" + elem + "&kind=" + kind + "&dog=" + dog + "&active=" + active, '_self');
+                "&high=" + high + "&midd=" + midd + "&elem=" + elem + "&kind=" + kind + "&dog=" + dog + "&active=" + active + "&addr=" + address_name, '_self');
             }
             
         </script>

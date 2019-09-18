@@ -150,7 +150,7 @@
                 -o-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
                 transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
                 display: block;
-                margin: 20px auto;
+                margin: 60px auto;
                 max-width: 180px;
                 text-decoration: none;
                 border-radius: 4px;
@@ -316,8 +316,8 @@
                     <h style="color: white; font-weight: bold; font-size: 20px;">활동 반경</h><br>
                 </div>
                 <div style="display: flex; margin-top: 10px;">
-                    <input id="active_range_slider" type="range" min="0.5" max="3" step="0.5" value="3">
-                    <h id="active_show" style="color: white;">3km</h>
+                    <input id="active_range_slider" type="range" min="0.5" max="3" step="0.5" value="1">
+                    <h id="active_show" style="color: white;">1km</h>
                 </div>
                 <div>
                     <a href="#" class="button" style="font-size: 20px; font-weight:bold;">검색해보기</a>
@@ -338,7 +338,7 @@
                         y = result.map_info.y;
                         circle = new kakao.maps.Circle({
                         center : new kakao.maps.LatLng(y, x),  // 원의 중심좌표 입니다 
-                        radius: 3000, // 미터 단위의 원의 반지름입니다 
+                        radius: $('#active_range_slider').val() * 1000, // 미터 단위의 원의 반지름입니다 
                         strokeWeight: 3, // 선의 두께입니다 
                         strokeColor: '#007ac3', // 선의 색깔입니다
                         strokeOpacity: 1, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
@@ -405,7 +405,7 @@
             var container = document.getElementById("kakao_map");
             var options = {
                 center: new kakao.maps.LatLng(33.450701, 126.570667),
-                level: 3
+                level: 4
             };
             var map = new kakao.maps.Map(container, options);
         </script>

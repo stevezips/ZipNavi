@@ -6,27 +6,207 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <title>Third Page</title>
-        <script src="js/jquery.js"></script>
+        <script src="../js/jquery.js"></script>
     </head>
-    <body>
+    <body style="background-color: #474747; overflow:hidden;">
         <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
         <script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=fb926e363d9a87e9712ed240cb75a7b0&libraries=services"></script>
-        <img src="../images/project_logo.png" style="height: 10%; position: fixed; z-index: 3;">
-        <script>
-            window.onload = function(){
-                search = window.location.search;
-                getData = _GET(search);
+        <style>
+            #kakao_map{
+                width: 100%;
+                height: 400px;
+                z-index: 1;
+            }
+            #txt_address{
+                width: 600px;
+                position: absolute;
+                font-size: 30px; 
+                font-weight: bold;
+                color: #007ac3;
+                align: center;
+                margin-top: 20px;
+                margin-left: -300px;
+            }
+            #first_page{
+                position:absolute;
+                margin-top: 10%;
+                height: 80%;
+                width: 100%;
+            }
+            #first_page_left{
+                width: 50%;
+                height: 100%;
+                float: left;
+            }
+            #first_page_right{
+                width: 50%;
+                height: 100%;
+                display:inline-block;
+            }
+            .checks {position: relative;}
 
-                $("#re_name").text(getData.address_name);
-                if(getData.tf == "tfMonth") $("#re_trade").text("월세");
-                else if(getData.tf == "tfJeon") $("#re_trade").text("전세");
-                else $("#re_trade").text("매매");
-                $("#re_price").text(getData.tfvp);
-                $("#re_deposit").text(getData.tfvd);
-                $("#re_month").text(getData.tfvm);
-                if(getData.aid == "dYes") $("#re_dog").text("반려견 허용");
-                else $("#re_dog").text("반려견 불가");
+            .checks input[type="checkbox"] {  /* 실제 체크박스는 화면에서 숨김 */
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip:rect(0,0,0,0);
+            border: 0
+            }
+            .checks input[type="checkbox"] + label {
+            display: inline-block;
+            position: relative;
+            cursor: pointer;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            }
+            .checks input[type="checkbox"] + label:before {  /* 가짜 체크박스 */
+            content: ' ';
+            display: inline-block;
+            width: 30px;  /* 체크박스의 너비를 지정 */
+            height: 30px;  /* 체크박스의 높이를 지정 */
+            line-height: 30px; /* 세로정렬을 위해 높이값과 일치 */
+            margin: 0 8px 0 0;
+            text-align: center; 
+            vertical-align: middle;
+            background: #fafafa;
+            border: 1px solid #cacece;
+            border-radius : 3px;
+            box-shadow: 0px 1px 2px rgba(0,0,0,0.05), inset 0px -15px 10px -12px rgba(0,0,0,0.05);
+            }
+
+            .checks.etrans input[type="checkbox"] + label {
+            padding-left: 30px;
+            }
+            .checks.etrans input[type="checkbox"] + label:before {
+            position: absolute;
+            left: 0;
+            top: 0;
+            margin-top: 0;
+            opacity: .6;
+            box-shadow: none;
+            border-color: #6cc0e5;
+            -webkit-transition: all .12s, border-color .08s;
+            transition: all .12s, border-color .08s;
+            }
+
+            .checks.etrans input[type="checkbox"]:checked + label:before {
+            position: absolute;
+            content: "";
+            width: 10px;
+            top: -5px;
+            left: 5px;
+            border-radius: 0;
+            opacity:1; 
+            background: transparent;
+            border-color:transparent #6cc0e5 #6cc0e5 transparent;
+            border-top-color:transparent;
+            border-left-color:transparent;
+            -ms-transform:rotate(45deg);
+            -webkit-transform:rotate(45deg);
+            transform:rotate(45deg);
+            }
+
+            .no-csstransforms .checks.etrans input[type="checkbox"]:checked + label:before {
+            /*content:"\2713";*/
+            content: "\2714";
+            top: 0;
+            left: 0;
+            width: 30px;
+            line-height: 30px;
+            color: #6cc0e5;
+            text-align: center;
+            border: 1px solid #6cc0e5;
+            }
+            .checks.etrans{
+                margin-top: 50px;
+            }
+        </style>
+        <img src="../images/project_logo.png" style="position:fixed; height: 10%; float: left;">
+        <div id="address_search_panel" style="position: absolute; height: 10%; width: 100%; text-align: center; z-index: 3;">
+            <h id="txt_address">주소가 들어갈 곳입니다</h>
+        </div>
+        <div id="first_page">
+            <div id="first_page_left">
+                <div id="kakao_map"></div>
+                <div style="display: flex; justify-content: center;">
+                    <div class="checks etrans" style="margin-top: 10px;">
+                        <input type="checkbox" id="check_medical">
+                        <label for="check_medical" style="margin-right: 20px; color: white; font-size: 21px; font-weight:bold;">의료시설</label>
+                        <input type="checkbox" id="check_school">
+                        <label for="check_school" style="margin-right: 20px; color: white; font-size: 21px; font-weight:bold;">교육시설</label>
+                        <input type="checkbox" id="check_market">
+                        <label for="check_market" style="margin-right: 20px; color: white; font-size: 21px; font-weight:bold;">마트 및 편의점</label>
+                        <input type="checkbox" id="check_restaurant">
+                        <label for="check_restaurant" style="margin-right: 20px; color: white; font-size: 21px; font-weight:bold;">음식점 및 카페</label><br><br>
+                        <input type="checkbox" id="check_public">
+                        <label for="check_public" style="margin-right: 20px; color: white; font-size: 21px; font-weight:bold;">공공시설</label>
+                        <input type="checkbox" id="check_subway">
+                        <label for="check_subway" style="margin-right: 40px; color: white; font-size: 21px; font-weight:bold;">지하철</label>
+                        <input type="checkbox" id="check_culture">
+                        <label for="check_culture" style="margin-right: 77px; color: white; font-size: 21px; font-weight:bold;">문화시설</label>
+                        <input type="checkbox" id="check_motel">
+                        <label for="check_motel" style="color: white; font-size: 21px; font-weight:bold;">관광명소 및 숙박</label>
+                    </div>
+                </div>
+            </div>
+            <div id="first_page_right">
+                <h></h>
+            </div>
+        </div>
+
+
+        
+        
+        <script>
+            //variables of user
+            var x, y, age, gender, old, high, midd, elem, kind, dog, active, address_name;
+            var marker;
+            search = window.location.search;
+            getData = _GET(search);
+            x = getData.x;
+            y = getData.y;
+            age = getData.age;
+            gender = getData.gender;
+            old = getData.old;
+            high = getData.high;
+            midd = getData.midd;
+            elem = getData.elem;
+            kind = getData.kind;
+            dog = getData.dog;
+            active = getData.active;
+            address_name = getData.addr;
+            var container = document.getElementById("kakao_map");
+            var options = {
+                center: new kakao.maps.LatLng(y, x),
+                level: 5
             };
+            marker = new kakao.maps.Marker({
+                map: map,
+                position: new kakao.maps.LatLng(y, x)
+            });
+            var circle = new kakao.maps.Circle({
+                center : new kakao.maps.LatLng(y, x),  // 원의 중심좌표 입니다 
+                radius: active * 1000, // 미터 단위의 원의 반지름입니다 
+                strokeWeight: 3, // 선의 두께입니다 
+                strokeColor: '#007ac3', // 선의 색깔입니다
+                strokeOpacity: 1, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
+                strokeStyle: 'dashed', // 선의 스타일 입니다
+                fillColor: '#CFE7FF', // 채우기 색깔입니다
+                fillOpacity: 0.5  // 채우기 불투명도 입니다   
+            });
+            var map = new kakao.maps.Map(container, options);
+            marker.setMap(map);
+            circle.setMap(map);
+            $("#txt_address").html("<h>" + address_name + "</h>");
+
+            /*
+            _GET : function for get data from url
+            return array type
+            */
             function _GET(search){
                 var obj = {};
                 var uri = decodeURI(search);
