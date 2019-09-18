@@ -41,6 +41,21 @@
                 float: right;
                 border-radius: 5%;
             }
+            #address_name{
+                border: #007ac3 5px solid;
+                background: white;
+                color: #474747;
+                font-weight: bold;
+                font-size: 20px;
+                opacity: 0.8;
+                margin-top: 30px;
+                z-index: 3; 
+                left: 50%; 
+                width: 400px; 
+                margin-left: -200px; 
+                position: fixed; 
+                text-align: center;
+            }
             .age_range_slider{
                 margin-left: 20px;
                 margin-right: 20px;
@@ -230,7 +245,9 @@
             border: 1px solid #6cc0e5;
             }
         </style>
+        
         <img src="../images/project_logo.png" style="height: 10%; position: fixed; z-index: 3;">
+        <h id="address_name"></h>
         <div id="wrapper">
             <div id="kakao_map" class="map_div"></div>
             <div id="filter_box">
@@ -375,6 +392,7 @@
                     success: function(result){
                         x = result.map_info.x;
                         y = result.map_info.y;
+                        $("#address_name").html("<h>" + result.address + "</h>");
                     }
                 });
                 panTo();

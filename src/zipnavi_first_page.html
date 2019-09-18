@@ -233,11 +233,74 @@
         <script>
             var circle;
 <<<<<<< HEAD
+<<<<<<< HEAD
             var x, y;
 =======
             var x, y = 0;
             var addr;
 >>>>>>> 385867294749d2db1a9880d002a81b1fa4caf1f2
+=======
+            var x, y;
+            var addr;
+            var marker, markerPosition;
+            search = window.location.search;
+            getData = _GET(search);
+            x = getData.x; y = getData.y;
+            circle = new kakao.maps.Circle({
+                center : new kakao.maps.LatLng(y, x),  // 원의 중심좌표 입니다 
+                radius: $('#active_range_slider').val() * 1000, // 미터 단위의 원의 반지름입니다 
+                strokeWeight: 3, // 선의 두께입니다 
+                strokeColor: '#007ac3', // 선의 색깔입니다
+                strokeOpacity: 1, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
+                strokeStyle: 'dashed', // 선의 스타일 입니다
+                fillColor: '#CFE7FF', // 채우기 색깔입니다
+                fillOpacity: 0.7  // 채우기 불투명도 입니다   
+            });
+            marker = new kakao.maps.Marker({
+                map: map,
+                position: new kakao.maps.LatLng(y, x),
+                draggable: true
+            });
+
+            kakao.maps.event.addListener(this.marker, 'dragend', function(){
+                var Lng = marker.getPosition().getLng();
+                var Lat = marker.getPosition().getLat();
+                x = Lng; y = Lat;
+                searchAddrFromCoords(new kakao.maps.LatLng(y,x), displayCenterInfo);
+                //console.log(marker.getPosition());
+                if(circle) circle.setMap(null);
+                if(x){
+                    circle = new kakao.maps.Circle({
+                    center : new kakao.maps.LatLng(y, x),  // 원의 중심좌표 입니다 
+                    radius: $('#active_range_slider').val() * 1000, // 미터 단위의 원의 반지름입니다 
+                    strokeWeight: 3, // 선의 두께입니다 
+                    strokeColor: '#007ac3', // 선의 색깔입니다
+                    strokeOpacity: 1, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
+                    strokeStyle: 'dashed', // 선의 스타일 입니다
+                    fillColor: '#CFE7FF', // 채우기 색깔입니다
+                    fillOpacity: 0.7  // 채우기 불투명도 입니다   
+                    });
+                    circle.setMap(map);
+                }
+                else{
+                    search = window.location.search;
+                    getData = _GET(search);
+                    console.log(getData);
+                    circle = new kakao.maps.Circle({
+                    center : new kakao.maps.LatLng(getData.y, getData.x),  // 원의 중심좌표 입니다 
+                    radius: $('#active_range_slider').val() * 1000, // 미터 단위의 원의 반지름입니다 
+                    strokeWeight: 3, // 선의 두께입니다 
+                    strokeColor: '#007ac3', // 선의 색깔입니다
+                    strokeOpacity: 1, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
+                    strokeStyle: 'dashed', // 선의 스타일 입니다
+                    fillColor: '#CFE7FF', // 채우기 색깔입니다
+                    fillOpacity: 0.7  // 채우기 불투명도 입니다   
+                    });
+                }
+                circle.setMap(map);
+            });
+
+>>>>>>> 174ddce1a49f9b2aa645dfe3199407ec80d62e24
             $('input[type="range"]').rangeslider({polyfill: false});
 
             $('#age_range_slider').on('input', function(){
@@ -277,13 +340,19 @@
             })
             
             window.onload = function(){
+<<<<<<< HEAD
                 search = window.location.search;
                 getData = _GET(search);
                 y = getData.y;
                 x = getData.x;
                 console.log(getData.y, getData.x);
+=======
+>>>>>>> 174ddce1a49f9b2aa645dfe3199407ec80d62e24
                 panTo();
-            };
+                this.circle.setMap(map);
+                this.marker.setMap(map);
+                searchAddrFromCoords(new kakao.maps.LatLng(y,x), displayCenterInfo);
+            };  
             
             function _GET(search){  //url에서 
                 var obj = {};
@@ -310,20 +379,11 @@
                     if(status === kakao.maps.services.Status.OK){
                         y = results[0].y;
                         x = results[0].x;
+                        this.marker.setPosition(new kakao.maps.LatLng(y,x));
                         var moveLatLon = new kakao.maps.LatLng(y, x);
                         map.panTo(moveLatLon);
-                        circle.setMap(null);
-                            circle = new kakao.maps.Circle({
-                            center : new kakao.maps.LatLng(y, x),  // 원의 중심좌표 입니다 
-                            radius: $('#active_range_slider').val() * 1000, // 미터 단위의 원의 반지름입니다 
-                            strokeWeight: 3, // 선의 두께입니다 
-                            strokeColor: '#007ac3', // 선의 색깔입니다
-                            strokeOpacity: 1, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
-                            strokeStyle: 'dashed', // 선의 스타일 입니다
-                            fillColor: '#CFE7FF', // 채우기 색깔입니다
-                            fillOpacity: 0.7  // 채우기 불투명도 입니다   
-                            });
-                        circle.setMap(map);
+                        this.circle.setPosition(new kakao.maps.LatLng(y,x));
+                        searchAddrFromCoords(new kakao.maps.LatLng(y,x), displayCenterInfo);
                     }
                     else{
                         $("#txt_address").html("<h>" + "결과를 찾지 못했습니다" + "</h>");
@@ -337,7 +397,30 @@
                 map.panTo(moveLatLon);            
             }
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+
+            function searchAddrFromCoords(coords, callback) {
+                // 좌표로 행정동 주소 정보를 요청합니다
+                geocoder.coord2RegionCode(coords.getLng(), coords.getLat(), callback);         
+            }
+
+            function displayCenterInfo(result, status) {
+                if (status === kakao.maps.services.Status.OK) {
+                    var infoDiv = document.getElementById('txt_address');
+
+                    for(var i = 0; i < result.length; i++) {
+                        // 행정동의 region_type 값은 'H' 이므로
+                        if (result[i].region_type === 'H') {
+                            //$("#txt_address").html("<h>" + result[i].address_name + "</h>");
+                            infoDiv.innerHTML = result[i].address_name;
+                            break;
+                        }
+                    }
+                }    
+            }
+>>>>>>> 174ddce1a49f9b2aa645dfe3199407ec80d62e24
             
             function searchMyArea(){
                 var age = $('#age_range_slider').val();
