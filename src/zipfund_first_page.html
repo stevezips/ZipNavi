@@ -245,7 +245,6 @@
             border: 1px solid #6cc0e5;
             }
         </style>
-        
         <img src="../images/project_logo.png" style="height: 10%; position: fixed; z-index: 3;">
         <h id="address_name"></h>
         <div id="wrapper">
@@ -320,15 +319,22 @@
                     <h id="active_show" style="color: white;">1km</h>
                 </div>
                 <div>
-                    <a href="#" class="button" style="font-size: 20px; font-weight:bold;">검색해보기</a>
+                    <a href="#" class="button" style="font-size: 20px; font-weight:bold;"onclick="searchMyArea()">검색해보기</a>
                 </div>
             </div>
         </div>
         <script>
             var circle;
+            var container = document.getElementById("kakao_map");
+            var options = {
+                center: new kakao.maps.LatLng(33.450701, 126.570667),
+                level: 4
+            };
+            var map = new kakao.maps.Map(container, options);
             search = window.location.search;
             getData = _GET(search);
             var x, y;
+            var addr_name;
             $.ajax({
                     url: "http://admin.zipfund.co/api/address/apartment_info/" + getData.info,
                     contentType: "application/json",
@@ -336,6 +342,8 @@
                     success: function(result){
                         x = result.map_info.x;
                         y = result.map_info.y;
+                        addr_name = result.address + " / " + result.name;
+                        console.log(result);
                         circle = new kakao.maps.Circle({
                         center : new kakao.maps.LatLng(y, x),  // 원의 중심좌표 입니다 
                         radius: $('#active_range_slider').val() * 1000, // 미터 단위의 원의 반지름입니다 
@@ -384,7 +392,6 @@
             
             window.onload = function(){
                 this.circle.setMap(map);
-                console.log("on load");
                 $.ajax({
                     url: "http://admin.zipfund.co/api/address/apartment_info/" + getData.info,
                     contentType: "application/json",
@@ -401,13 +408,22 @@
                 var moveLatLon = new kakao.maps.LatLng(y, x);
                 map.panTo(moveLatLon);            
             }
+            function searchMyArea(){
+                var age = $('#age_range_slider').val();
+                var gender = $("input:radio[name=gender_radio]:checked").val();
+                var old = $("input:radio[name=old_radio]:checked").val();
+                var high = $("input:checkbox[id=check_high]").is(":checked")==true;
+                var midd = $("input:checkbox[id=check_middle]").is(":checked")==true;
+                var elem = $("input:checkbox[id=check_elementary]").is(":checked")==true; 
+                var kind = $("input:checkbox[id=check_child]").is(":checked")==true;
+                var dog = $("input:radio[name=dog_radio]:checked").val();
+                var active = $('#active_range_slider').val();
+                //console.log(x, y, age, gender, old, high, midd, elem, kind, dog, active);
+                window.open("zipfund_second_page.html?x=" + x + "&y=" + y + "&age=" + age + "&gender=" + gender + "&old=" + old + 
+                "&high=" + high + "&midd=" + midd + "&elem=" + elem + "&kind=" + kind + "&dog=" + dog + "&active=" + active + "&addr=" + addr_name, '_self');
+            }
             //$('#age_range_slider').rangeslider({polyfill: false});
-            var container = document.getElementById("kakao_map");
-            var options = {
-                center: new kakao.maps.LatLng(33.450701, 126.570667),
-                level: 4
-            };
-            var map = new kakao.maps.Map(container, options);
+            
         </script>
     </body>
     </html>
