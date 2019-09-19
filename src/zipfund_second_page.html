@@ -9,10 +9,12 @@
         <script src="../js/jquery.js"></script>
     </head>
     <body style="background-color: #474747; overflow: hidden;">
+        <script src="https://underscorejs.org/underscore.js"></script>
         <script src="https://code.highcharts.com/highcharts.js"></script>
         <script src="https://code.highcharts.com/modules/exporting.js"></script>
         <script src="https://code.highcharts.com/modules/export-data.js"></script>
         <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
+        <script src="https://code.highcharts.com/modules/heatmap.js"></script>
         <script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=fb926e363d9a87e9712ed240cb75a7b0&libraries=services"></script>
         <style>
             .container{
@@ -65,8 +67,20 @@
                 height: 80%;
             }
             #second_page_top{
+                height: 10%;
                 text-align: center;
                 float:top;
+            }
+            #second_page_middle{
+                height: 50%;
+                width: 100%;
+                text-align: center;
+            }
+            #second_page_chart{
+                margin-top: 10%;
+                height: 100%;
+                min-width: 310px; max-width: 80%;
+                margin: 0 auto;
             }
             .checks {position: relative;}
 
@@ -153,8 +167,14 @@
             .highcharts-background{
                 fill: #474747
             }
-            tspan{
+            g.highcharts-legend-item.highcharts-pie-series text tspan {
                 font: bold 20px sans-serif; fill: white;
+            }
+            g.highcharts-label.highcharts-data-label text tspan{
+                font: 20px sans-serif; fill: black;
+            }
+            g.highcharts-axis-labels text tspan{
+                font: 18px sans-serif; fill:white;
             }
         </style>
         <main id="container">
@@ -204,6 +224,9 @@
                         onmouseover="this.src='../images/arrow_up_white.png'" 
                         onmouseout="this.src='../images/arrow_up.png'"
                         onclick="moveTop()">
+                </div>
+                <div id="second_page_middle">
+                    <div id="second_page_chart"></div>
                 </div>
             <!--
                 <div id="second_screen_first_line" style="padding-top:15%; height:10%; text-align: center;">
@@ -316,65 +339,87 @@
             codes[13].place_name_1='AD5';   // 숙박
             var travel = [];
             var travel_markers = [];
-
+            function getUniqueObjectArray(array, key) {
+            var tempArray = [];
+            var resultArray = [];
+                for(var i = 0; i < array.length; i++) {
+                    var item = array[i]
+                    if(tempArray.include(item[key])) {
+                        continue;
+                    } else {
+                        resultArray.push(item);
+                        tempArray.push(item[key]);
+                    }
+                }
+                return resultArray;
+            }
             for(var i = 0; i < codes.length; i++){
                 ps.categorySearch(codes[i].place_name_1, placeSearchCB, {
-                    page: 1, size: 15, location: new kakao.maps.LatLng(y, x),
+                    page: 1, size: 15, y: y, x: x,
                     radius: active * 1000
                 });
                 ps.categorySearch(codes[i].place_name_1, placeSearchCB, {
-                    page: 2, size: 15, location: new kakao.maps.LatLng(y, x),
+                    page: 2, size: 15, y: y, x: x,
                     radius: active * 1000
                 });
                 ps.categorySearch(codes[i].place_name_1, placeSearchCB, {
-                    page: 3, size: 15, location: new kakao.maps.LatLng(y, x),
+                    page: 3, size: 15, y: y, x: x,
                     radius: active * 1000
                 });
             }
+            var hospital_1 = 0, hospital_2 = 0, hospital_3 = 0, hospital_4 = 0, hospital_5 = 0;
+            var school_1 = 0, school_2 = 0, school_3 = 0, school_4 = 0, school_5 = 0;
+            var mart_1 = 0, mart_2 = 0, mart_3 = 0, mart_4 = 0, mart_5 = 0;
+            var culture_1 = 0, culture_2 = 0, culture_3 = 0, culture_4 = 0, culture_5 = 0;
+            var restaurant_1 = 0, restaurant_2 = 0, restaurant_3 = 0, restaurant_4 = 0, restaurant_5 = 0;
+            var public_place_1 = 0,public_place_2 = 0, public_place_3 = 0, public_place_4 = 0, public_place_5 = 0;
+            var subway_1 = 0, subway_2 = 0, subway_3 = 0, subway_4 = 0, subway_5 = 0;
+            var travel_1 = 0, travel_2 = 0, travel_3 = 0, travel_4 = 0, travel_5 = 0;
             function placeSearchCB (data, status, pagination) {
                 if (status === kakao.maps.services.Status.OK) {
                     for (var j=0; j<data.length; j++) {
+                        var temp = data[j].distance;
                         var obj = {name : data[j].place_name, dist : data[j].distance, x : data[j].x, y : data[j].y};
-                        if(data[j].category_group_code == 'HP8' && !hospital.includes(obj)){
+                        if(data[j].category_group_code == 'HP8'){
                             hospital.push(Object.entries(obj));
                         }
-                        if(data[j].category_group_code == 'PM9' && !hospital.includes(obj)){
+                        if(data[j].category_group_code == 'PM9'){
                             hospital.push(Object.entries(obj));
                         }
-                        if(data[j].category_group_code == 'PS3' && !school.includes(obj)){
+                        if(data[j].category_group_code == 'PS3'){
                             school.push(Object.entries(obj));
                         }
-                        if(data[j].category_group_code == 'SC4' && !school.includes(obj)){
+                        if(data[j].category_group_code == 'SC4'){
                             school.push(Object.entries(obj));
                         }
-                        if(data[j].category_group_code == 'AC5' && !school.includes(obj)){
+                        if(data[j].category_group_code == 'AC5'){
                             school.push(Object.entries(obj));
                         }
-                        if(data[j].category_group_code == 'MT1' && !mart.includes(obj)){
+                        if(data[j].category_group_code == 'MT1'){
                             mart.push(Object.entries(obj));
                         }
-                        if(data[j].category_group_code == 'CS2' && !mart.includes(obj)){
+                        if(data[j].category_group_code == 'CS2'){
                             mart.push(Object.entries(obj));
                         }
-                        if(data[j].category_group_code == 'CT1' && !culture.includes(obj)){
+                        if(data[j].category_group_code == 'CT1'){
                             culture.push(Object.entries(obj));
                         }
-                        if(data[j].category_group_code == 'FD6' && !restaurant.includes(obj)){
+                        if(data[j].category_group_code == 'FD6'){
                             restaurant.push(Object.entries(obj));
                         }
-                        if(data[j].category_group_code == 'CE7' && !restaurant.includes(obj)){
+                        if(data[j].category_group_code == 'CE7'){
                             restaurant.push(Object.entries(obj));
                         }
-                        if(data[j].category_group_code == 'PO3' && !public_place.includes(obj)){
+                        if(data[j].category_group_code == 'PO3'){
                             public_place.push(Object.entries(obj));
                         }
-                        if(data[j].category_group_code == 'SW8' && !subway.includes(obj)){
+                        if(data[j].category_group_code == 'SW8'){
                             subway.push(Object.entries(obj));
                         }
-                        if(data[j].category_group_code == 'AT4' && !travel.includes(obj)){
+                        if(data[j].category_group_code == 'AT4'){
                             travel.push(Object.entries(obj));
                         }
-                        if(data[j].category_group_code == 'AD5' && !travel.includes(obj)){
+                        if(data[j].category_group_code == 'AD5'){
                             travel.push(Object.entries(obj));
                         }
                     }/*
@@ -386,9 +431,99 @@
                 }
                 return data.length;
             }
+            function remove_duplicates(objectsArray) {
+                var usedObjects = {};
+                for (var i=objectsArray.length - 1;i>=0;i--) {
+                    var so = JSON.stringify(objectsArray[i]);
+                    if (usedObjects[so]) {
+                        objectsArray.splice(i, 1);
+                    } else {
+                        usedObjects[so] = true;          
+                    }
+                }
+                return objectsArray;
+            }
+
+            function getNumber(){
+                for(item in hospital){
+                    var temp = parseInt(hospital[item][1][1]);
+                    if(temp > active * 800) hospital_5++;
+                    else if(temp > active * 600) hospital_4++;
+                    else if(temp > active * 400) hospital_3++;
+                    else if(temp > active * 200) hospital_2++;
+                    else hospital_1++;
+                }
+                for(item in school){
+                    var temp = parseInt(school[item][1][1]);
+                    if(temp > active * 800) school_5++;
+                    else if(temp > active * 600) school_4++;
+                    else if(temp > active * 400) school_3++;
+                    else if(temp > active * 200) school_2++;
+                    else school_1++;
+                }
+                for(item in mart){
+                    var temp = parseInt(mart[item][1][1]);
+                    if(temp > active * 800) mart_5++;
+                    else if(temp > active * 600) mart_4++;
+                    else if(temp > active * 400) mart_3++;
+                    else if(temp > active * 200) mart_2++;
+                    else mart_1++;
+                }
+                for(item in culture){
+                    var temp = parseInt(culture[item][1][1]);
+                    if(temp > active * 800) culture_5++;
+                    else if(temp > active * 600) culture_4++;
+                    else if(temp > active * 400) culture_3++;
+                    else if(temp > active * 200) culture_2++;
+                    else culture_1++;
+                }
+                for(item in restaurant){
+                    var temp = parseInt(restaurant[item][1][1]);
+                    if(temp > active * 800) restaurant_5++;
+                    else if(temp > active * 600) restaurant_4++;
+                    else if(temp > active * 400) restaurant_3++;
+                    else if(temp > active * 200) restaurant_2++;
+                    else restaurant_1++;
+                }
+                for(item in public_place){
+                    var temp = parseInt(public_place[item][1][1]);
+                    if(temp > active * 800) public_place_5++;
+                    else if(temp > active * 600) public_place_4++;
+                    else if(temp > active * 400) public_place_3++;
+                    else if(temp > active * 200) public_place_2++;
+                    else public_place_1++;
+                }
+                for(item in subway){
+                    var temp = parseInt(subway[item][1][1]);
+                    if(temp > active * 800) subway_5++;
+                    else if(temp > active * 600) subway_4++;
+                    else if(temp > active * 400) subway_3++;
+                    else if(temp > active * 200) subway_2++;
+                    else subway_1++;
+                }
+                for(item in travel){
+                    var temp = parseInt(travel[item][1][1]);
+                    if(temp > active * 800) travel_5++;
+                    else if(temp > active * 600) travel_4++;
+                    else if(temp > active * 400) travel_3++;
+                    else if(temp > active * 200) travel_2++;
+                    else travel_1++;
+                }
+            }
             
             window.onload = function(){
+                remove_duplicates(hospital);
+                remove_duplicates(school);
+                remove_duplicates(mart);
+                remove_duplicates(culture);
+                remove_duplicates(restaurant);
+                remove_duplicates(public_place);
+                remove_duplicates(subway);
+                remove_duplicates(travel);
+                getNumber();
+                console.log(subway);
                 viewFirstChart();
+                viewSecondChart();
             }
 
             $("#check_medical").change(function(){
@@ -611,9 +746,7 @@
                     infowindow.close();
                 };
             }
-
-
-
+            
             function viewFirstChart(){
                 Highcharts.chart('first_page_chart',{
                 chart: {
@@ -625,9 +758,9 @@
                 title: {
                     text: '주변 환경 정보',
                     style: {
-                        "color": "#007ac3",
-                        "font-size": "30px",
-                        "fill": "#007ac3"
+                        "color": "white",
+                        "font-size": "25px",
+                        "font-weight": "bold"
                     }
                 },
                 tooltip: {
@@ -676,6 +809,78 @@
             });
             }
             
+            function viewSecondChart(){
+                Highcharts.chart('second_page_chart', {
+                    chart: {
+                        type: 'heatmap',
+                        marginTop: 40,
+                        marginBottom: 80,
+                        plotBorderWidth: 1,
+                    },
+                    title: {
+                        text: '동네 주변 환경 히트맵',
+                        style:{
+                            color: 'white',
+                            fontSize: '25px',
+                            "font-weight": "bold"
+                        }
+                    },
+                    xAxis: {
+                        categories: ['병원', '학군', '장보기', '문화시설', '음식점 및 카페', '공공시설', '지하철', '관광지 및 숙박업소'],
+                        labels:{
+                            style:{
+                                color: 'white',
+                                fontSize: '18px'
+                            }
+                        }
+                    },
+                    yAxis: {
+                        categories: [(parseInt(active) * 0.2).toFixed(1) + 'km', (parseInt(active) * 0.4).toFixed(1) + 'km', (parseInt(active) * 0.6).toFixed(1) + 'km', (parseInt(active) * 0.8).toFixed(1) + 'km', parseInt(active).toFixed(1) + 'km'],
+                        labels:{
+                            style:{
+                                color: 'white',
+                                fontSize: '18px'
+                            }
+                        },
+                        title: null
+                    },
+                    colorAxis: {
+                        min: 0,
+                        minColor: '#FFFFFF',
+                        maxColor: Highcharts.getOptions().colors[0]
+                    },
+                    legend: {
+                        align: 'right',
+                        layout: 'vertical',
+                        margin: 0,
+                        verticalAlign: 'top',
+                        y: 25,
+                        symbolHeight: 280
+                    },
+                    tooltip: {
+                        formatter: function () {
+                            return '<b>' + this.series.xAxis.categories[this.point.x] + '</b>의 개수는 <br><b>' +
+                            this.series.yAxis.categories[this.point.y] + '</b> 내에<br><b>' + this.point.value + '개 있습니다</b>';
+                        }
+                    },
+                    series: [{
+                        name: 'Sales per employee',
+                        borderWidth: 1,
+                        data: [[0, 0, hospital_1], [0, 1, hospital_2], [0, 2, hospital_3], [0, 3, hospital_4], [0, 4, hospital_5], 
+                        [1, 0, school_1], [1, 1, school_2], [1, 2, school_3], [1, 3, school_4], [1, 4, school_5], 
+                        [2, 0, mart_1], [2, 1, mart_2], [2, 2, mart_3], [2, 3, mart_4], [2, 4, mart_5], 
+                        [3, 0, culture_1], [3, 1, culture_2], [3, 2, culture_3], [3, 3, culture_4], [3, 4, culture_5], 
+                        [4, 0, restaurant_1], [4, 1, restaurant_2], [4, 2, restaurant_3], [4, 3, restaurant_4], [4, 4, restaurant_5], 
+                        [5, 0, public_place_1], [5, 1, public_place_2], [5, 2, public_place_3], [5, 3, public_place_4], [5, 4, public_place_5], 
+                        [6, 0, subway_1], [6, 1, subway_2], [6, 2, subway_3], [6, 3, subway_4], [6, 4, subway_5], 
+                        [7, 0, travel_1], [7, 1, travel_2], [7, 2, travel_3], [7, 3, travel_4], [7, 4, travel_5]],
+                        dataLabels: {
+                            enabled: true,
+                            color: '#ffffff'
+                        }
+                    }]
+                });
+            }
 
             
             
