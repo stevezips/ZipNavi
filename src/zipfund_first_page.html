@@ -39,7 +39,7 @@
                 opacity: 0.9;
                 margin-right: 50px;
                 float: right;
-                border-radius: 5%;
+                border-radius: 30px;
             }
             #address_name{
                 border: #007ac3 5px solid;
@@ -262,11 +262,11 @@
                 </div>
                 <div style="display: flex; justify-content: center;">
                     <label class="radio">
-                        <input type="radio" name="r" id="male_button" value="male" checked>
+                        <input type="radio" name="gender_radio" id="male_button" value="male" checked>
                         <span style="color:white; margin-right: 20px;">남성</span>
                     </label>
                     <label class="radio">
-                        <input type="radio" name="r" id="female_button" value="female">
+                        <input type="radio" name="gender_radio" id="female_button" value="female">
                         <span style="color:white;">여성</span>
                     </label>
                 </div>
@@ -275,11 +275,11 @@
                 </div>
                 <div style="display: flex; justify-content: center;">
                     <label class="radio">
-                        <input type="radio" name="r1" id="old_yes" value="yes" checked>
+                        <input type="radio" name="old_radio" id="old_yes" value="yes" checked>
                         <span style="color:white; margin-right: 20px;">있음</span>
                     </label>
                     <label class="radio">
-                        <input type="radio" name="r1" id="old_no" value="no">
+                        <input type="radio" name="old_radio" id="old_no" value="no">
                         <span style="color:white;">없음</span>
                     </label>
                 </div>
@@ -418,7 +418,6 @@
                 var kind = $("input:checkbox[id=check_child]").is(":checked")==true;
                 var dog = $("input:radio[name=dog_radio]:checked").val();
                 var active = $('#active_range_slider').val();
-                //console.log(x, y, age, gender, old, high, midd, elem, kind, dog, active);
                 window.open("zipfund_second_page.html?x=" + x + "&y=" + y + "&age=" + age + "&gender=" + gender + "&old=" + old + 
                 "&high=" + high + "&midd=" + midd + "&elem=" + elem + "&kind=" + kind + "&dog=" + dog + "&active=" + active + "&addr=" + addr_name, '_self');
             }

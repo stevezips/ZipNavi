@@ -6,6 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <title>ZipFund Second Page</title>
+        <link href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" rel="stylesheet" type="text/css"/>
         <script src="../js/jquery.js"></script>
     </head>
     <body style="background-color: #474747; overflow: hidden;">
@@ -14,6 +15,7 @@
         <script src="https://code.highcharts.com/modules/exporting.js"></script>
         <script src="https://code.highcharts.com/modules/export-data.js"></script>
         <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
+        <script type="text/javascript" src="https://code.jquery.com/ui/1.12.1/jquery-ui.js" ></script>
         <script src="https://code.highcharts.com/modules/heatmap.js"></script>
         <script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=fb926e363d9a87e9712ed240cb75a7b0&libraries=services"></script>
         <style>
@@ -35,7 +37,7 @@
                 position: absolute;
                 font-size: 30px; 
                 font-weight: bold;
-                color: #007ac3;
+                color: rgb(127, 219, 239);
                 margin-top: 20px;
                 margin-left: -500px;
             }
@@ -71,16 +73,51 @@
                 text-align: center;
                 float:top;
             }
-            #second_page_middle{
-                height: 50%;
+            #second_page{
+                height: 90%;
                 width: 100%;
+            }
+            #second_page_left{
+                height: 70%;
+                width: 70%;
                 text-align: center;
+                float: left;
             }
             #second_page_chart{
-                margin-top: 10%;
-                height: 100%;
-                min-width: 310px; max-width: 80%;
+                height: 90%;
+                min-width: 310px; max-width: 90%;
                 margin: 0 auto;
+            }
+            #second_page_right{
+                height: 70%;
+                width: 30%;
+                float:right;
+            }
+            #second_page_middle{
+                display: inline-block;
+                height: 20%;
+                width: 100%;
+            }
+            #mytable{
+                border: rgb(127, 219, 239) 5px dashed;
+                width: 80%;
+                margin-left: 10%;
+                height: 80%;
+                vertical-align: middle;
+                text-align: center;
+            }
+            #second_page_bottom{
+                display: inline-block;
+                height:10%;
+                width:100%;
+                padding-top: 30px;
+                text-align: center;
+            }
+            #third_page_top{
+                margin-top: 15px;
+                height: 10%;
+                text-align: center;
+                float:top;
             }
             .checks {position: relative;}
 
@@ -105,10 +142,10 @@
             .checks input[type="checkbox"] + label:before {  /* 가짜 체크박스 */
                 content: ' ';
                 display: inline-block;
-                width: 30px;  /* 체크박스의 너비를 지정 */
-                height: 30px;  /* 체크박스의 높이를 지정 */
-                line-height: 30px; /* 세로정렬을 위해 높이값과 일치 */
-                margin: 0 15px 0 0;
+                width: 25px;  /* 체크박스의 너비를 지정 */
+                height: 25px;  /* 체크박스의 높이를 지정 */
+                line-height: 25px; /* 세로정렬을 위해 높이값과 일치 */
+                margin: 0 8px 0 0;
                 text-align: center; 
                 vertical-align: middle;
                 background: #fafafa;
@@ -126,7 +163,6 @@
                 top: 0;
                 margin-top: 0;
                 margin-left: -10px;
-                opacity: .6;
                 box-shadow: none;
                 border-color: #6cc0e5;
                 -webkit-transition: all .12s, border-color .08s;
@@ -176,6 +212,9 @@
             g.highcharts-axis-labels text tspan{
                 font: 18px sans-serif; fill:white;
             }
+            #sortable { list-style-type: none; margin: 0; padding: 0; width: 400px;}
+            #sortable li { margin: 15px 10px 5px 10px; padding: 0.4em; padding-left: 1.5em; font-size: 1.4em; font-weight: bold; height: 18px; border:#007ac3 5px solid; border-radius: 15px;}
+            #sortable li span { position: absolute; margin-left: -1.3em; }
         </style>
         <main id="container">
             <section id="main_screen">
@@ -225,28 +264,66 @@
                         onmouseout="this.src='../images/arrow_up.png'"
                         onclick="moveTop()">
                 </div>
-                <div id="second_page_middle">
-                    <div id="second_page_chart"></div>
+                <div id="second_page">
+                    <div id="second_page_left">
+                        <div id="second_page_chart"></div>
+                    </div>
+                    <div id="second_page_right">
+                        <ul id="sortable">
+                            <li class="ui-state-default" value=0><span class="ui-icon ui-icon-arrowthick-2-n-s"></span>의료시설</li>
+                            <li class="ui-state-default" value=1><span class="ui-icon ui-icon-arrowthick-2-n-s"></span>학군</li>
+                            <li class="ui-state-default" value=2><span class="ui-icon ui-icon-arrowthick-2-n-s"></span>장보기</li>
+                            <li class="ui-state-default" value=3><span class="ui-icon ui-icon-arrowthick-2-n-s"></span>문화시설</li>
+                            <li class="ui-state-default" value=4><span class="ui-icon ui-icon-arrowthick-2-n-s"></span>음식점 및 카페</li>
+                            <li class="ui-state-default" value=5><span class="ui-icon ui-icon-arrowthick-2-n-s"></span>공공시설</li>
+                            <li class="ui-state-default" value=6><span class="ui-icon ui-icon-arrowthick-2-n-s"></span>지하철</li>
+                            <li class="ui-state-default" value=7><span class="ui-icon ui-icon-arrowthick-2-n-s"></span>관광 및 숙박시설</li>
+                          </ul>
+                    </div>
+                    <div id="second_page_middle">
+                        <table id="mytable" border="1" cellspacing="0">
+                            <tr>
+                                <th style="font: 30px bold; color:white;">분류</th>
+                                <th style="font: 28px bold; color:white;">의료시설</th>
+                                <th style="font: 28px bold; color:white;">학군</th>
+                                <th style="font: 28px bold; color:white;">장보기</th>
+                                <th style="font: 28px bold; color:white;">문화시설</th>
+                                <th style="font: 28px bold; color:white;">음식점 및 카페</th>
+                                <th style="font: 28px bold; color:white;">공공시설</th>
+                                <th style="font: 28px bold; color:white;">지하철</th>
+                                <th style="font: 28px bold; color:white;">관광 및 숙박시설</th>
+                                <th style="font: 28px bold; color:white;">평균</th>
+                            </tr>
+                            <tr style="text-align: center;">
+                                <td style="font: 30px bold; color:white;">스코어</td>
+                                <td id="score_0" style="font: 28px bold; color:white;">0</td>
+                                <td id="score_1" style="font: 28px bold; color:white;">0</td>
+                                <td id="score_2" style="font: 28px bold; color:white;">0</td>
+                                <td id="score_3" style="font: 28px bold; color:white;">0</td>
+                                <td id="score_4" style="font: 28px bold; color:white;">0</td>
+                                <td id="score_5" style="font: 28px bold; color:white;">0</td>
+                                <td id="score_6" style="font: 28px bold; color:white;">0</td>
+                                <td id="score_7" style="font: 28px bold; color:white;">0</td>
+                                <td id="score_avg" style="font: 28px bold; color:white;">0</td>
+                            </tr>
+                            <tbody></tbody>
+                          </table>
+                    </div>
+                    <div id="second_page_bottom">
+                        <img style="width: 100px;" src="../images/arrow_down.png"
+                        onmouseover="this.src='../images/arrow_down_white.png'" 
+                        onmouseout="this.src='../images/arrow_down.png'"
+                        onclick="moveThird()">
+                    </div>
                 </div>
-            <!--
-                <div id="second_screen_first_line" style="padding-top:15%; height:10%; text-align: center;">
-                    <input type="image" src="../images/second_screen_first_line.png" disabled="true">
+            </section>
+            <section id="third_screen" style="height:100%;">
+                <div id="third_page_top">
+                    <img style="width: 100px;" src="../images/arrow_up.png"
+                        onmouseover="this.src='../images/arrow_up_white.png'" 
+                        onmouseout="this.src='../images/arrow_up.png'"
+                        onclick="moveSecond()">
                 </div>
-                <div id="second_screen_second_line"style="height:10%; text-align:center;">
-                    <input type="image" src="../images/second_screen_second_line.png"disabled="true">
-                </div>
-                <div id="second_screen_third_line"style="height:10%; text-align:center;">
-                    <input type="image" src="../images/second_screen_third_line.png"disabled="true">
-                </div>
-                <div id="second_screen_fourth_line"style="height:10%; text-align:center;">
-                    <input type="image" src="../images/second_screen_fourth_line.png"disabled="true">
-                </div>
-                <div id="address_search_panel" style="margin-top: 25px; width: 100%; height: 30%; text-align: center;">
-                    <input type="text" id="sample_address" class="address_search" placeholder="찾고자 하는 지역의 '구', '동'을 입력하세요.">
-                    <input type="image" onclick="SearchAddress()" src="../images/zoom_2.png" style="vertical-align: middle; width: 30px; height: 30px;" onfocus="this.blur()"><br>
-                    <h1 id="txt_address" style="font-size: 18px; font-weight: bold; font-style: italic; color: #007ac3;"> </h1>
-                </div>
-            -->
             </section>
         </main>
         <script>
@@ -339,20 +416,7 @@
             codes[13].place_name_1='AD5';   // 숙박
             var travel = [];
             var travel_markers = [];
-            function getUniqueObjectArray(array, key) {
-            var tempArray = [];
-            var resultArray = [];
-                for(var i = 0; i < array.length; i++) {
-                    var item = array[i]
-                    if(tempArray.include(item[key])) {
-                        continue;
-                    } else {
-                        resultArray.push(item);
-                        tempArray.push(item[key]);
-                    }
-                }
-                return resultArray;
-            }
+
             for(var i = 0; i < codes.length; i++){
                 ps.categorySearch(codes[i].place_name_1, placeSearchCB, {
                     page: 1, size: 15, y: y, x: x,
@@ -422,12 +486,7 @@
                         if(data[j].category_group_code == 'AD5'){
                             travel.push(Object.entries(obj));
                         }
-                    }/*
-                    for(var i = 0; i < codes.length; i++){
-                        if(data[0].category_group_code == codes[i].place_name_1){
-                            window.codes[i].place_num = data.length;
-                        }
-                    }*/
+                    }
                 }
                 return data.length;
             }
@@ -511,6 +570,7 @@
                 }
             }
             
+            var category_score = [];
             window.onload = function(){
                 remove_duplicates(hospital);
                 remove_duplicates(school);
@@ -521,9 +581,94 @@
                 remove_duplicates(subway);
                 remove_duplicates(travel);
                 getNumber();
-                console.log(subway);
                 viewFirstChart();
                 viewSecondChart();
+            }
+
+            function getScore(){
+                //category_score[0]
+                category_score[0] = hospital.length - 100;
+                var hospital_weight = 100 / hospital.length;
+                if(category_score[0] < 0) category_score[0] = 0;
+                category_score[0] += hospital_weight * hospital_1 + 
+                hospital_weight * hospital_2 * 0.9 + 
+                hospital_weight * hospital_3 * 0.8 + 
+                hospital_weight * hospital_4 * 0.7 +
+                hospital_weight * hospital_5 * 0.6;
+
+                category_score[1] = school.length - 100;
+                var school_weight = 100 / school.length; console.log(school_weight, school_1, school_2, school_3, school_4, school_5);
+                if(category_score[1] < 0) category_score[1] = 0;
+                category_score[1] += school_weight * school_1 + 
+                school_weight * school_2 * 0.9 + 
+                school_weight * school_3 * 0.8 + 
+                school_weight * school_4 * 0.7 +
+                school_weight * school_5 * 0.6;
+
+                category_score[2] = mart.length - 100;
+                var mart_weight = 100 / mart.length;
+                if(category_score[2] < 0) category_score[2] = 0;
+                category_score[2] += mart_weight * mart_1 + 
+                mart_weight * mart_2 * 0.9 + 
+                mart_weight * mart_3 * 0.8 + 
+                mart_weight * mart_4 * 0.7 +
+                mart_weight * mart_5 * 0.6;
+
+                category_score[3] = culture.length - 100;
+                var culture_weight = 100 / culture.length;
+                if(category_score[3] < 0) category_score[3] = 0;
+                category_score[3] += culture_weight * culture_1 + 
+                culture_weight * culture_2 * 0.9 + 
+                culture_weight * culture_3 * 0.8 + 
+                culture_weight * culture_4 * 0.7 +
+                culture_weight * culture_5 * 0.6;
+
+                category_score[4] = restaurant.length - 100;
+                var rest_weight = 100 / restaurant.length;
+                if(category_score[4] < 0) category_score[4] = 0;
+                category_score[4] += rest_weight * restaurant_1 + 
+                rest_weight * restaurant_2 * 0.9 + 
+                rest_weight * restaurant_3 * 0.8 + 
+                rest_weight * restaurant_4 * 0.7 +
+                rest_weight * restaurant_5 * 0.6;
+
+                category_score[5] = public_place.length - 100;
+                var pub_weight = 100 / public_place.length;
+                if(category_score[5] < 0) category_score[5] = 0;
+                category_score[5] += pub_weight * public_place_1 + 
+                pub_weight * public_place_2 * 0.9 + 
+                pub_weight * public_place_3 * 0.8 + 
+                pub_weight * public_place_4 * 0.7 +
+                pub_weight * public_place_5 * 0.6;
+
+                category_score[6] = subway.length - 100;
+                var subway_weight = 100 / subway.length;
+                if(category_score[6] < 0) category_score[6] = 0;
+                category_score[6] += subway_weight * subway_1 + 
+                pub_weight * subway_2 * 0.9 + 
+                pub_weight * subway_3 * 0.8 + 
+                pub_weight * subway_4 * 0.7 +
+                pub_weight * subway_5 * 0.6;
+
+                category_score[7] = travel.length - 100;
+                var travel_weight = 100 / travel.length;
+                if(category_score[7] < 0) category_score[7] = 0;
+                category_score[7] += travel_weight * travel_1 + 
+                travel_weight * travel_2 * 0.9 + 
+                travel_weight * travel_3 * 0.8 + 
+                travel_weight * travel_4 * 0.7 +
+                travel_weight * travel_5 * 0.6;
+
+                category_score[order_category[0]] *= 1.3;
+                category_score[order_category[1]] *= 1.2;
+                category_score[order_category[2]] *= 1.1;
+
+                category_score[order_category[3]] *= 1.0;
+                category_score[order_category[4]] *= 0.9;
+                category_score[order_category[5]] *= 0.8;
+
+                category_score[order_category[6]] *= 0.7;
+                category_score[order_category[7]] *= 0.6;
             }
 
             $("#check_medical").change(function(){
@@ -758,9 +903,9 @@
                 title: {
                     text: '주변 환경 정보',
                     style: {
-                        "color": "white",
-                        "font-size": "25px",
-                        "font-weight": "bold"
+                        "color": "rgb(127, 219, 239)",
+                        "font-size": "30px",
+                        "fill": "rgb(127, 219, 239)"
                     }
                 },
                 tooltip: {
@@ -802,7 +947,7 @@
                     name: '지하철',
                     y: subway.length
                     }, {
-                    name: '관광지 및 숙박업소',
+                    name: '관광 및 숙박시설',
                     y: travel.length
                     }]
                 }]
@@ -826,7 +971,7 @@
                         }
                     },
                     xAxis: {
-                        categories: ['병원', '학군', '장보기', '문화시설', '음식점 및 카페', '공공시설', '지하철', '관광지 및 숙박업소'],
+                        categories: ['병원', '학군', '장보기', '문화시설', '음식점 및 카페', '공공시설', '지하철', '관광 및 숙박시설'],
                         labels:{
                             style:{
                                 color: 'white',
@@ -835,7 +980,7 @@
                         }
                     },
                     yAxis: {
-                        categories: [(parseInt(active) * 0.2).toFixed(1) + 'km', (parseInt(active) * 0.4).toFixed(1) + 'km', (parseInt(active) * 0.6).toFixed(1) + 'km', (parseInt(active) * 0.8).toFixed(1) + 'km', parseInt(active).toFixed(1) + 'km'],
+                        categories: [active * 200 + 'm', active * 400 + 'm', active * 600 + 'm', active * 800 + 'm', active * 1000 + 'm'],
                         labels:{
                             style:{
                                 color: 'white',
@@ -881,7 +1026,33 @@
                     }]
                 });
             }
-
+            $(function() {
+                $( "#sortable").sortable({
+                    stop: function(event, ui){
+                        order_category = [];
+                        $("#sortable").children().each(function(){
+                            order_category.push($(this).val());
+                            //스코어링 차트 그리는 함수 호출해서 변동사항 업데이트함
+                        })
+                        getScore();
+                        var sum = 0;
+                        for(var item in category_score){
+                            category_score[item] = Number.parseFloat(category_score[item]).toFixed(1);
+                            sum += Number.parseFloat(category_score[item]);
+                        }
+                        $("#score_0").html(category_score[0]);
+                        $("#score_1").html(category_score[1]);
+                        $("#score_2").html(category_score[2]);
+                        $("#score_3").html(category_score[3]);
+                        $("#score_4").html(category_score[4]);
+                        $("#score_5").html(category_score[5]);
+                        $("#score_6").html(category_score[6]);
+                        $("#score_7").html(category_score[7]);
+                        $("#score_avg").html((sum / 8).toFixed(1));
+                    }
+                });
+                $( "#sortable" ).disableSelection();
+            });
             
             
             /*
@@ -905,6 +1076,10 @@
             }
             function moveSecond(){
                 var offset=$("#second_screen").offset();
+                $("html body").animate({scrollTop:offset.top}, 500);
+            }
+            function moveThird(){
+                var offset=$("#third_screen").offset();
                 $("html body").animate({scrollTop:offset.top}, 500);
             }
         </script>
