@@ -22,6 +22,16 @@
     <body>   
         <div id="container" style="height: 600px; min-width: 310px; max-width: 1000px; margin: 0 auto"></div>
         <script>
+          $.ajax({
+            type: 'POST',
+            url: "sample_crawl.py",
+            dataType: "text",
+            success: function(response){
+              console.log(response);
+            }
+          }).done(function(data){
+            console.log(data);
+          });
             Highcharts.chart('container', {
 
 chart: {

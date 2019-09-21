@@ -288,10 +288,12 @@
                                 <th style="font: 28px bold; color:white;">학군</th>
                                 <th style="font: 28px bold; color:white;">장보기</th>
                                 <th style="font: 28px bold; color:white;">문화시설</th>
-                                <th style="font: 28px bold; color:white;">음식점 및 카페</th>
+                                <th style="font: 28px bold; color:white;">음식점</th>
+                                <th style="font: 28px bold; color:white;">카페</th>
                                 <th style="font: 28px bold; color:white;">공공시설</th>
                                 <th style="font: 28px bold; color:white;">지하철</th>
-                                <th style="font: 28px bold; color:white;">관광 및 숙박시설</th>
+                                <th style="font: 28px bold; color:white;">관광지</th>
+                                <th style="font: 28px bold; color:white;">숙박시설</th>
                                 <th style="font: 28px bold; color:white;">평균</th>
                             </tr>
                             <tr style="text-align: center;">
@@ -304,6 +306,8 @@
                                 <td id="score_5" style="font: 28px bold; color:white;">0</td>
                                 <td id="score_6" style="font: 28px bold; color:white;">0</td>
                                 <td id="score_7" style="font: 28px bold; color:white;">0</td>
+                                <td id="score_8" style="font: 28px bold; color:white;">0</td>
+                                <td id="score_9" style="font: 28px bold; color:white;">0</td>
                                 <td id="score_avg" style="font: 28px bold; color:white;">0</td>
                             </tr>
                             <tbody></tbody>
@@ -344,6 +348,8 @@
             dog = getData.dog;
             active = getData.active;
             address_name = getData.addr;
+            var order_category = [];
+            var total_category_num;
             var container = document.getElementById("kakao_map");
             var options = {
                 center: new kakao.maps.LatLng(y, x),
@@ -381,41 +387,68 @@
             //var infowindow = new kakao.maps.InfoWindow({zIndex:1});
             // 병원 관련
             codes[0].place_name_1="HP8";  // 병원
-            codes[1].place_name_1="PM9";  // 약국
             var hospital = [];
             var hospital_markers = [];
+            var image_hos = '../images/hospital_marker.png', // 마커이미지의 주소입니다    
+                            imageSize = new kakao.maps.Size(35, 35), // 마커이미지의 크기입니다
+                            imageOption = {offset: new kakao.maps.Point(25, 40)};
+            codes[1].place_name_1="PM9";  // 약국
+            var pharmacy = [];
+            var pharmacy_markers = [];
+            var image_pha = '../images/pharmacy_marker.png';
+            
             // 학군 관련
             codes[2].place_name_1='PS3';    // 유치원
+            var kindergarten = [];
+            var kindergarten_markers = [];
+            var image_kin = '../images/kindergarten_marker.png';
             codes[3].place_name_1='SC4';    // 학교
-            codes[4].place_name_1='AC5';    // 학원
             var school = [];
             var school_markers = [];
+            var image_sch = '../images/school_marker.png';
+            codes[4].place_name_1='AC5';    // 학원
+            var academy = [];
+            var academy_markers = [];
+            var image_aca = '../images/academy_marker.png';
+            
             // 장보기 관련
             codes[5].place_name_1='MT1';    // 마트
             codes[6].place_name_1='CS2';    // 편의점
             var mart = [];
             var mart_markers = [];
+            var image_mart = '../images/mart_marker.png';
             // 문화시설
             codes[7].place_name_1='CT1';    // 문화시설
             var culture = [];
             var culture_markers = [];
+            var image_cul = '../images/culture_marker.png';
             // 음식점과카페
             codes[8].place_name_1='FD6';    // 음식점
-            codes[9].place_name_1='CE7';    // 카페
             var restaurant = [];
             var restaurant_markers = [];
+            var image_res = '../images/restaurant_marker.png';
+            codes[9].place_name_1='CE7';    // 카페
+            var cafe = [];
+            var cafe_markers = [];
+            var image_caf = '../images/cafe_marker.png';
             // 공공기관과 지하철
             codes[10].place_name_1='PO3';   // 공공시설
             var public_place = [];
             var public_place_markers = [];
+            var image_pub = '../images/public_place_marker.png';
             codes[11].place_name_1='SW8';   // 지하철
             var subway = [];
             var subway_markers = [];
+            var image_sub = '../images/subway_marker.png';
             // 관광명소와 숙박
             codes[12].place_name_1='AT4';   // 관광명소
-            codes[13].place_name_1='AD5';   // 숙박
             var travel = [];
             var travel_markers = [];
+            var image_tra = '../images/travel_marker.png';
+            codes[13].place_name_1='AD5';   // 숙박
+            var motel = [];
+            var motel_markers = [];
+            var image_mot = '../images/motel_marker.png';
 
             for(var i = 0; i < codes.length; i++){
                 ps.categorySearch(codes[i].place_name_1, placeSearchCB, {
@@ -432,59 +465,64 @@
                 });
             }
             var hospital_1 = 0, hospital_2 = 0, hospital_3 = 0, hospital_4 = 0, hospital_5 = 0;
+            var pharmacy_1 = 0, pharmacy_2 = 0, pharmacy_3 = 0, pharmacy_4 = 0, pharmacy_5 = 0;
+            var kindergarten_1 = 0, kindergarten_2 = 0, kindergarten_3 = 0, kindergarten_4 = 0, kindergarten_5 = 0;
             var school_1 = 0, school_2 = 0, school_3 = 0, school_4 = 0, school_5 = 0;
+            var academy_1 = 0,  academy_2 = 0,  academy_3 = 0,  academy_4 = 0,  academy_5 = 0;
             var mart_1 = 0, mart_2 = 0, mart_3 = 0, mart_4 = 0, mart_5 = 0;
             var culture_1 = 0, culture_2 = 0, culture_3 = 0, culture_4 = 0, culture_5 = 0;
             var restaurant_1 = 0, restaurant_2 = 0, restaurant_3 = 0, restaurant_4 = 0, restaurant_5 = 0;
+            var cafe_1 = 0, cafe_2 = 0, cafe_3 = 0, cafe_4 = 0, cafe_5 = 0;
             var public_place_1 = 0,public_place_2 = 0, public_place_3 = 0, public_place_4 = 0, public_place_5 = 0;
             var subway_1 = 0, subway_2 = 0, subway_3 = 0, subway_4 = 0, subway_5 = 0;
             var travel_1 = 0, travel_2 = 0, travel_3 = 0, travel_4 = 0, travel_5 = 0;
+            var motel_1 = 0, motel_2 = 0, motel_3 = 0, motel_4 = 0, motel_5 = 0;
             function placeSearchCB (data, status, pagination) {
                 if (status === kakao.maps.services.Status.OK) {
                     for (var j=0; j<data.length; j++) {
                         var temp = data[j].distance;
                         var obj = {name : data[j].place_name, dist : data[j].distance, x : data[j].x, y : data[j].y};
-                        if(data[j].category_group_code == 'HP8'){
+                        if(data[j].category_group_code == 'HP8'){//hospital
                             hospital.push(Object.entries(obj));
                         }
-                        if(data[j].category_group_code == 'PM9'){
-                            hospital.push(Object.entries(obj));
+                        if(data[j].category_group_code == 'PM9'){//pharmacy
+                            pharmacy.push(Object.entries(obj));
                         }
-                        if(data[j].category_group_code == 'PS3'){
+                        if(data[j].category_group_code == 'PS3'){//kindergarten
+                            kindergarten.push(Object.entries(obj));
+                        }
+                        if(data[j].category_group_code == 'SC4'){//school
                             school.push(Object.entries(obj));
                         }
-                        if(data[j].category_group_code == 'SC4'){
-                            school.push(Object.entries(obj));
+                        if(data[j].category_group_code == 'AC5'){//academy
+                            academy.push(Object.entries(obj));
                         }
-                        if(data[j].category_group_code == 'AC5'){
-                            school.push(Object.entries(obj));
-                        }
-                        if(data[j].category_group_code == 'MT1'){
+                        if(data[j].category_group_code == 'MT1'){//mart
                             mart.push(Object.entries(obj));
                         }
-                        if(data[j].category_group_code == 'CS2'){
+                        if(data[j].category_group_code == 'CS2'){//mart(convenience store)
                             mart.push(Object.entries(obj));
                         }
-                        if(data[j].category_group_code == 'CT1'){
+                        if(data[j].category_group_code == 'CT1'){//culture
                             culture.push(Object.entries(obj));
                         }
-                        if(data[j].category_group_code == 'FD6'){
+                        if(data[j].category_group_code == 'FD6'){//restaurant
                             restaurant.push(Object.entries(obj));
                         }
-                        if(data[j].category_group_code == 'CE7'){
-                            restaurant.push(Object.entries(obj));
+                        if(data[j].category_group_code == 'CE7'){//cafe
+                            cafe.push(Object.entries(obj));
                         }
-                        if(data[j].category_group_code == 'PO3'){
+                        if(data[j].category_group_code == 'PO3'){//public_place
                             public_place.push(Object.entries(obj));
                         }
-                        if(data[j].category_group_code == 'SW8'){
+                        if(data[j].category_group_code == 'SW8'){//subway
                             subway.push(Object.entries(obj));
                         }
-                        if(data[j].category_group_code == 'AT4'){
+                        if(data[j].category_group_code == 'AT4'){//travel
                             travel.push(Object.entries(obj));
                         }
-                        if(data[j].category_group_code == 'AD5'){
-                            travel.push(Object.entries(obj));
+                        if(data[j].category_group_code == 'AD5'){//motel
+                            motel.push(Object.entries(obj));
                         }
                     }
                 }
@@ -512,6 +550,22 @@
                     else if(temp > active * 200) hospital_2++;
                     else hospital_1++;
                 }
+                for(item in pharmacy){
+                    var temp = parseInt(pharmacy[item][1][1]);
+                    if(temp > active * 800) pharmacy_5++;
+                    else if(temp > active * 600) pharmacy_4++;
+                    else if(temp > active * 400) pharmacy_3++;
+                    else if(temp > active * 200) pharmacy_2++;
+                    else pharmacy_1++;
+                }
+                for(item in kindergarten){
+                    var temp = parseInt(kindergarten[item][1][1]);
+                    if(temp > active * 800) kindergarten_5++;
+                    else if(temp > active * 600) kindergarten_4++;
+                    else if(temp > active * 400) kindergarten_3++;
+                    else if(temp > active * 200) kindergarten_2++;
+                    else kindergarten_1++;
+                }
                 for(item in school){
                     var temp = parseInt(school[item][1][1]);
                     if(temp > active * 800) school_5++;
@@ -519,6 +573,14 @@
                     else if(temp > active * 400) school_3++;
                     else if(temp > active * 200) school_2++;
                     else school_1++;
+                }
+                for(item in academy){
+                    var temp = parseInt(academy[item][1][1]);
+                    if(temp > active * 800) academy_5++;
+                    else if(temp > active * 600) academy_4++;
+                    else if(temp > active * 400) academy_3++;
+                    else if(temp > active * 200) academy_2++;
+                    else academy_1++;
                 }
                 for(item in mart){
                     var temp = parseInt(mart[item][1][1]);
@@ -544,6 +606,14 @@
                     else if(temp > active * 200) restaurant_2++;
                     else restaurant_1++;
                 }
+                for(item in cafe){
+                    var temp = parseInt(cafe[item][1][1]);
+                    if(temp > active * 800) cafe_5++;
+                    else if(temp > active * 600) cafe_4++;
+                    else if(temp > active * 400) cafe_3++;
+                    else if(temp > active * 200) cafe_2++;
+                    else cafe_1++;
+                }
                 for(item in public_place){
                     var temp = parseInt(public_place[item][1][1]);
                     if(temp > active * 800) public_place_5++;
@@ -568,26 +638,41 @@
                     else if(temp > active * 200) travel_2++;
                     else travel_1++;
                 }
+                for(item in motel){
+                    var temp = parseInt(motel[item][1][1]);
+                    if(temp > active * 800) motel_5++;
+                    else if(temp > active * 600) motel_4++;
+                    else if(temp > active * 400) motel_3++;
+                    else if(temp > active * 200) motel_2++;
+                    else motel_1++;
+                }
             }
             
             var category_score = [];
             window.onload = function(){
                 remove_duplicates(hospital);
+                remove_duplicates(pharmacy);
+                remove_duplicates(kindergarten);
                 remove_duplicates(school);
+                remove_duplicates(academy);
                 remove_duplicates(mart);
                 remove_duplicates(culture);
                 remove_duplicates(restaurant);
+                remove_duplicates(cafe);
                 remove_duplicates(public_place);
                 remove_duplicates(subway);
                 remove_duplicates(travel);
-                getNumber();
-                viewFirstChart();
-                viewSecondChart();
+                remove_duplicates(motel);
+                setTimeout(function(){
+                    getNumber();
+                    viewFirstChart();
+                    viewSecondChart();
+                }, 1000);
             }
 
             function getScore(){
-                //category_score[0]
                 category_score[0] = hospital.length - 100;
+                //category_score[0]
                 var hospital_weight = 100 / hospital.length;
                 if(category_score[0] < 0) category_score[0] = 0;
                 category_score[0] += hospital_weight * hospital_1 + 
@@ -596,79 +681,147 @@
                 hospital_weight * hospital_4 * 0.7 +
                 hospital_weight * hospital_5 * 0.6;
 
-                category_score[1] = school.length - 100;
-                var school_weight = 100 / school.length; console.log(school_weight, school_1, school_2, school_3, school_4, school_5);
-                if(category_score[1] < 0) category_score[1] = 0;
-                category_score[1] += school_weight * school_1 + 
+                category_score[1] = pharmacy.length - 100;
+                var pharmacy_weight = 100 / pharmacy.length;
+                if(category_score[0] < 0) category_score[0] = 0;
+                category_score[0] += pharmacy_weight * pharmacy_1 + 
+                pharmacy_weight * pharmacy_2 * 0.9 + 
+                pharmacy_weight * pharmacy_3 * 0.8 + 
+                pharmacy_weight * pharmacy_4 * 0.7 +
+                pharmacy_weight * pharmacy_5 * 0.6;
+
+                category_score[2] = kindergarten.length - 100;
+                var kindergarten_weight = 100 / kindergarten.length;
+                if(category_score[2] < 0) category_score[2] = 0;
+                category_score[2] += kindergarten_weight * kindergarten_1 + 
+                kindergarten_weight * kindergarten_2 * 0.9 + 
+                kindergarten_weight * kindergarten_3 * 0.8 + 
+                kindergarten_weight * kindergarten_4 * 0.7 +
+                kindergarten_weight * kindergarten_5 * 0.6;
+
+                category_score[3] = school.length - 100;
+                var school_weight = 100 / school.length;
+                if(category_score[3] < 0) category_score[3] = 0;
+                category_score[3] += school_weight * school_1 + 
                 school_weight * school_2 * 0.9 + 
                 school_weight * school_3 * 0.8 + 
                 school_weight * school_4 * 0.7 +
                 school_weight * school_5 * 0.6;
 
-                category_score[2] = mart.length - 100;
+                category_score[4] = academy.length - 100;
+                var academy_weight = 100 / academy.length;
+                if(category_score[4] < 0) category_score[4] = 0;
+                category_score[4] += academy_weight * academy_1 + 
+                academy_weight * academy_2 * 0.9 + 
+                academy_weight * academy_3 * 0.8 + 
+                academy_weight * academy_4 * 0.7 +
+                academy_weight * academy_5 * 0.6;
+
+                category_score[5] = mart.length - 100;
                 var mart_weight = 100 / mart.length;
-                if(category_score[2] < 0) category_score[2] = 0;
-                category_score[2] += mart_weight * mart_1 + 
+                if(category_score[5] < 0) category_score[5] = 0;
+                category_score[5] += mart_weight * mart_1 + 
                 mart_weight * mart_2 * 0.9 + 
                 mart_weight * mart_3 * 0.8 + 
                 mart_weight * mart_4 * 0.7 +
                 mart_weight * mart_5 * 0.6;
 
-                category_score[3] = culture.length - 100;
+                category_score[6] = culture.length - 100;
                 var culture_weight = 100 / culture.length;
-                if(category_score[3] < 0) category_score[3] = 0;
-                category_score[3] += culture_weight * culture_1 + 
+                if(category_score[6] < 0) category_score[6] = 0;
+                category_score[6] += culture_weight * culture_1 + 
                 culture_weight * culture_2 * 0.9 + 
                 culture_weight * culture_3 * 0.8 + 
                 culture_weight * culture_4 * 0.7 +
                 culture_weight * culture_5 * 0.6;
 
-                category_score[4] = restaurant.length - 100;
-                var rest_weight = 100 / restaurant.length;
-                if(category_score[4] < 0) category_score[4] = 0;
-                category_score[4] += rest_weight * restaurant_1 + 
-                rest_weight * restaurant_2 * 0.9 + 
-                rest_weight * restaurant_3 * 0.8 + 
-                rest_weight * restaurant_4 * 0.7 +
-                rest_weight * restaurant_5 * 0.6;
+                category_score[7] = restaurant.length - 100;
+                var res_weight = 100 / restaurant.length;
+                if(category_score[7] < 0) category_score[7] = 0;
+                category_score[7] += res_weight * restaurant_1 + 
+                res_weight * restaurant_2 * 0.9 + 
+                res_weight * restaurant_3 * 0.8 + 
+                res_weight * restaurant_4 * 0.7 +
+                res_weight * restaurant_5 * 0.6;
 
-                category_score[5] = public_place.length - 100;
+                category_score[8] = cafe.length - 100;
+                var cafe_weight = 100 / cafe.length;
+                if(category_score[8] < 0) category_score[8] = 0;
+                category_score[8] += cafe_weight * cafe_1 + 
+                cafe_weight * cafe_2 * 0.9 + 
+                cafe_weight * cafe_3 * 0.8 + 
+                cafe_weight * cafe_4 * 0.7 +
+                cafe_weight * cafe_5 * 0.6;
+
+                category_score[9] = public_place.length - 100;
                 var pub_weight = 100 / public_place.length;
-                if(category_score[5] < 0) category_score[5] = 0;
-                category_score[5] += pub_weight * public_place_1 + 
+                if(category_score[9] < 0) category_score[9] = 0;
+                category_score[9] += pub_weight * public_place_1 + 
                 pub_weight * public_place_2 * 0.9 + 
                 pub_weight * public_place_3 * 0.8 + 
                 pub_weight * public_place_4 * 0.7 +
                 pub_weight * public_place_5 * 0.6;
 
-                category_score[6] = subway.length - 100;
+                category_score[10] = subway.length - 100;
                 var subway_weight = 100 / subway.length;
-                if(category_score[6] < 0) category_score[6] = 0;
-                category_score[6] += subway_weight * subway_1 + 
-                pub_weight * subway_2 * 0.9 + 
-                pub_weight * subway_3 * 0.8 + 
-                pub_weight * subway_4 * 0.7 +
-                pub_weight * subway_5 * 0.6;
+                if(category_score[10] < 0) category_score[10] = 0;
+                category_score[10] += subway_weight * subway_1 + 
+                subway_weight * subway_2 * 0.9 + 
+                subway_weight * subway_3 * 0.8 + 
+                subway_weight * subway_4 * 0.7 +
+                subway_weight * subway_5 * 0.6;
 
-                category_score[7] = travel.length - 100;
+                category_score[11] = travel.length - 100;
                 var travel_weight = 100 / travel.length;
-                if(category_score[7] < 0) category_score[7] = 0;
-                category_score[7] += travel_weight * travel_1 + 
+                if(category_score[11] < 0) category_score[11] = 0;
+                category_score[11] += travel_weight * travel_1 + 
                 travel_weight * travel_2 * 0.9 + 
                 travel_weight * travel_3 * 0.8 + 
                 travel_weight * travel_4 * 0.7 +
                 travel_weight * travel_5 * 0.6;
 
-                category_score[order_category[0]] *= 1.3;
-                category_score[order_category[1]] *= 1.2;
+                category_score[12] = motel.length - 100;
+                var motel_weight = 100 / motel.length;
+                if(category_score[12] < 0) category_score[12] = 0;
+                category_score[12] += motel_weight * motel_1 + 
+                motel_weight * motel_2 * 0.9 + 
+                motel_weight * motel_3 * 0.8 + 
+                motel_weight * motel_4 * 0.7 +
+                motel_weight * motel_5 * 0.6;
+                
+                total_category_num = (hospital.length + pharmacy.length + kindergarten.length +school.length + 
+                                    academy.length + mart.length + culture.length + restaurant.length + cafe.length +
+                                    public_place.length + subway.length + travel.length + motel.length) / 13;
+                category_score[0] *= hospital.length / total_category_num;
+                category_score[1] *= pharmacy.length / total_category_num;
+                category_score[2] *= kindergarten.length / total_category_num;
+                category_score[3] *= school.length / total_category_num;
+                category_score[4] *= academy.length / total_category_num;
+                category_score[5] *= mart.length / total_category_num;
+                category_score[6] *= culture.length / total_category_num;
+                category_score[7] *= restaurant.length / total_category_num;
+                category_score[8] *= cafe.length / total_category_num;
+                category_score[9] *= public_place.length / total_category_num;
+                category_score[10] *= subway.length / total_category_num;
+                category_score[11] *= travel.length / total_category_num;
+                category_score[12] *= motel.length / total_category_num;
+
+                category_score[order_category[0]] *= 1.2;
+                category_score[order_category[1]] *= 1.15;
                 category_score[order_category[2]] *= 1.1;
 
-                category_score[order_category[3]] *= 1.0;
-                category_score[order_category[4]] *= 0.9;
-                category_score[order_category[5]] *= 0.8;
+                category_score[order_category[3]] *= 1.05;
+                category_score[order_category[4]] *= 1.0;
+                category_score[order_category[5]] *= 1.0;
 
-                category_score[order_category[6]] *= 0.7;
-                category_score[order_category[7]] *= 0.6;
+                category_score[order_category[6]] *= 0.95;
+                category_score[order_category[7]] *= 0.95;
+                category_score[order_category[8]] *= 0.9;
+
+                category_score[order_category[9]] *= 0.85;
+                category_score[order_category[10]] *= 0.85;
+                category_score[order_category[11]] *= 0.8;
+                category_score[order_category[12]] *= 0.8;
             }
 
             $("#check_medical").change(function(){
@@ -677,9 +830,11 @@
                         var nameM = hospital[item][0][1];
                         var xPos = hospital[item][2][1];
                         var yPos = hospital[item][3][1];
+                        var markerImage = new kakao.maps.MarkerImage(image_hos, imageSize, imageOption);
                         var marker = new kakao.maps.Marker({
                             map: map,
-                            position: new kakao.maps.LatLng(yPos, xPos)
+                            position: new kakao.maps.LatLng(yPos, xPos),
+                            image: markerImage
                         });
                         var infowindow = new kakao.maps.InfoWindow({
                             content: nameM // 인포윈도우에 표시할 내용
@@ -688,24 +843,63 @@
                         kakao.maps.event.addListener(marker, 'mouseout', makeOutListener(infowindow));
                         hospital_markers.push(marker);
                     }
+                    for(var item in pharmacy){
+                        var nameM = pharmacy[item][0][1];
+                        var xPos = pharmacy[item][2][1];
+                        var yPos = pharmacy[item][3][1];
+                        var markerImage = new kakao.maps.MarkerImage(image_pha, imageSize, imageOption);
+                        var marker = new kakao.maps.Marker({
+                            map: map,
+                            position: new kakao.maps.LatLng(yPos, xPos),
+                            image: markerImage
+                        });
+                        var infowindow = new kakao.maps.InfoWindow({
+                            content: nameM // 인포윈도우에 표시할 내용
+                        });
+                        kakao.maps.event.addListener(marker, 'mouseover', makeOverListener(map, marker, infowindow));
+                        kakao.maps.event.addListener(marker, 'mouseout', makeOutListener(infowindow));
+                        pharmacy_markers.push(marker);
+                    }
                     //this.hospital_markers.setMap(this.map);
                 } else {
                     for(var item in hospital_markers){
                         hospital_markers[item].setMap(null);
                     }
-                    hospital_markers = [];
+                    for(var item in pharmacy_markers){
+                        pharmacy_markers[item].setMap(null);
+                    }
+                    hospital_markers = []; pharmacy_markers = [];
                 }
             });
 
             $("#check_school").change(function(){
                 if($("#check_school").is(":checked")){
+                    for(var item in kindergarten){
+                        var nameM = kindergarten[item][0][1];
+                        var xPos = kindergarten[item][2][1];
+                        var yPos = kindergarten[item][3][1];
+                        var markerImage = new kakao.maps.MarkerImage(image_kin, imageSize, imageOption);
+                        var marker = new kakao.maps.Marker({
+                            map: map,
+                            position: new kakao.maps.LatLng(yPos, xPos),
+                            image: markerImage
+                        });
+                        var infowindow = new kakao.maps.InfoWindow({
+                            content: nameM // 인포윈도우에 표시할 내용
+                        });
+                        kakao.maps.event.addListener(marker, 'mouseover', makeOverListener(map, marker, infowindow));
+                        kakao.maps.event.addListener(marker, 'mouseout', makeOutListener(infowindow));
+                        kindergarten_markers.push(marker);
+                    }
                     for(var item in school){
                         var nameM = school[item][0][1];
                         var xPos = school[item][2][1];
                         var yPos = school[item][3][1];
+                        var markerImage = new kakao.maps.MarkerImage(image_sch, imageSize, imageOption);
                         var marker = new kakao.maps.Marker({
                             map: map,
-                            position: new kakao.maps.LatLng(yPos, xPos)
+                            position: new kakao.maps.LatLng(yPos, xPos),
+                            image: markerImage
                         });
                         var infowindow = new kakao.maps.InfoWindow({
                             content: nameM // 인포윈도우에 표시할 내용
@@ -714,12 +908,37 @@
                         kakao.maps.event.addListener(marker, 'mouseout', makeOutListener(infowindow));
                         school_markers.push(marker);
                     }
+                    for(var item in academy){
+                        var nameM = academy[item][0][1];
+                        var xPos = academy[item][2][1];
+                        var yPos = academy[item][3][1];
+                        var markerImage = new kakao.maps.MarkerImage(image_aca, imageSize, imageOption);
+                        var marker = new kakao.maps.Marker({
+                            map: map,
+                            position: new kakao.maps.LatLng(yPos, xPos),
+                            image: markerImage
+                        });
+                        var infowindow = new kakao.maps.InfoWindow({
+                            content: nameM // 인포윈도우에 표시할 내용
+                        });
+                        kakao.maps.event.addListener(marker, 'mouseover', makeOverListener(map, marker, infowindow));
+                        kakao.maps.event.addListener(marker, 'mouseout', makeOutListener(infowindow));
+                        academy_markers.push(marker);
+                    }
                     //this.hospital_markers.setMap(this.map);
                 } else {
+                    for(var item in kindergarten_markers){
+                        kindergarten_markers[item].setMap(null);
+                    }
                     for(var item in school_markers){
                         school_markers[item].setMap(null);
                     }
+                    for(var item in academy_markers){
+                        academy_markers[item].setMap(null);
+                    }
+                    kindergarten_markers = [];
                     school_markers = [];
+                    academy_markers = [];
                 }
             });
 
@@ -729,9 +948,11 @@
                         var nameM = mart [item][0][1];
                         var xPos = mart [item][2][1];
                         var yPos = mart [item][3][1];
+                        var markerImage = new kakao.maps.MarkerImage(image_mart, imageSize, imageOption);
                         var marker = new kakao.maps.Marker({
                             map: map,
-                            position: new kakao.maps.LatLng(yPos, xPos)
+                            position: new kakao.maps.LatLng(yPos, xPos),
+                            image: markerImage
                         });
                         var infowindow = new kakao.maps.InfoWindow({
                             content: nameM // 인포윈도우에 표시할 내용
@@ -752,12 +973,14 @@
             $("#check_restaurant").change(function(){
                 if($("#check_restaurant").is(":checked")){
                     for(var item in restaurant){
-                        var nameM = restaurant [item][0][1];
-                        var xPos = restaurant [item][2][1];
-                        var yPos = restaurant [item][3][1];
+                        var nameM = restaurant[item][0][1];
+                        var xPos = restaurant[item][2][1];
+                        var yPos = restaurant[item][3][1];
+                        var markerImage = new kakao.maps.MarkerImage(image_res, imageSize, imageOption);
                         var marker = new kakao.maps.Marker({
                             map: map,
-                            position: new kakao.maps.LatLng(yPos, xPos)
+                            position: new kakao.maps.LatLng(yPos, xPos),
+                            image: markerImage
                         });
                         var infowindow = new kakao.maps.InfoWindow({
                             content: nameM // 인포윈도우에 표시할 내용
@@ -766,12 +989,32 @@
                         kakao.maps.event.addListener(marker, 'mouseout', makeOutListener(infowindow));
                         restaurant_markers.push(marker);
                     }
-                    //this.hospital_markers.setMap(this.map);
+                    for(var item in cafe){
+                        var nameM = cafe[item][0][1];
+                        var xPos = cafe[item][2][1];
+                        var yPos = cafe[item][3][1];
+                        var markerImage = new kakao.maps.MarkerImage(image_caf, imageSize, imageOption);
+                        var marker = new kakao.maps.Marker({
+                            map: map,
+                            position: new kakao.maps.LatLng(yPos, xPos),
+                            image: markerImage
+                        });
+                        var infowindow = new kakao.maps.InfoWindow({
+                            content: nameM // 인포윈도우에 표시할 내용
+                        });
+                        kakao.maps.event.addListener(marker, 'mouseover', makeOverListener(map, marker, infowindow));
+                        kakao.maps.event.addListener(marker, 'mouseout', makeOutListener(infowindow));
+                        cafe_markers.push(marker);
+                    }
                 } else {
                     for(var item in restaurant_markers){
                         restaurant_markers[item].setMap(null);
                     }
+                    for(var item in cafe_markers){
+                        cafe_markers[item].setMap(null);
+                    }
                     restaurant_markers = [];
+                    cafe_markers = [];
                 }
             });
 
@@ -781,9 +1024,11 @@
                         var nameM = public_place [item][0][1];
                         var xPos = public_place [item][2][1];
                         var yPos = public_place [item][3][1];
+                        var markerImage = new kakao.maps.MarkerImage(image_pub, imageSize, imageOption);
                         var marker = new kakao.maps.Marker({
                             map: map,
-                            position: new kakao.maps.LatLng(yPos, xPos)
+                            position: new kakao.maps.LatLng(yPos, xPos),
+                            image: markerImage
                         });
                         var infowindow = new kakao.maps.InfoWindow({
                             content: nameM // 인포윈도우에 표시할 내용
@@ -807,9 +1052,11 @@
                         var nameM = subway [item][0][1];
                         var xPos = subway [item][2][1];
                         var yPos = subway [item][3][1];
+                        var markerImage = new kakao.maps.MarkerImage(image_sub, imageSize, imageOption);
                         var marker = new kakao.maps.Marker({
                             map: map,
-                            position: new kakao.maps.LatLng(yPos, xPos)
+                            position: new kakao.maps.LatLng(yPos, xPos),
+                            image: markerImage
                         });
                         var infowindow = new kakao.maps.InfoWindow({
                             content: nameM // 인포윈도우에 표시할 내용
@@ -833,9 +1080,11 @@
                         var nameM = culture [item][0][1];
                         var xPos = culture [item][2][1];
                         var yPos = culture [item][3][1];
+                        var markerImage = new kakao.maps.MarkerImage(image_cul, imageSize, imageOption);
                         var marker = new kakao.maps.Marker({
                             map: map,
-                            position: new kakao.maps.LatLng(yPos, xPos)
+                            position: new kakao.maps.LatLng(yPos, xPos),
+                            image: markerImage
                         });
                         var infowindow = new kakao.maps.InfoWindow({
                             content: nameM // 인포윈도우에 표시할 내용
@@ -859,9 +1108,11 @@
                         var nameM = travel [item][0][1];
                         var xPos = travel [item][2][1];
                         var yPos = travel [item][3][1];
+                        var markerImage = new kakao.maps.MarkerImage(image_tra, imageSize, imageOption);
                         var marker = new kakao.maps.Marker({
                             map: map,
-                            position: new kakao.maps.LatLng(yPos, xPos)
+                            position: new kakao.maps.LatLng(yPos, xPos),
+                            image: markerImage
                         });
                         var infowindow = new kakao.maps.InfoWindow({
                             content: nameM // 인포윈도우에 표시할 내용
@@ -870,12 +1121,33 @@
                         kakao.maps.event.addListener(marker, 'mouseout', makeOutListener(infowindow));
                         travel_markers.push(marker);
                     }
+                    for(var item in motel){
+                        var nameM = motel[item][0][1];
+                        var xPos = motel[item][2][1];
+                        var yPos = motel[item][3][1];
+                        var markerImage = new kakao.maps.MarkerImage(image_mot, imageSize, imageOption);
+                        var marker = new kakao.maps.Marker({
+                            map: map,
+                            position: new kakao.maps.LatLng(yPos, xPos),
+                            image: markerImage
+                        });
+                        var infowindow = new kakao.maps.InfoWindow({
+                            content: nameM // 인포윈도우에 표시할 내용
+                        });
+                        kakao.maps.event.addListener(marker, 'mouseover', makeOverListener(map, marker, infowindow));
+                        kakao.maps.event.addListener(marker, 'mouseout', makeOutListener(infowindow));
+                        motel_markers.push(marker);
+                    }
                     //this.hospital_markers.setMap(this.map);
                 } else {
                     for(var item in travel_markers){
                         travel_markers[item].setMap(null);
                     }
+                    for(var item in motel_markers){
+                        motel_markers[item].setMap(null);
+                    }
                     travel_markers = [];
+                    motel_markers = [];
                 }
             });
 
@@ -929,8 +1201,23 @@
                     sliced: true,
                     selected: true
                     }, {
-                    name: '학군',
+                    name: '약국',
+                    y: pharmacy.length,
+                    sliced: true,
+                    selected: true
+                    }, {
+                    name: '유치원',
+                    y: kindergarten.length,
+                    sliced: true,
+                    selected: true
+                    }, {
+                    name: '학교',
                     y: school.length
+                    }, {
+                    name: '학원',
+                    y: academy.length,
+                    sliced: true,
+                    selected: true
                     }, {
                     name: '장보기',
                     y: mart.length
@@ -938,17 +1225,25 @@
                     name: '문화시설',
                     y: culture.length
                     }, {
-                    name: '음식점 및 카페',
+                    name: '음식점',
                     y: restaurant.length
+                    }, {
+                    name: '카페',
+                    y: cafe.length,
+                    sliced: true,
+                    selected: true
                     }, {
                     name: '공공시설',
                     y: public_place.length
-                    }, {
+                    },{
                     name: '지하철',
                     y: subway.length
                     }, {
-                    name: '관광 및 숙박시설',
+                    name: '관광지',
                     y: travel.length
+                    }, {
+                    name: '숙박업소',
+                    y: motel.length
                     }]
                 }]
             });
@@ -971,7 +1266,7 @@
                         }
                     },
                     xAxis: {
-                        categories: ['병원', '학군', '장보기', '문화시설', '음식점 및 카페', '공공시설', '지하철', '관광 및 숙박시설'],
+                        categories: ['병원', '약국', '유치원', '학교', '학원', '장보기', '문화시설', '음식점', '카페', '공공시설', '지하철', '관광지','숙박시설'],
                         labels:{
                             style:{
                                 color: 'white',
@@ -1009,16 +1304,22 @@
                         }
                     },
                     series: [{
-                        name: 'Sales per employee',
+                        name: '거리별 각 카테고리 수',
                         borderWidth: 1,
-                        data: [[0, 0, hospital_1], [0, 1, hospital_2], [0, 2, hospital_3], [0, 3, hospital_4], [0, 4, hospital_5], 
-                        [1, 0, school_1], [1, 1, school_2], [1, 2, school_3], [1, 3, school_4], [1, 4, school_5], 
-                        [2, 0, mart_1], [2, 1, mart_2], [2, 2, mart_3], [2, 3, mart_4], [2, 4, mart_5], 
-                        [3, 0, culture_1], [3, 1, culture_2], [3, 2, culture_3], [3, 3, culture_4], [3, 4, culture_5], 
-                        [4, 0, restaurant_1], [4, 1, restaurant_2], [4, 2, restaurant_3], [4, 3, restaurant_4], [4, 4, restaurant_5], 
-                        [5, 0, public_place_1], [5, 1, public_place_2], [5, 2, public_place_3], [5, 3, public_place_4], [5, 4, public_place_5], 
-                        [6, 0, subway_1], [6, 1, subway_2], [6, 2, subway_3], [6, 3, subway_4], [6, 4, subway_5], 
-                        [7, 0, travel_1], [7, 1, travel_2], [7, 2, travel_3], [7, 3, travel_4], [7, 4, travel_5]],
+                        data: 
+                        [[0, 0, hospital_1], [0, 1, hospital_2], [0, 2, hospital_3], [0, 3, hospital_4], [0, 4, hospital_5], 
+                        [1, 0, pharmacy_1], [1, 1, pharmacy_2], [1, 2, pharmacy_3], [1, 3, pharmacy_4], [1, 4, pharmacy_5], 
+                        [2, 0, kindergarten_1], [2, 1, kindergarten_2], [2, 2, kindergarten_3], [2, 3, kindergarten_4], [2, 4, kindergarten_5], 
+                        [3, 0, school_1], [3, 1, school_2], [3, 2, school_3], [3, 3, school_4], [3, 4, school_5], 
+                        [4, 0, academy_1], [4, 1, academy_2], [4, 2, academy_3], [4, 3, academy_4], [4, 4, academy_5], 
+                        [5, 0, mart_1], [5, 1, mart_2], [5, 2, mart_3], [5, 3, mart_4], [5, 4, mart_5], 
+                        [6, 0, culture_1], [6, 1, culture_2], [6, 2, culture_3], [6, 3, culture_4], [6, 4, culture_5], 
+                        [7, 0, restaurant_1], [7, 1, restaurant_2], [7, 2, restaurant_3], [7, 3, restaurant_4], [7, 4, restaurant_5], 
+                        [8, 0, cafe_1], [8, 1, cafe_2], [8, 2, cafe_3], [8, 3, cafe_4], [8, 4, cafe_5], 
+                        [9, 0, public_place_1], [9, 1, public_place_2], [9, 2, public_place_3], [9, 3, public_place_4], [9, 4, public_place_5], 
+                        [10, 0, subway_1], [10, 1, subway_2], [10, 2, subway_3], [10, 3, subway_4], [10, 4, subway_5], 
+                        [11, 0, travel_1], [11, 1, travel_2], [11, 2, travel_3], [11, 3, travel_4], [11, 4, travel_5],
+                        [12, 0, motel_1], [12, 1, motel_2], [12, 2, motel_3], [12, 3, motel_4], [12, 4, motel_5]], 
                         dataLabels: {
                             enabled: true,
                             color: '#ffffff'
@@ -1036,24 +1337,77 @@
                         })
                         getScore();
                         var sum = 0;
-                        for(var item in category_score){
-                            category_score[item] = Number.parseFloat(category_score[item]).toFixed(1);
-                            sum += Number.parseFloat(category_score[item]);
+                        var total_score = [];
+                        if(kind != 'true') category_score[2] = 0;
+                        if((kind != 'true') && (high != 'true') && (midd != 'true') && (elem != 'true')) {
+                            category_score[2] = 0; category_score[3] = 0; category_score[4] = 0;
                         }
-                        $("#score_0").html(category_score[0]);
-                        $("#score_1").html(category_score[1]);
-                        $("#score_2").html(category_score[2]);
-                        $("#score_3").html(category_score[3]);
-                        $("#score_4").html(category_score[4]);
-                        $("#score_5").html(category_score[5]);
-                        $("#score_6").html(category_score[6]);
-                        $("#score_7").html(category_score[7]);
-                        $("#score_avg").html((sum / 8).toFixed(1));
+                        if(old == 'true') category_score[0] += 3;
+                        if(dog == 'true') category_score[0] += 3;
+
+                        if(age >= 60){
+                            //숙박업소 감점, 학군 감점, 병원 가산점
+                            category_score[12] *= 0.8;
+                            category_score[2] *= 0.9; category_score[3] *= 0.9; category_score[4] *= 0.9;
+                            category_score[0] *= 1.1; category_score[1] *= 1.1;
+                        }
+                        else if(age >= 50){
+                            //숙박업소 감점, 학군 감점, 장보기 가산점
+                            category_score[12] *= 0.8;
+                            category_score[2] *= 0.9; category_score[3] *= 0.9; category_score[4] *= 0.9;
+                            category_score[5] *= 1.1;
+                        }
+                        else if(age >= 40){
+                            //숙박업소 감점, 지하철 감점, 학군 가산점
+                            category_score[12] *= 0.8;
+                            category_score[10] *= 0.8;
+                            category_score[2] *= 1.1; category_score[3] *= 1.1; category_score[4] *= 1.1;                            
+                        }
+                        else if(age >= 30){
+                            //숙박업소 감점, 문화시설 감점, 음식점 가산점
+                            category_score[12] *= 0.8;
+                            category_score[6] *= 0.8;
+                            category_score[7] *= 1.1; category_score[8] *= 1.1;
+                        }
+                        else if(age >= 20){
+                            //학교, 유치원 감점, 병원 감점, 음식점 가산점
+                            category_score[2] *= 0.8; category_score[3] *= 0.8; category_score[4] *= 1.1;
+                            category_score[0] *= 0.9; category_score[1] *= 0.9;
+                            category_score[7] *= 1.1; category_score[8] *= 1.1;
+                        }
+                        
+                        total_score.push(Number.parseFloat(category_score[0]) + Number.parseFloat(category_score[1]));
+                        total_score.push(Number.parseFloat(category_score[2]) + Number.parseFloat(category_score[3]) + Number.parseFloat(category_score[4]));
+                        total_score.push(Number.parseFloat(category_score[5]));
+                        total_score.push(Number.parseFloat(category_score[6]));
+                        total_score.push(Number.parseFloat(category_score[7]));
+                        total_score.push(Number.parseFloat(category_score[8]));
+                        total_score.push(Number.parseFloat(category_score[9]));
+                        total_score.push(Number.parseFloat(category_score[10]));
+                        total_score.push(Number.parseFloat(category_score[11]));
+                        total_score.push(Number.parseFloat(category_score[12]));
+                        for(var item in total_score){
+                            total_score[item] = Number.parseFloat(total_score[item]).toFixed(1);
+                            if(!isNaN(total_score[item]))
+                                sum += Number.parseFloat(total_score[item]);
+                            else total_score[item] = 0;
+                            if(total_score[item] > 100) total_score[item] = 100;
+                        }
+                        $("#score_0").html(total_score[0]);
+                        $("#score_1").html(total_score[1]);
+                        $("#score_2").html(total_score[2]);
+                        $("#score_3").html(total_score[3]);
+                        $("#score_4").html(total_score[4]);
+                        $("#score_5").html(total_score[5]);
+                        $("#score_6").html(total_score[6]);
+                        $("#score_7").html(total_score[7]);
+                        $("#score_8").html(total_score[8]);
+                        $("#score_9").html(total_score[9]);
+                        $("#score_avg").html((sum / 10).toFixed(1));
                     }
                 });
                 $( "#sortable" ).disableSelection();
             });
-            
             
             /*
             _GET : function for get data from url
