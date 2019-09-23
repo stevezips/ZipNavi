@@ -193,6 +193,14 @@
             var geocoder = new daum.maps.services.Geocoder();
             var coords, lf, tf, tfvp, tfvm, tfvd, aig, aia, aie, aid, coordX, coordY;
             var windowObj;
+
+            var apt_name;
+            var price_Time;
+            var price_Buy;
+            var price_Rent;
+            var built_time;
+            var phoneNum;
+
             $('#select_area_province').change(function(){
                 $.ajax({
                     /*
@@ -293,8 +301,22 @@
                     success: function(result){
                         window.open("zipfund_first_page.html?info=" + value, '_self');
                         console.log(result.map_info.x, result.map_info.y);
+                        apt_name = result.name;
+                        price_Time = result.kb_price_info.month;
+                        price_Buy = result.kb_price_info.price;
+                        price_Rent = result.kb_price_info.rent;
+                        built_time = result.built_year;
+                        phoneNum = result.office_phone;
                     }
                 });
+            }
+            function viewInfoTable(){
+                $("#infoAPT_0").html(apt_Name);
+                $("#infoAPT_1").html(built_time);
+                $("#infoAPT_2").html(price_Time);
+                $("#infoAPT_3").html(price_Buy);
+                $("#infoAPT_4").html(price_Rent);
+                $("#infoAPT_5").html(phoneNum);
             }
             function SearchAddress(){
                 var addr = $("#sample_address").val();
