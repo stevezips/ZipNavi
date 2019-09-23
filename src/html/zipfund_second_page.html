@@ -7,7 +7,7 @@
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <title>ZipFund Second Page</title>
         <link href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" rel="stylesheet" type="text/css"/>
-        <script src="../../js/jquery.js"></script>
+        <script src="../js/jquery.js"></script>
     </head>
     <body style="background-color: #474747; overflow: hidden;">
         <script src="https://underscorejs.org/underscore.js"></script>
@@ -247,7 +247,7 @@
         </style>
         <main id="container">
             <section id="main_screen">
-                <img src="../../images/project_logo.png" style="position:fixed; height: 10%; float: left;" onclick="moveTop()">
+                <img src="../images/project_logo.png" style="position:fixed; height: 10%; float: left;" onclick="moveTop()">
                 <div id="address_search_panel" style="position: absolute; width: 100%; text-align: center; z-index: 3;">
                     <h id="txt_address">주소가 들어갈 곳입니다</h>
                     <br>
@@ -312,18 +312,18 @@
                         <div id="first_page_chart"></div>
                     </div>
                     <div id="first_page_bottom">
-                        <img style="width: 100px; margin-top: -50px;" src="../../images/arrow_down.png"
-                        onmouseover="this.src='../../images/arrow_down_white.png'" 
-                        onmouseout="this.src='../../images/arrow_down.png'"
+                        <img style="width: 100px; margin-top: -50px;" src="../images/arrow_down.png"
+                        onmouseover="this.src='../images/arrow_down_white.png'" 
+                        onmouseout="this.src='../images/arrow_down.png'"
                         onclick="moveSecond()">
                     </div>
                 </div>
             </section>
             <section id="second_screen" style="height:100%;">
                 <div id="second_page_top">
-                    <img style="width: 100px;" src="../../images/arrow_up.png"
-                        onmouseover="this.src='../../images/arrow_up_white.png'" 
-                        onmouseout="this.src='../../images/arrow_up.png'"
+                    <img style="width: 100px;" src="../images/arrow_up.png"
+                        onmouseover="this.src='../images/arrow_up_white.png'" 
+                        onmouseout="this.src='../images/arrow_up.png'"
                         onclick="moveTop()">
                 </div>
                 <div id="second_page">
@@ -376,9 +376,9 @@
                           </table> -->
                     </div>
                     <div id="second_page_bottom">
-                        <img style="width: 100px;" src="../../images/arrow_down.png"
-                        onmouseover="this.src='../../images/arrow_down_white.png'" 
-                        onmouseout="this.src='../../images/arrow_down.png'"
+                        <img style="width: 100px;" src="../images/arrow_down.png"
+                        onmouseover="this.src='../images/arrow_down_white.png'" 
+                        onmouseout="this.src='../images/arrow_down.png'"
                         onclick="moveThird()">
                     </div>
                 </div>
@@ -419,9 +419,9 @@
                     </table> -->
                 </div>
                 <div id="third_page_top">
-                    <img style="width: 100px;" src="../../images/arrow_up.png"
-                        onmouseover="this.src='../../images/arrow_up_white.png'" 
-                        onmouseout="this.src='../../images/arrow_up.png'"
+                    <img style="width: 100px;" src="../images/arrow_up.png"
+                        onmouseover="this.src='../images/arrow_up_white.png'" 
+                        onmouseout="this.src='../images/arrow_up.png'"
                         onclick="moveSecond()">
                 </div>
             </section>
@@ -510,66 +510,66 @@
             codes[0].place_name_1="HP8";  // 병원
             var hospital = [];
             var hospital_markers = [];
-            var image_hos = '../../images/hospital_marker.png', // 마커이미지의 주소입니다    
+            var image_hos = '../images/hospital_marker.png', // 마커이미지의 주소입니다    
                             imageSize = new kakao.maps.Size(35, 35), // 마커이미지의 크기입니다
                             imageOption = {offset: new kakao.maps.Point(25, 40)};
             codes[1].place_name_1="PM9";  // 약국
             var pharmacy = [];
             var pharmacy_markers = [];
-            var image_pha = '../../images/pharmacy_marker.png';
+            var image_pha = '../images/pharmacy_marker.png';
             
             // 학군 관련
             codes[2].place_name_1='PS3';    // 유치원
             var kindergarten = [];
             var kindergarten_markers = [];
-            var image_kin = '../../images/kindergarten_marker.png';
+            var image_kin = '../images/kindergarten_marker.png';
             codes[3].place_name_1='SC4';    // 학교
             var school = [];
             var school_markers = [];
-            var image_sch = '../../images/school_marker.png';
+            var image_sch = '../images/school_marker.png';
             codes[4].place_name_1='AC5';    // 학원
             var academy = [];
             var academy_markers = [];
-            var image_aca = '../../images/academy_marker.png';
+            var image_aca = '../images/academy_marker.png';
             
             // 장보기 관련
             codes[5].place_name_1='MT1';    // 마트
             codes[6].place_name_1='CS2';    // 편의점
             var mart = [];
             var mart_markers = [];
-            var image_mart = '../../images/mart_marker.png';
+            var image_mart = '../images/mart_marker.png';
             // 문화시설
             codes[7].place_name_1='CT1';    // 문화시설
             var culture = [];
             var culture_markers = [];
-            var image_cul = '../../images/culture_marker.png';
+            var image_cul = '../images/culture_marker.png';
             // 음식점과카페
             codes[8].place_name_1='FD6';    // 음식점
             var restaurant = [];
             var restaurant_markers = [];
-            var image_res = '../../images/restaurant_marker.png';
+            var image_res = '../images/restaurant_marker.png';
             codes[9].place_name_1='CE7';    // 카페
             var cafe = [];
             var cafe_markers = [];
-            var image_caf = '../../images/cafe_marker.png';
+            var image_caf = '../images/cafe_marker.png';
             // 공공기관과 지하철
             codes[10].place_name_1='PO3';   // 공공시설
             var public_place = [];
             var public_place_markers = [];
-            var image_pub = '../../images/public_place_marker.png';
+            var image_pub = '../images/public_place_marker.png';
             codes[11].place_name_1='SW8';   // 지하철
             var subway = [];
             var subway_markers = [];
-            var image_sub = '../../images/subway_marker.png';
+            var image_sub = '../images/subway_marker.png';
             // 관광명소와 숙박
             codes[12].place_name_1='AT4';   // 관광명소
             var travel = [];
             var travel_markers = [];
-            var image_tra = '../../images/travel_marker.png';
+            var image_tra = '../images/travel_marker.png';
             codes[13].place_name_1='AD5';   // 숙박
             var motel = [];
             var motel_markers = [];
-            var image_mot = '../../images/motel_marker.png';
+            var image_mot = '../images/motel_marker.png';
 
             for(var i = 0; i < codes.length; i++){
                 ps.categorySearch(codes[i].place_name_1, placeSearchCB, {

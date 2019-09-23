@@ -6,7 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <title>First Page</title>
-        <script src="../../js/jquery.js"></script>
+        <script src="../js/jquery.js"></script>
     </head>
     <body style="background-color: #131313; overflow: hidden;">
         <style>
@@ -49,35 +49,35 @@
         <main id="container">
             <section id="main_screen">
                 <div id="team_logo_panel" style="width:100%; height:10%; text-align: left; position: fixed;" >
-                    <input type="image" src="../../images/project_logo.png" style="height:100%;" onclick="moveTop()">
+                    <input type="image" src="../images/project_logo.png" style="height:100%;" onclick="moveTop()">
                 </div>
                 <div id="logo_panel" style="padding-top:10%; width: 100%; height:50%; text-align: center;">
-                    <input type="image" src="../../images/team_logo.png" style="height: 80%;" disabled="true">
+                    <input type="image" src="../images/team_logo.png" style="height: 80%;" disabled="true">
                 </div>
                 <div id="search_method_panel" style="margin-top: 0px; width: 100%; height:10%; text-align: center;">
                     <div id="check_my_house_panel" style="width: 100%; height:100%; text-align: center; float: top;">
-                        <input id="check_my_house" type="image" src="../../images/check_my_house.png" onfocus="this.blur()" onclick="moveMine()"
-                        onmouseover="this.src='../../images/check_my_house_white.png'" onmouseout="this.src='../../images/check_my_house.png'">
+                        <input id="check_my_house" type="image" src="../images/check_my_house.png" onfocus="this.blur()" onclick="moveMine()"
+                        onmouseover="this.src='../images/check_my_house_white.png'" onmouseout="this.src='../images/check_my_house.png'">
                     </div>
                     <div id="check_other_house_panel" style="width: 100%; height:100%; text-align: center; float: bottom;">
-                        <input id="check_others_house" type="image" src="../../images/check_others_house.png" onfocus="this.blur()" onclick="moveOthers()"
-                        onmouseover="this.src='../../images/check_others_house_white.png'" onmouseout="this.src='../../images/check_others_house.png'">
+                        <input id="check_others_house" type="image" src="../images/check_others_house.png" onfocus="this.blur()" onclick="moveOthers()"
+                        onmouseover="this.src='../images/check_others_house_white.png'" onmouseout="this.src='../images/check_others_house.png'">
                     </div>
                 </div>
                 <div style="height: 20%;"></div>
             </section>
             <section id="first_screen">
                 <div id="first_screen_first_line" style="padding-top:15%; height:10%; text-align: center;">
-                    <input type="image" src="../../images/first_screen_first_line.png" disabled="true">
+                    <input type="image" src="../images/first_screen_first_line.png" disabled="true">
                 </div>
                 <div id="first_screen_second_line"style="height:10%; text-align:center;">
-                    <input type="image" src="../../images/first_screen_second_line.png"disabled="true">
+                    <input type="image" src="../images/first_screen_second_line.png"disabled="true">
                 </div>
                 <div id="first_screen_third_line"style="height:10%; text-align:center;">
-                    <input type="image" src="../../images/first_screen_third_line.png"disabled="true">
+                    <input type="image" src="../images/first_screen_third_line.png"disabled="true">
                 </div>
                 <div id="first_screen_fourth_line"style="height:10%; text-align:center;">
-                    <input type="image" src="../../images/first_screen_fourth_line.png"disabled="true">
+                    <input type="image" src="../images/first_screen_fourth_line.png"disabled="true">
                 </div>
                 <div id="zipfund_search_area" style="height: 20%; text-align: center;"> 
                     <select id="select_area_province" class="select_area_box">
@@ -112,26 +112,26 @@
                     <select id="select_area_meter" class="select_area_box">
                         <option value disabled class selected="selected">평방미터 선택</option>
                     </select>
-                    <input type="image" onclick="SearchApartment()" src="../../images/zoom_2.png" style="vertical-align: middle; width: 30px; height: 30px;" onfocus="this.blur()"><br>
+                    <input type="image" onclick="SearchApartment()" src="../images/zoom_2.png" style="vertical-align: middle; width: 30px; height: 30px;" onfocus="this.blur()"><br>
                 </div>
                 <div id="zipfund_search_button" style="height:30%; text-align: center;">
             </section>
             <section id="second_screen">
                 <div id="second_screen_first_line" style="padding-top:15%; height:10%; text-align: center;">
-                    <input type="image" src="../../images/second_screen_first_line.png" disabled="true">
+                    <input type="image" src="../images/second_screen_first_line.png" disabled="true">
                 </div>
                 <div id="second_screen_second_line"style="height:10%; text-align:center;">
-                    <input type="image" src="../../images/second_screen_second_line.png"disabled="true">
+                    <input type="image" src="../images/second_screen_second_line.png"disabled="true">
                 </div>
                 <div id="second_screen_third_line"style="height:10%; text-align:center;">
-                    <input type="image" src="../../images/second_screen_third_line.png"disabled="true">
+                    <input type="image" src="../images/second_screen_third_line.png"disabled="true">
                 </div>
                 <div id="second_screen_fourth_line"style="height:10%; text-align:center;">
-                    <input type="image" src="../../images/second_screen_fourth_line.png"disabled="true">
+                    <input type="image" src="../images/second_screen_fourth_line.png"disabled="true">
                 </div>
                 <div id="address_search_panel" style="margin-top: 25px; width: 100%; height: 30%; text-align: center;">
                     <input type="text" id="sample_address" class="address_search" placeholder="찾고자 하는 지역의 '구', '동'을 입력하세요.">
-                    <input type="image" onclick="SearchAddress()" src="../../images/zoom_2.png" style="vertical-align: middle; width: 30px; height: 30px;" onfocus="this.blur()"><br>
+                    <input type="image" onclick="SearchAddress()" src="../images/zoom_2.png" style="vertical-align: middle; width: 30px; height: 30px;" onfocus="this.blur()"><br>
                     <h1 id="txt_address" style="font-size: 18px; font-weight: bold; font-style: italic; color: #007ac3;"> </h1>
                 </div>
             </section>
