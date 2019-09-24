@@ -69,6 +69,49 @@
                 position: fixed; 
                 text-align: center;
             }
+            .infoBox{
+                /* 작업중 */
+                /* position:relative;
+                bottom: 85px;
+                border-radius : 6px;
+                border : 1px solid #ccc;
+                border-bottom: 2px solid #ddd;
+                float:left; */
+                
+                /* 구버젼 중 최신 */
+                background-image: url('../images/main_marker_info.png') no-repeat;
+                background: url('../images/main_marker_info.png') no-repeat;
+                position: relative;
+                background: #131313;
+
+                /* background: url('../images/main_marker_info.png') no-repeat; */
+                /* background:url('http://t1.daumcdn.net/localimg/localimages/07/mapapidoc/box_movie.png') no-repeat;*/
+                /* margin-bottom : 250%; */
+
+                /* position: absolute; */
+                /* width:360px; */
+                /* height:350px; */
+                /* background:url('http://t1.daumcdn.net/localimg/localimages/07/mapapidoc/box_movie.png') no-repeat; */
+                /* padding:15px 10px; */
+            }
+            .infoBox .boxTitle{
+                display: block;
+                background: #fff;
+                margin-right : 35px;
+                padding: 10px 15px;
+                font-weight : bold;
+                font-size: 18px;
+                text-align: center;
+            }
+            .infoBox .boxContent{
+                display: block;
+                background: #fff;
+                margin-right : 35px;
+                padding: 10px 15px;
+                font-weight : bold;
+                font-size: 12px;
+                text-align: center;
+            }
             .age_range_slider{
                 margin-left: 20px;
                 margin-right: 20px;
@@ -371,6 +414,12 @@
             var price_Rent;
             var built_time;
             var phoneNum;
+            var main_marker;
+            var main_marker_src = '../images/main_marker.png';
+            var main_marker_size = new kakao.maps.Size(100,100);
+            var main_marker_option = {offset: new kakao.maps.LatLng(80, 50)};   //80, 50 으로 했더니 가장 적절한 위치에 위치함
+            var main_marker_image = new kakao.maps.MarkerImage(main_marker_src, main_marker_size, main_marker_option);
+            var main_marker_position;
             $.ajax({
                     url: "http://admin.zipfund.co/api/address/apartment_info/" + getData.info,
                     contentType: "application/json",
@@ -396,6 +445,12 @@
                         strokeStyle: 'dashed', // 선의 스타일 입니다
                         fillColor: '#CFE7FF', // 채우기 색깔입니다
                         fillOpacity: 0.7  // 채우기 불투명도 입니다   
+                        });                        
+                        // 좌표의 경우, circle이 여기서 받아오는 것에 착안하여, 이곳에서 좌표를 받고
+                        main_marker_position = new kakao.maps.LatLng(y,x);                        
+                        main_marker = new kakao.maps.Marker({
+                            position: main_marker_position,
+                            image: main_marker_image
                         });
                     }
                 });
@@ -433,8 +488,37 @@
                 circle.setMap(map);
             })
             window.onload = function(){
-                this.circle.setMap(map);
-                $.ajax({
+                setTimeout(function(){
+                    // circle이 여기서 생성되는 것에 착안하여, 여기서 마커 생성
+                    this.circle.setMap(map);
+                    main_marker.setMap(map);
+                    var iwContent = '<div class = "infoBox">' +
+                                    '<div class = "boxTitle">' + apt_name +'</div>' +
+                                    '<div class = "boxContent">' + '</br>' +  '완공 시기 : ' + built_time + '</br>'+
+                                    '시세 기준 시기 : ' + price_Time + '</br>' +
+                                    '매매가 : ' + price_Buy + '</br>' +
+                                    '전세가 : ' + price_Rent + '</br>' +
+                                    'apt 문의번호 : ' + phoneNum + 
+                                    '</div>' + '</div>';
+                    
+                    var iwRemoveable = true; // removeable 속성을 ture 로 설정하면 인포윈도우를 닫을 수 있는 x버튼이 표시됩니다
+                    var iwPosition = new kakao.maps.LatLng(y,x);
+                    // 인포윈도우를 생성합니다
+                    var infowindow = new kakao.maps.InfoWindow({
+                        content : iwContent,
+                        removable : iwRemoveable,
+                        position : iwPosition,
+                        xAnchor : 0.3,
+                        yAnchor : 0.91
+                    });
+
+                    // 마커에 클릭이벤트를 등록합니다
+                    kakao.maps.event.addListener(main_marker, 'click', function() {
+                    // 마커 위에 인포윈도우를 표시합니다.
+                    infowindow.open(map, main_marker);
+                    // infowindow.setMap(map);
+            });
+                    $.ajax({
                     url: "http://admin.zipfund.co/api/address/apartment_info/" + getData.info,
                     contentType: "application/json",
                     dataType: 'json',
@@ -451,10 +535,11 @@
                     }
                 });
                 panTo();
+                }, 500);
             };
             function panTo() {
                 var moveLatLon = new kakao.maps.LatLng(y, x);
-                map.panTo(moveLatLon);            
+                map.panTo(moveLatLon);
             }
             function searchMyArea(){
                 var age = $('#age_range_slider').val();
