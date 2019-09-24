@@ -299,7 +299,7 @@
                     contentType: "application/json",
                     dataType: 'json',
                     success: function(result){
-                        window.open("zipfund_first_page.html?info=" + value, '_self');
+                        window.open("html/zipfund_first_page.html?info=" + value, '_self');
                         console.log(result.map_info.x, result.map_info.y);
                         apt_name = result.name;
                         price_Time = result.kb_price_info.month;
@@ -340,7 +340,7 @@
                 });
             }
             function openChildWindow(){
-                window.open("zipnavi_first_page.html?x=" + coordX + "&y=" + coordY, '_self');
+                window.open("html/zipnavi_first_page.html?x=" + coordX + "&y=" + coordY, '_self');
             }
         </script>
     </body>
