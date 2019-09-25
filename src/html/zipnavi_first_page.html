@@ -327,7 +327,13 @@
             var x, y;
             var addr;
             var address_name;
-            var marker, markerPosition;
+            // var marker, markerPosition;
+            var main_marker;
+            var main_marker_src = '../images/main_marker.png';
+            var main_marker_size = new kakao.maps.Size(100,100);
+            var main_marker_option = {offset: new kakao.maps.LatLng(80, 50)};   //80, 50 으로 했더니 가장 적절한 위치에 위치함
+            var main_marker_image = new kakao.maps.MarkerImage(main_marker_src, main_marker_size, main_marker_option);
+            var main_marker_position;
             search = window.location.search;
             getData = _GET(search);
             x = getData.x; y = getData.y;
@@ -341,15 +347,21 @@
                 fillColor: '#CFE7FF', // 채우기 색깔입니다
                 fillOpacity: 0.7  // 채우기 불투명도 입니다   
             });
-            marker = new kakao.maps.Marker({
-                map: map,
-                position: new kakao.maps.LatLng(y, x),
-                draggable: true
+            main_marker_position = new kakao.maps.LatLng(y,x);                        
+            main_marker = new kakao.maps.Marker({
+                position: main_marker_position,
+                image: main_marker_image,
+                draggable:true
             });
+            // marker = new kakao.maps.Marker({
+            //     map: map,
+            //     position: new kakao.maps.LatLng(y, x),
+            //     draggable: true
+            // });
 
-            kakao.maps.event.addListener(this.marker, 'dragend', function(){
-                var Lng = marker.getPosition().getLng();
-                var Lat = marker.getPosition().getLat();
+            kakao.maps.event.addListener(this.main_marker, 'dragend', function(){
+                var Lng = main_marker.getPosition().getLng();
+                var Lat = main_marker.getPosition().getLat();
                 x = Lng; y = Lat;
                 searchAddrFromCoords(new kakao.maps.LatLng(y,x), displayCenterInfo);
                 //console.log(marker.getPosition());
@@ -427,7 +439,7 @@
             window.onload = function(){
                 panTo();
                 this.circle.setMap(map);
-                this.marker.setMap(map);
+                this.main_marker.setMap(map);
                 searchAddrFromCoords(new kakao.maps.LatLng(y,x), displayCenterInfo);
             };  
             
@@ -457,7 +469,7 @@
                     if(status === kakao.maps.services.Status.OK){
                         y = results[0].y;
                         x = results[0].x;
-                        this.marker.setPosition(new kakao.maps.LatLng(y,x));
+                        this.main_marker.setPosition(new kakao.maps.LatLng(y,x));
                         var moveLatLon = new kakao.maps.LatLng(y, x);
                         map.panTo(moveLatLon);
                         this.circle.setPosition(new kakao.maps.LatLng(y,x));
