@@ -28,17 +28,17 @@
             #kakao_map{
                 margin-left: 5%;
                 width: 90%;
-                height: 500px;
+                height: 67%;
                 z-index: 1;
             }
             #txt_address{
-                width: 600px;
+                width: 1000px;
                 position: absolute;
-                font-size: 30px; 
+                font-size: 50px; 
                 font-weight: bold;
                 color: rgb(127, 219, 239);
                 margin-top: 20px;
-                margin-left: -300px;
+                margin-left: -500px;
             }
             #first_page{
                 padding-top: 10%;
@@ -95,15 +95,31 @@
             #second_page_middle{
                 display: inline-block;
                 height: 20%;
-                width: 100%;
+                width: 90%;
+                text-align: center;
             }
             #mytable{
-                border: rgb(127, 219, 239) 5px dashed;
-                width: 80%;
-                margin-left: 10%;
-                height: 80%;
-                vertical-align: middle;
+                width: 100%;
+                border-collapse: separate;
+                border-spacing: 4px;
                 text-align: center;
+                line-height: 1.5;
+                margin: 20px 5%;
+            }
+            #mytable th{
+                padding: 15px;
+                font-weight: bold;
+                vertical-align: top;
+                color: #fff;
+                background: #7f77c9;
+                font: 20px bold; color:black;
+            }
+            #mytable td{
+                padding: 15px;
+                vertical-align: center;
+                border-bottom: 1px solid #ccc;
+                background: rgb(220, 255, 253);
+                font: 20px bold; color:black;
             }
             #second_page_bottom{
                 display: inline-block;
@@ -117,6 +133,38 @@
                 height: 10%;
                 text-align: center;
                 float:top;
+            }
+            #third_page_crawl{
+                display: inline-block;
+                height:90%;
+                width: 80%;
+                padding-top: 30px;
+                text-align: center;
+            }
+            #crawl_table{
+                width: 100%;
+                border-collapse: separate;
+                border-spacing: 4px;
+                text-align: center;
+                line-height: 1.5;
+                margin: 20px 5%;
+                background-color: white;
+            }
+            #crawl_table th{
+                padding: 10px;
+                font-weight: bold;
+                vertical-align: top;
+                color: #fff;
+                background: #7f77c9;
+                font: 20px bold; color:black;
+            }
+            #crawl_table td{
+                padding: 10px;
+                font-weight: bold;
+                vertical-align: top;
+                color: black;
+                background: lightgoldenrodyellow;
+                font: 20px bold;
             }
             .checks {position: relative;}
 
@@ -212,10 +260,154 @@
             g.highcharts-axis-labels text tspan{
                 font: 18px sans-serif; fill:white;
             }
-            #sortable { list-style-type: none; margin: 0; padding: 0; width: 400px;}
+            .dim-layer{
+                display: none;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: #000;
+                opacity: .5;
+                filter: alpha(opacity=50);
+                z-index: 80;
+            }
+            #link {color: #E45635;display:block;font: 12px "Helvetica Neue", Helvetica, Arial, sans-serif;text-align:center; text-decoration: none;}
+            #link:hover {color: #CCCCCC}
+
+            #link, #link:hover {-webkit-transition: color 0.5s ease-out;-moz-transition: color 0.5s ease-out;-ms-transition: color 0.5s ease-out;-o-transition: color 0.5s ease-out;transition: color 0.5s ease-out;}
+
+            /** BEGIN CSS **/
+            body {background: #333333;}
+            @keyframes rotate-loading {
+                0%  {transform: rotate(0deg);-ms-transform: rotate(0deg); -webkit-transform: rotate(0deg); -o-transform: rotate(0deg); -moz-transform: rotate(0deg);}
+                100% {transform: rotate(360deg);-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); -o-transform: rotate(360deg); -moz-transform: rotate(360deg);}
+            }
+
+            @-moz-keyframes rotate-loading {
+                0%  {transform: rotate(0deg);-ms-transform: rotate(0deg); -webkit-transform: rotate(0deg); -o-transform: rotate(0deg); -moz-transform: rotate(0deg);}
+                100% {transform: rotate(360deg);-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); -o-transform: rotate(360deg); -moz-transform: rotate(360deg);}
+            }
+
+            @-webkit-keyframes rotate-loading {
+                0%  {transform: rotate(0deg);-ms-transform: rotate(0deg); -webkit-transform: rotate(0deg); -o-transform: rotate(0deg); -moz-transform: rotate(0deg);}
+                100% {transform: rotate(360deg);-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); -o-transform: rotate(360deg); -moz-transform: rotate(360deg);}
+            }
+
+            @-o-keyframes rotate-loading {
+                0%  {transform: rotate(0deg);-ms-transform: rotate(0deg); -webkit-transform: rotate(0deg); -o-transform: rotate(0deg); -moz-transform: rotate(0deg);}
+                100% {transform: rotate(360deg);-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); -o-transform: rotate(360deg); -moz-transform: rotate(360deg);}
+            }
+
+            @keyframes rotate-loading {
+                0%  {transform: rotate(0deg);-ms-transform: rotate(0deg); -webkit-transform: rotate(0deg); -o-transform: rotate(0deg); -moz-transform: rotate(0deg);}
+                100% {transform: rotate(360deg);-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); -o-transform: rotate(360deg); -moz-transform: rotate(360deg);}
+            }
+
+            @-moz-keyframes rotate-loading {
+                0%  {transform: rotate(0deg);-ms-transform: rotate(0deg); -webkit-transform: rotate(0deg); -o-transform: rotate(0deg); -moz-transform: rotate(0deg);}
+                100% {transform: rotate(360deg);-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); -o-transform: rotate(360deg); -moz-transform: rotate(360deg);}
+            }
+
+            @-webkit-keyframes rotate-loading {
+                0%  {transform: rotate(0deg);-ms-transform: rotate(0deg); -webkit-transform: rotate(0deg); -o-transform: rotate(0deg); -moz-transform: rotate(0deg);}
+                100% {transform: rotate(360deg);-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); -o-transform: rotate(360deg); -moz-transform: rotate(360deg);}
+            }
+
+            @-o-keyframes rotate-loading {
+                0%  {transform: rotate(0deg);-ms-transform: rotate(0deg); -webkit-transform: rotate(0deg); -o-transform: rotate(0deg); -moz-transform: rotate(0deg);}
+                100% {transform: rotate(360deg);-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); -o-transform: rotate(360deg); -moz-transform: rotate(360deg);}
+            }
+
+            @keyframes loading-text-opacity {
+                0%  {opacity: 0}
+                20% {opacity: 0}
+                50% {opacity: 1}
+                100%{opacity: 0}
+            }
+
+            @-moz-keyframes loading-text-opacity {
+                0%  {opacity: 0}
+                20% {opacity: 0}
+                50% {opacity: 1}
+                100%{opacity: 0}
+            }
+
+            @-webkit-keyframes loading-text-opacity {
+                0%  {opacity: 0}
+                20% {opacity: 0}
+                50% {opacity: 1}
+                100%{opacity: 0}
+            }
+
+            @-o-keyframes loading-text-opacity {
+                0%  {opacity: 0}
+                20% {opacity: 0}
+                50% {opacity: 1}
+                100%{opacity: 0}
+            }
+            .loading-container,
+            .loading {
+                height: 100px;
+                position: relative;
+                width: 100px;
+                border-radius: 100%;
+            }
+
+
+            .loading-container { position: fixed; top: 45%; left: 45%; margin: 40px auto; display: block; z-index: 99;}
+
+            .loading {
+                border: 2px solid transparent;
+                border-color: transparent #fff transparent #FFF;
+                -moz-animation: rotate-loading 1.5s linear 0s infinite normal;
+                -moz-transform-origin: 50% 50%;
+                -o-animation: rotate-loading 1.5s linear 0s infinite normal;
+                -o-transform-origin: 50% 50%;
+                -webkit-animation: rotate-loading 1.5s linear 0s infinite normal;
+                -webkit-transform-origin: 50% 50%;
+                animation: rotate-loading 1.5s linear 0s infinite normal;
+                transform-origin: 50% 50%;
+            }
+
+            .loading-container:hover .loading {
+                border-color: transparent #E45635 transparent #E45635;
+            }
+            .loading-container:hover .loading,
+            .loading-container .loading {
+                -webkit-transition: all 0.5s ease-in-out;
+                -moz-transition: all 0.5s ease-in-out;
+                -ms-transition: all 0.5s ease-in-out;
+                -o-transition: all 0.5s ease-in-out;
+                transition: all 0.5s ease-in-out;
+            }
+
+            #loading-text {
+                -moz-animation: loading-text-opacity 2s linear 0s infinite normal;
+                -o-animation: loading-text-opacity 2s linear 0s infinite normal;
+                -webkit-animation: loading-text-opacity 2s linear 0s infinite normal;
+                animation: loading-text-opacity 2s linear 0s infinite normal;
+                color: #ffffff;
+                font-family: "Helvetica Neue, "Helvetica", ""arial";
+                font-size: 10px;
+                font-weight: bold;
+                margin-top: 45px;
+                opacity: 0;
+                position: absolute;
+                text-align: center;
+                text-transform: uppercase;
+                top: 0;
+                width: 100px;
+            }
+            #sortable { list-style-type: none; margin-left: 75px; padding: 0; width: 400px;}
             #sortable li { margin: 15px 10px 5px 10px; padding: 0.4em; padding-left: 1.5em; font-size: 1.4em; font-weight: bold; height: 18px; border:#007ac3 5px solid; border-radius: 15px;}
             #sortable li span { position: absolute; margin-left: -1.3em; }
         </style>
+        <div class="dim-layer" style="display: block"></div> 
+        <div class="loading-container">
+            <div class="loading"></div>
+            <div id="loading-text">loading</div>
+        </div>
         <main id="container">
             <section id="main_screen">
                 <img src="../images/project_logo.png" style="position:fixed; height: 10%; float: left;" onclick="moveTop()">
@@ -269,7 +461,7 @@
                         <div id="second_page_chart"></div>
                     </div>
                     <div id="second_page_right">
-                        <ul id="sortable">
+                        <ul id="sortable" style="margin-top: 50px;">
                             <li class="ui-state-default" value=0><span class="ui-icon ui-icon-arrowthick-2-n-s"></span>의료시설</li>
                             <li class="ui-state-default" value=1><span class="ui-icon ui-icon-arrowthick-2-n-s"></span>학군</li>
                             <li class="ui-state-default" value=2><span class="ui-icon ui-icon-arrowthick-2-n-s"></span>장보기</li>
@@ -277,38 +469,37 @@
                             <li class="ui-state-default" value=4><span class="ui-icon ui-icon-arrowthick-2-n-s"></span>음식점 및 카페</li>
                             <li class="ui-state-default" value=5><span class="ui-icon ui-icon-arrowthick-2-n-s"></span>공공시설</li>
                             <li class="ui-state-default" value=6><span class="ui-icon ui-icon-arrowthick-2-n-s"></span>지하철</li>
-                            <li class="ui-state-default" value=7><span class="ui-icon ui-icon-arrowthick-2-n-s"></span>관광 및 숙박시설</li>
+                            <li class="ui-state-default" value=7><span class="ui-icon ui-icon-arrowthick-2-n-s"></span>관광지</li>
+                            <li class="ui-state-default" value=8><span class="ui-icon ui-icon-arrowthick-2-n-s"></span>숙박시설</li>
                           </ul>
                     </div>
                     <div id="second_page_middle">
-                        <table id="mytable" border="1" cellspacing="0">
+                        <table id="mytable" cellspacing="0">
                             <tr>
-                                <th style="font: 30px bold; color:white;">분류</th>
-                                <th style="font: 28px bold; color:white;">의료시설</th>
-                                <th style="font: 28px bold; color:white;">학군</th>
-                                <th style="font: 28px bold; color:white;">장보기</th>
-                                <th style="font: 28px bold; color:white;">문화시설</th>
-                                <th style="font: 28px bold; color:white;">음식점</th>
-                                <th style="font: 28px bold; color:white;">카페</th>
-                                <th style="font: 28px bold; color:white;">공공시설</th>
-                                <th style="font: 28px bold; color:white;">지하철</th>
-                                <th style="font: 28px bold; color:white;">관광지</th>
-                                <th style="font: 28px bold; color:white;">숙박시설</th>
-                                <th style="font: 28px bold; color:white;">평균</th>
+                                <th>분류</th>
+                                <th>의료시설</th>
+                                <th>학군</th>
+                                <th>장보기</th>
+                                <th>문화시설</th>
+                                <th>음식점 및 카페</th>
+                                <th>공공시설</th>
+                                <th>지하철</th>
+                                <th>관광지</th>
+                                <th>숙박시설</th>
+                                <th>평균</th>
                             </tr>
                             <tr style="text-align: center;">
-                                <td style="font: 30px bold; color:white;">스코어</td>
-                                <td id="score_0" style="font: 28px bold; color:white;">0</td>
-                                <td id="score_1" style="font: 28px bold; color:white;">0</td>
-                                <td id="score_2" style="font: 28px bold; color:white;">0</td>
-                                <td id="score_3" style="font: 28px bold; color:white;">0</td>
-                                <td id="score_4" style="font: 28px bold; color:white;">0</td>
-                                <td id="score_5" style="font: 28px bold; color:white;">0</td>
-                                <td id="score_6" style="font: 28px bold; color:white;">0</td>
-                                <td id="score_7" style="font: 28px bold; color:white;">0</td>
-                                <td id="score_8" style="font: 28px bold; color:white;">0</td>
-                                <td id="score_9" style="font: 28px bold; color:white;">0</td>
-                                <td id="score_avg" style="font: 28px bold; color:white;">0</td>
+                                <td>스코어</td>
+                                <td id="score_0">0</td>
+                                <td id="score_1">0</td>
+                                <td id="score_2">0</td>
+                                <td id="score_3">0</td>
+                                <td id="score_4">0</td>
+                                <td id="score_5">0</td>
+                                <td id="score_6">0</td>
+                                <td id="score_7">0</td>
+                                <td id="score_8">0</td>
+                                <td id="score_avg">0</td>
                             </tr>
                             <tbody></tbody>
                           </table>
@@ -321,12 +512,23 @@
                     </div>
                 </div>
             </section>
-            <section id="third_screen" style="height:100%;">
+            <section id="third_screen" style="height:100%; width: 100%;">
                 <div id="third_page_top">
                     <img style="width: 100px;" src="../images/arrow_up.png"
                         onmouseover="this.src='../images/arrow_up_white.png'" 
                         onmouseout="this.src='../images/arrow_up.png'"
                         onclick="moveSecond()">
+                </div>
+                <div id="third_page_crawl">
+                    <table id="crawl_table" cellspacing="0">
+                        <tr style="width: 5%; text-align: center;">
+                            <th style="width: 10%;">썸네일</th>
+                            <th>제목</th>
+                        </tr>
+                        <tr style="width: 10%; text-align: center;">
+                        </tr>
+                        <tbody></tbody>
+                      </table>
                 </div>
             </section>
         </main>
@@ -334,6 +536,11 @@
             //variables of user
             var x, y, age, gender, old, high, midd, elem, kind, dog, active, address_name;
             var marker;
+            var weight_1 = 1.38; //36 나누기 26
+            var weight_2 = 1.08; //28 나누기 26
+            var weight_3 = 0.77; //20 나누기 26
+            var weight_4 = 0.46; //12 나누기 26
+            var weight_5 = 0.15; //4 나누기 26
             search = window.location.search;
             getData = _GET(search);
             x = getData.x;
@@ -385,6 +592,26 @@
             }
             var ps = new kakao.maps.services.Places(map);
             //var infowindow = new kakao.maps.InfoWindow({zIndex:1});
+
+            var article_title = [];
+            var article_img_src = [];
+            var article_img_alt = [];
+            var article_url = [];
+            $.ajax({
+                    url: "http://13.209.97.253:3000/api/crawl_news/" + address_name,
+                    contentType: "application/json",
+                    dataType: 'json',
+                    success: function(result){
+                        result.map((value) => {
+                            article_title.push(value.title);
+                            article_url.push(value.url);
+                            article_img_src.push(value.image_url);
+                            article_img_alt.push(value.image_alt);
+                        })
+                    }
+                });
+
+
             // 병원 관련
             codes[0].place_name_1="HP8";  // 병원
             var hospital = [];
@@ -671,144 +898,116 @@
                     getNumber();
                     viewFirstChart();
                     viewSecondChart();
+                    crawlNewsInput();
+                    //$('.loading').hide();
+                    $('.loading-container').hide();
+                    $('.dim-layer').hide();
                 }, 1000);
             }
 
+            function crawlNewsInput(){
+                article_title.forEach((v,i) => {
+                    if(article_img_src[i] === null){
+                        article_img_src[i] = "https://www.cchannel.com/images/noimg.gif";
+                        article_img_alt[i] = "이미지가 없습니다!";
+                    }
+                    $("#crawl_table").append("<tr><td>" + "<image height=50px src=" + article_img_src[i] + " title=" + article_img_alt[i] + "/>" + "</td><td>" 
+                        + "<a href=" + article_url[i] + ">" + article_title[i] + "</a>" + "</td></tr>");
+                });
+                $('#crawl_table tr')
+            }
+
             function getScore(){
-                category_score[0] = hospital.length - 100;
-                //category_score[0]
-                var hospital_weight = 100 / hospital.length;
-                if(category_score[0] < 0) category_score[0] = 0;
-                category_score[0] += hospital_weight * hospital_1 + 
-                hospital_weight * hospital_2 * 0.9 + 
-                hospital_weight * hospital_3 * 0.8 + 
-                hospital_weight * hospital_4 * 0.7 +
-                hospital_weight * hospital_5 * 0.6;
+                category_score[0] = 
+                weight_1 * hospital_1 +
+                weight_2 * hospital_2 +
+                weight_3 * hospital_3 +
+                weight_4 * hospital_4 +
+                weight_5 * hospital_5;
 
-                category_score[1] = pharmacy.length - 100;
-                var pharmacy_weight = 100 / pharmacy.length;
-                if(category_score[0] < 0) category_score[0] = 0;
-                category_score[0] += pharmacy_weight * pharmacy_1 + 
-                pharmacy_weight * pharmacy_2 * 0.9 + 
-                pharmacy_weight * pharmacy_3 * 0.8 + 
-                pharmacy_weight * pharmacy_4 * 0.7 +
-                pharmacy_weight * pharmacy_5 * 0.6;
+                category_score[0] += 
+                weight_1 * pharmacy_1 +
+                weight_2 * pharmacy_2 +
+                weight_3 * pharmacy_3 +
+                weight_4 * pharmacy_4 +
+                weight_5 * pharmacy_5;
 
-                category_score[2] = kindergarten.length - 100;
-                var kindergarten_weight = 100 / kindergarten.length;
-                if(category_score[2] < 0) category_score[2] = 0;
-                category_score[2] += kindergarten_weight * kindergarten_1 + 
-                kindergarten_weight * kindergarten_2 * 0.9 + 
-                kindergarten_weight * kindergarten_3 * 0.8 + 
-                kindergarten_weight * kindergarten_4 * 0.7 +
-                kindergarten_weight * kindergarten_5 * 0.6;
+                category_score[1] = 
+                weight_1 * kindergarten_1 +
+                weight_2 * kindergarten_2 +
+                weight_3 * kindergarten_3 +
+                weight_4 * kindergarten_4 +
+                weight_5 * kindergarten_5;
 
-                category_score[3] = school.length - 100;
-                var school_weight = 100 / school.length;
-                if(category_score[3] < 0) category_score[3] = 0;
-                category_score[3] += school_weight * school_1 + 
-                school_weight * school_2 * 0.9 + 
-                school_weight * school_3 * 0.8 + 
-                school_weight * school_4 * 0.7 +
-                school_weight * school_5 * 0.6;
+                category_score[1] += 
+                weight_1 * school_1 +
+                weight_2 * school_2 +
+                weight_3 * school_3 +
+                weight_4 * school_4 +
+                weight_5 * school_5;
 
-                category_score[4] = academy.length - 100;
-                var academy_weight = 100 / academy.length;
-                if(category_score[4] < 0) category_score[4] = 0;
-                category_score[4] += academy_weight * academy_1 + 
-                academy_weight * academy_2 * 0.9 + 
-                academy_weight * academy_3 * 0.8 + 
-                academy_weight * academy_4 * 0.7 +
-                academy_weight * academy_5 * 0.6;
+                category_score[1] += 
+                weight_1 * academy_1 +
+                weight_2 * academy_2 +
+                weight_3 * academy_3 +
+                weight_4 * academy_4 +
+                weight_5 * academy_5;
 
-                category_score[5] = mart.length - 100;
-                var mart_weight = 100 / mart.length;
-                if(category_score[5] < 0) category_score[5] = 0;
-                category_score[5] += mart_weight * mart_1 + 
-                mart_weight * mart_2 * 0.9 + 
-                mart_weight * mart_3 * 0.8 + 
-                mart_weight * mart_4 * 0.7 +
-                mart_weight * mart_5 * 0.6;
+                category_score[2] = 
+                weight_1 * mart_1 +
+                weight_2 * mart_2 +
+                weight_3 * mart_3 +
+                weight_4 * mart_4 +
+                weight_5 * mart_5;
 
-                category_score[6] = culture.length - 100;
-                var culture_weight = 100 / culture.length;
-                if(category_score[6] < 0) category_score[6] = 0;
-                category_score[6] += culture_weight * culture_1 + 
-                culture_weight * culture_2 * 0.9 + 
-                culture_weight * culture_3 * 0.8 + 
-                culture_weight * culture_4 * 0.7 +
-                culture_weight * culture_5 * 0.6;
+                category_score[3] = 
+                weight_1 * culture_1 +
+                weight_2 * culture_2 +
+                weight_3 * culture_3 +
+                weight_4 * culture_4 +
+                weight_5 * culture_5;
 
-                category_score[7] = restaurant.length - 100;
-                var res_weight = 100 / restaurant.length;
-                if(category_score[7] < 0) category_score[7] = 0;
-                category_score[7] += res_weight * restaurant_1 + 
-                res_weight * restaurant_2 * 0.9 + 
-                res_weight * restaurant_3 * 0.8 + 
-                res_weight * restaurant_4 * 0.7 +
-                res_weight * restaurant_5 * 0.6;
+                category_score[4] = 
+                weight_1 * restaurant_1 +
+                weight_2 * restaurant_2 +
+                weight_3 * restaurant_3 +
+                weight_4 * restaurant_4 +
+                weight_5 * restaurant_5;
 
-                category_score[8] = cafe.length - 100;
-                var cafe_weight = 100 / cafe.length;
-                if(category_score[8] < 0) category_score[8] = 0;
-                category_score[8] += cafe_weight * cafe_1 + 
-                cafe_weight * cafe_2 * 0.9 + 
-                cafe_weight * cafe_3 * 0.8 + 
-                cafe_weight * cafe_4 * 0.7 +
-                cafe_weight * cafe_5 * 0.6;
-
-                category_score[9] = public_place.length - 100;
-                var pub_weight = 100 / public_place.length;
-                if(category_score[9] < 0) category_score[9] = 0;
-                category_score[9] += pub_weight * public_place_1 + 
-                pub_weight * public_place_2 * 0.9 + 
-                pub_weight * public_place_3 * 0.8 + 
-                pub_weight * public_place_4 * 0.7 +
-                pub_weight * public_place_5 * 0.6;
-
-                category_score[10] = subway.length - 100;
-                var subway_weight = 100 / subway.length;
-                if(category_score[10] < 0) category_score[10] = 0;
-                category_score[10] += subway_weight * subway_1 + 
-                subway_weight * subway_2 * 0.9 + 
-                subway_weight * subway_3 * 0.8 + 
-                subway_weight * subway_4 * 0.7 +
-                subway_weight * subway_5 * 0.6;
-
-                category_score[11] = travel.length - 100;
-                var travel_weight = 100 / travel.length;
-                if(category_score[11] < 0) category_score[11] = 0;
-                category_score[11] += travel_weight * travel_1 + 
-                travel_weight * travel_2 * 0.9 + 
-                travel_weight * travel_3 * 0.8 + 
-                travel_weight * travel_4 * 0.7 +
-                travel_weight * travel_5 * 0.6;
-
-                category_score[12] = motel.length - 100;
-                var motel_weight = 100 / motel.length;
-                if(category_score[12] < 0) category_score[12] = 0;
-                category_score[12] += motel_weight * motel_1 + 
-                motel_weight * motel_2 * 0.9 + 
-                motel_weight * motel_3 * 0.8 + 
-                motel_weight * motel_4 * 0.7 +
-                motel_weight * motel_5 * 0.6;
+                category_score[4] += 
+                weight_1 * cafe_1 +
+                weight_2 * cafe_2 +
+                weight_3 * cafe_3 +
+                weight_4 * cafe_4 +
+                weight_5 * cafe_5;
                 
-                total_category_num = (hospital.length + pharmacy.length + kindergarten.length +school.length + 
-                                    academy.length + mart.length + culture.length + restaurant.length + cafe.length +
-                                    public_place.length + subway.length + travel.length + motel.length) / 13;
-                category_score[0] *= hospital.length / total_category_num;
-                category_score[1] *= pharmacy.length / total_category_num;
-                category_score[2] *= kindergarten.length / total_category_num;
-                category_score[3] *= school.length / total_category_num;
-                category_score[4] *= academy.length / total_category_num;
-                category_score[5] *= mart.length / total_category_num;
-                category_score[6] *= culture.length / total_category_num;
-                category_score[7] *= restaurant.length / total_category_num;
-                category_score[8] *= cafe.length / total_category_num;
-                category_score[9] *= public_place.length / total_category_num;
-                category_score[10] *= subway.length / total_category_num;
-                category_score[11] *= travel.length / total_category_num;
-                category_score[12] *= motel.length / total_category_num;
+                category_score[5] = 
+                weight_1 * public_place_1 +
+                weight_2 * public_place_2 +
+                weight_3 * public_place_3 +
+                weight_4 * public_place_4 +
+                weight_5 * public_place_5;
+
+                category_score[6] = 
+                weight_1 * subway_1 * 10 / active +
+                weight_2 * subway_2 * 10 / active +
+                weight_3 * subway_3 * 10 / active +
+                weight_4 * subway_4 * 10 / active +
+                weight_5 * subway_5 * 10 / active;
+
+                category_score[7] = 
+                weight_1 * travel_1 +
+                weight_2 * travel_2 +
+                weight_3 * travel_3 +
+                weight_4 * travel_4 +
+                weight_5 * travel_5;
+
+                category_score[8] = 
+                weight_1 * motel_1 +
+                weight_2 * motel_2 +
+                weight_3 * motel_3 +
+                weight_4 * motel_4 +
+                weight_5 * motel_5;
 
                 category_score[order_category[0]] *= 1.2;
                 category_score[order_category[1]] *= 1.15;
@@ -821,11 +1020,6 @@
                 category_score[order_category[6]] *= 0.95;
                 category_score[order_category[7]] *= 0.95;
                 category_score[order_category[8]] *= 0.9;
-
-                category_score[order_category[9]] *= 0.85;
-                category_score[order_category[10]] *= 0.85;
-                category_score[order_category[11]] *= 0.8;
-                category_score[order_category[12]] *= 0.8;
             }
 
             $("#check_medical").change(function(){
@@ -1179,9 +1373,10 @@
                 title: {
                     text: '주변 환경 정보',
                     style: {
-                        "color": "rgb(127, 219, 239)",
+                        color: 'white',
                         "font-size": "30px",
-                        "fill": "rgb(127, 219, 239)"
+                        "font-weight": "bold",
+                        "margin-top" : '25px'
                     }
                 },
                 tooltip: {
@@ -1257,15 +1452,15 @@
                 Highcharts.chart('second_page_chart', {
                     chart: {
                         type: 'heatmap',
-                        marginTop: 40,
-                        marginBottom: 80,
+                        marginTop: 60,
                         plotBorderWidth: 1,
                     },
                     title: {
                         text: '동네 주변 환경 히트맵',
                         style:{
+                            "margin-bottom" : '25px',
                             color: 'white',
-                            fontSize: '25px',
+                            fontSize: '30px',
                             "font-weight": "bold"
                         }
                     },
@@ -1298,7 +1493,7 @@
                         layout: 'vertical',
                         margin: 0,
                         verticalAlign: 'top',
-                        y: 25,
+                        y: 42,
                         symbolHeight: 280
                     },
                     tooltip: {
@@ -1343,56 +1538,58 @@
                         getScore();
                         var sum = 0;
                         var total_score = [];
-                        if(kind != 'true') category_score[2] = 0;
+                        if(kind != 'true') category_score[1] -= (
+                            weight_1 * kindergarten_1 + weight_2 * kindergarten_2 +
+                            weight_3 * kindergarten_3 + weight_4 * kindergarten_4 +
+                            weight_5 * kindergarten_5);
                         if((kind != 'true') && (high != 'true') && (midd != 'true') && (elem != 'true')) {
-                            category_score[2] = 0; category_score[3] = 0; category_score[4] = 0;
+                            category_score[1] = 0;
                         }
                         if(old == 'true') category_score[0] += 3;
                         if(dog == 'true') category_score[0] += 3;
 
                         if(age >= 60){
                             //숙박업소 감점, 학군 감점, 병원 가산점
-                            category_score[12] *= 0.8;
-                            category_score[2] *= 0.9; category_score[3] *= 0.9; category_score[4] *= 0.9;
-                            category_score[0] *= 1.1; category_score[1] *= 1.1;
+                            category_score[8] *= 0.8;
+                            category_score[1] *= 0.9;
+                            category_score[0] *= 1.1;
                         }
                         else if(age >= 50){
                             //숙박업소 감점, 학군 감점, 장보기 가산점
-                            category_score[12] *= 0.8;
-                            category_score[2] *= 0.9; category_score[3] *= 0.9; category_score[4] *= 0.9;
-                            category_score[5] *= 1.1;
+                            category_score[8] *= 0.8;
+                            category_score[1] *= 0.9;
+                            category_score[2] *= 1.1;
                         }
                         else if(age >= 40){
                             //숙박업소 감점, 지하철 감점, 학군 가산점
-                            category_score[12] *= 0.8;
-                            category_score[10] *= 0.8;
-                            category_score[2] *= 1.1; category_score[3] *= 1.1; category_score[4] *= 1.1;                            
+                            category_score[8] *= 0.8;
+                            category_score[6] *= 0.9;
+                            category_score[1] *= 1.1;
                         }
                         else if(age >= 30){
                             //숙박업소 감점, 문화시설 감점, 음식점 가산점
-                            category_score[12] *= 0.8;
-                            category_score[6] *= 0.8;
-                            category_score[7] *= 1.1; category_score[8] *= 1.1;
+                            category_score[8] *= 0.8;
+                            category_score[3] *= 0.9;
+                            category_score[4] *= 1.1;
                         }
                         else if(age >= 20){
                             //학교, 유치원 감점, 병원 감점, 음식점 가산점
-                            category_score[2] *= 0.8; category_score[3] *= 0.8; category_score[4] *= 1.1;
-                            category_score[0] *= 0.9; category_score[1] *= 0.9;
-                            category_score[7] *= 1.1; category_score[8] *= 1.1;
+                            category_score[1] *= 0.8;
+                            category_score[0] *= 0.9;
+                            category_score[4] *= 1.1;
                         }
-                        
-                        total_score.push(Number.parseFloat(category_score[0]) + Number.parseFloat(category_score[1]));
-                        total_score.push(Number.parseFloat(category_score[2]) + Number.parseFloat(category_score[3]) + Number.parseFloat(category_score[4]));
+                        total_score.push(Number.parseFloat(category_score[0]));
+                        total_score.push(Number.parseFloat(category_score[1]));
+                        total_score.push(Number.parseFloat(category_score[2]));
+                        total_score.push(Number.parseFloat(category_score[3]));
+                        total_score.push(Number.parseFloat(category_score[4]));
                         total_score.push(Number.parseFloat(category_score[5]));
                         total_score.push(Number.parseFloat(category_score[6]));
                         total_score.push(Number.parseFloat(category_score[7]));
                         total_score.push(Number.parseFloat(category_score[8]));
-                        total_score.push(Number.parseFloat(category_score[9]));
-                        total_score.push(Number.parseFloat(category_score[10]));
-                        total_score.push(Number.parseFloat(category_score[11]));
-                        total_score.push(Number.parseFloat(category_score[12]));
                         for(var item in total_score){
                             total_score[item] = Number.parseFloat(total_score[item]).toFixed(1);
+                            console.log(total_score[item]);
                             if(!isNaN(total_score[item]))
                                 sum += Number.parseFloat(total_score[item]);
                             else total_score[item] = 0;
@@ -1407,7 +1604,6 @@
                         $("#score_6").html(total_score[6]);
                         $("#score_7").html(total_score[7]);
                         $("#score_8").html(total_score[8]);
-                        $("#score_9").html(total_score[9]);
                         $("#score_avg").html((sum / 10).toFixed(1));
                     }
                 });
