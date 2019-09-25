@@ -28,19 +28,6 @@
                 height:100%;
                 text-align: center;    
             }
-            #aptinfo_box{
-                position: relative;
-                top: 50%;
-                margin-top: -300px;
-                z-index: 2;
-                width: 400px;
-                height: 600px;
-                background:rgb(127, 219, 239);
-                opacity: 0.7;
-                margin-left: 50px;
-                float: left;
-                border-radius: 30px;
-            }
             #filter_box{
                 position: relative;
                 top: 50%;
@@ -357,22 +344,6 @@
         <h id="address_name"></h>
         <div id="wrapper">
             <div id="kakao_map" class="map_div"></div>
-            <div id = "aptinfo_box">
-                <div style = "margin-top: 10px">
-                    <!-- <h style = "color : white ; font-weight : bold; font-size: 20px;">아파트 이름</h> -->
-                    <h id= "infoAPT_0" style="color: black ; font-weight : bold;font-size : 28px" ></h><br><br><br>
-                    <h style = "color : black ; font-weight : bold; font-size: 20px;">완공 시기</h>
-                    <h id= "infoAPT_1" style="color: black ; font-weight : bold;font-size : 15px" ></h><br><br><br>
-                    <h style = "color : black ; font-weight : bold; font-size: 20px;">시세 기준 시기</h>
-                    <h id= "infoAPT_2" style="color: black ; font-weight : bold;font-size : 15px" ></h><br><br><br>
-                    <h style = "color : black ; font-weight : bold; font-size: 20px;">매매가</h>
-                    <h id= "infoAPT_3" style="color: black ; font-weight : bold;font-size : 15px" ></h><br><br><br>
-                    <h style = "color : black ; font-weight : bold; font-size: 20px;">전세가</h>
-                    <h id= "infoAPT_4" style="color: black ; font-weight : bold;font-size : 15px" ></h><br><br><br>
-                    <h style = "color : black ; font-weight : bold; font-size: 20px;">apt 문의 번호</h>
-                    <h id= "infoAPT_5" style="color: black ; font-weight : bold;font-size : 15px" ></h><br><br><br>
-                </div>
-            </div>
             <div id="filter_box">
                 <div style="margin-top: 50px;">
                     <h style="color: white; font-weight: bold; font-size: 20px;">연령</h><br>
@@ -534,7 +505,6 @@
                     }   //success 함수꺼다 건드리지마라
                 });     //얜 아약스꺼
             function closeOverlay() {
-                console.log("!@#!@#");
                 iwOverlay.setMap(null);     
             }
             function _GET(search){
