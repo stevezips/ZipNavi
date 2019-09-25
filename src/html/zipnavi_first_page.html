@@ -366,6 +366,7 @@
                     fillOpacity: 0.7  // 채우기 불투명도 입니다   
                     });
                     circle.setMap(map);
+                    map.panTo(new kakao.maps.LatLng(y,x));
                 }
                 else{
                     search = window.location.search;
@@ -487,7 +488,6 @@
                         if (result[i].region_type === 'H') {
                             //$("#txt_address").html("<h>" + result[i].address_name + "</h>");
                             infoDiv.innerHTML = result[i].address_name;
-                            console.log($('#txt_address').val());
                             address_name = result[i].address_name;
                             break;
                         }
