@@ -3,10 +3,11 @@ var router = express.Router();
 var crawlNews = require('../utils/CrawlNews');
 //로그 찍는거
 /* GET home page. */
-router.get('/api/crawl_news', async (req, res, next) => {
-  const result = await crawlNews("https://search.naver.com/search.naver?where=news&sm=tab_jum&query=%EB%8C%80%EB%A6%BC%EB%8F%99+%EB%B6%80%EB%8F%99%EC%82%B0")
+router.get('/api/crawl_news/:query', async (req, res, next) => {
+  const query = req.params.query
+  const result = await crawlNews('https://search.naver.com/search.naver', query)
   console.log(result);
-  // await res.render('index', { title: result[0].title });
+  // await res.rener('index', { title: result[0].title });
 
   await res.send(result)
 
