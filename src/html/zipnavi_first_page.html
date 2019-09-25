@@ -45,7 +45,7 @@
                 z-index: 2;
                 width: 400px;
                 height: 800px;
-                background: #131313;
+                background: #0d92db;
                 opacity: 0.9;
                 margin-right: 50px;
                 float: right;
@@ -239,8 +239,152 @@
             text-align: center;
             border: 1px solid #6cc0e5;
             }
+            .dim-layer{
+                display: none;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: #000;
+                opacity: .5;
+                filter: alpha(opacity=50);
+                z-index: 80;
+            }
+            #link {color: #E45635;display:block;font: 12px "Helvetica Neue", Helvetica, Arial, sans-serif;text-align:center; text-decoration: none;}
+            #link:hover {color: #CCCCCC}
+
+            #link, #link:hover {-webkit-transition: color 0.5s ease-out;-moz-transition: color 0.5s ease-out;-ms-transition: color 0.5s ease-out;-o-transition: color 0.5s ease-out;transition: color 0.5s ease-out;}
+
+            /** BEGIN CSS **/
+            body {background: #333333;}
+            @keyframes rotate-loading {
+                0%  {transform: rotate(0deg);-ms-transform: rotate(0deg); -webkit-transform: rotate(0deg); -o-transform: rotate(0deg); -moz-transform: rotate(0deg);}
+                100% {transform: rotate(360deg);-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); -o-transform: rotate(360deg); -moz-transform: rotate(360deg);}
+            }
+
+            @-moz-keyframes rotate-loading {
+                0%  {transform: rotate(0deg);-ms-transform: rotate(0deg); -webkit-transform: rotate(0deg); -o-transform: rotate(0deg); -moz-transform: rotate(0deg);}
+                100% {transform: rotate(360deg);-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); -o-transform: rotate(360deg); -moz-transform: rotate(360deg);}
+            }
+
+            @-webkit-keyframes rotate-loading {
+                0%  {transform: rotate(0deg);-ms-transform: rotate(0deg); -webkit-transform: rotate(0deg); -o-transform: rotate(0deg); -moz-transform: rotate(0deg);}
+                100% {transform: rotate(360deg);-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); -o-transform: rotate(360deg); -moz-transform: rotate(360deg);}
+            }
+
+            @-o-keyframes rotate-loading {
+                0%  {transform: rotate(0deg);-ms-transform: rotate(0deg); -webkit-transform: rotate(0deg); -o-transform: rotate(0deg); -moz-transform: rotate(0deg);}
+                100% {transform: rotate(360deg);-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); -o-transform: rotate(360deg); -moz-transform: rotate(360deg);}
+            }
+
+            @keyframes rotate-loading {
+                0%  {transform: rotate(0deg);-ms-transform: rotate(0deg); -webkit-transform: rotate(0deg); -o-transform: rotate(0deg); -moz-transform: rotate(0deg);}
+                100% {transform: rotate(360deg);-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); -o-transform: rotate(360deg); -moz-transform: rotate(360deg);}
+            }
+
+            @-moz-keyframes rotate-loading {
+                0%  {transform: rotate(0deg);-ms-transform: rotate(0deg); -webkit-transform: rotate(0deg); -o-transform: rotate(0deg); -moz-transform: rotate(0deg);}
+                100% {transform: rotate(360deg);-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); -o-transform: rotate(360deg); -moz-transform: rotate(360deg);}
+            }
+
+            @-webkit-keyframes rotate-loading {
+                0%  {transform: rotate(0deg);-ms-transform: rotate(0deg); -webkit-transform: rotate(0deg); -o-transform: rotate(0deg); -moz-transform: rotate(0deg);}
+                100% {transform: rotate(360deg);-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); -o-transform: rotate(360deg); -moz-transform: rotate(360deg);}
+            }
+
+            @-o-keyframes rotate-loading {
+                0%  {transform: rotate(0deg);-ms-transform: rotate(0deg); -webkit-transform: rotate(0deg); -o-transform: rotate(0deg); -moz-transform: rotate(0deg);}
+                100% {transform: rotate(360deg);-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); -o-transform: rotate(360deg); -moz-transform: rotate(360deg);}
+            }
+
+            @keyframes loading-text-opacity {
+                0%  {opacity: 0}
+                20% {opacity: 0}
+                50% {opacity: 1}
+                100%{opacity: 0}
+            }
+
+            @-moz-keyframes loading-text-opacity {
+                0%  {opacity: 0}
+                20% {opacity: 0}
+                50% {opacity: 1}
+                100%{opacity: 0}
+            }
+
+            @-webkit-keyframes loading-text-opacity {
+                0%  {opacity: 0}
+                20% {opacity: 0}
+                50% {opacity: 1}
+                100%{opacity: 0}
+            }
+
+            @-o-keyframes loading-text-opacity {
+                0%  {opacity: 0}
+                20% {opacity: 0}
+                50% {opacity: 1}
+                100%{opacity: 0}
+            }
+            .loading-container,
+            .loading {
+                height: 100px;
+                position: relative;
+                width: 100px;
+                border-radius: 100%;
+            }
+
+
+            .loading-container { position: fixed; top: 45%; left: 45%; margin: 40px auto; display: block; z-index: 99;}
+
+            .loading {
+                border: 2px solid transparent;
+                border-color: transparent #fff transparent #FFF;
+                -moz-animation: rotate-loading 1.5s linear 0s infinite normal;
+                -moz-transform-origin: 50% 50%;
+                -o-animation: rotate-loading 1.5s linear 0s infinite normal;
+                -o-transform-origin: 50% 50%;
+                -webkit-animation: rotate-loading 1.5s linear 0s infinite normal;
+                -webkit-transform-origin: 50% 50%;
+                animation: rotate-loading 1.5s linear 0s infinite normal;
+                transform-origin: 50% 50%;
+            }
+
+            .loading-container:hover .loading {
+                border-color: transparent #E45635 transparent #E45635;
+            }
+            .loading-container:hover .loading,
+            .loading-container .loading {
+                -webkit-transition: all 0.5s ease-in-out;
+                -moz-transition: all 0.5s ease-in-out;
+                -ms-transition: all 0.5s ease-in-out;
+                -o-transition: all 0.5s ease-in-out;
+                transition: all 0.5s ease-in-out;
+            }
+
+            #loading-text {
+                -moz-animation: loading-text-opacity 2s linear 0s infinite normal;
+                -o-animation: loading-text-opacity 2s linear 0s infinite normal;
+                -webkit-animation: loading-text-opacity 2s linear 0s infinite normal;
+                animation: loading-text-opacity 2s linear 0s infinite normal;
+                color: #ffffff;
+                font-family: "Helvetica Neue, "Helvetica", ""arial";
+                font-size: 10px;
+                font-weight: bold;
+                margin-top: 45px;
+                opacity: 0;
+                position: absolute;
+                text-align: center;
+                text-transform: uppercase;
+                top: 0;
+                width: 100px;
+            }
         </style>
         <img src="../images/project_logo.png" style="height: 10%; position: fixed; z-index: 3;">
+        <div class="dim-layer" style="display: block"></div> 
+        <div class="loading-container">
+            <div class="loading"></div>
+            <div id="loading-text">loading</div>
+        </div>
         <div id="address_search_panel" style="position: fixed; margin-top: 30px; width: 100%; text-align: center; z-index: 3;">
             <input type="text" id="sample_address" class="address_search" placeholder="찾고자 하는 지역의 '구', '동'을 입력하세요." >
             <input type="image" onclick="SearchAddress()" src="../images/zoom_2.png" style="vertical-align: middle; width: 30px; height: 30px;" onfocus="this.blur()"><br>
@@ -437,10 +581,15 @@
             })
             
             window.onload = function(){
-                panTo();
+                setTimeout(() => {
+                    panTo();
+                $('.loading-container').hide();
+                $('.dim-layer').hide();
                 this.circle.setMap(map);
                 this.main_marker.setMap(map);
                 searchAddrFromCoords(new kakao.maps.LatLng(y,x), displayCenterInfo);
+                }, 500);
+                
             };  
             
             function _GET(search){

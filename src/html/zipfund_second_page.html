@@ -29,7 +29,7 @@
             #kakao_map{
                 margin-left: 5%;
                 width: 90%;
-                height: 500px;
+                height: 67%;
                 z-index: 1;
             }
             #txt_address{
@@ -109,18 +109,19 @@
             }
             #mytable th{
                 padding: 15px;
-                font-weight: bold;
+                font-weight: 800;
                 vertical-align: top;
                 color: #fff;
                 background: #7f77c9;
-                font: 20px bold; color:black;
+                font-size: 20px; color:black;
             }
             #mytable td{
                 padding: 15px;
                 vertical-align: center;
                 border-bottom: 1px solid #ccc;
                 background: rgb(220, 255, 253);
-                font: 20px bold; color:black;
+                font-size: 20px; color:black;
+                font-weight: 700;
             }
             #second_page_bottom{
                 display: inline-block;
@@ -144,28 +145,25 @@
             }
             #crawl_table{
                 width: 100%;
-                border-collapse: separate;
-                border-spacing: 4px;
+                border-collapse: collapse;
                 text-align: center;
-                line-height: 1.5;
-                margin: 20px 5%;
-                background-color: white;
+                margin: 20px 10%;
             }
             #crawl_table th{
+                font-size: 30px; font-weight: 700px;
                 padding: 10px;
-                font-weight: bold;
-                vertical-align: top;
-                color: #fff;
-                background: #7f77c9;
-                font: 20px bold; color:black;
+                color: rgb(6, 158, 218);
+                border-bottom: 5px solid #168;
+                text-align: center;
+                margin: 20px 10%;
             }
-            #crawl_table td{
+            #crawl_table td {
+                color: #669;
                 padding: 10px;
-                font-weight: bold;
-                vertical-align: top;
-                color: black;
-                background: lightgoldenrodyellow;
-                font: 20px bold;
+                border-bottom: 1px solid #ddd;
+            }
+            #crawl_table tbody:hover tr:hover td{
+                background: rgb(127, 219, 239);
             }
             .checks {position: relative;}
 
@@ -524,8 +522,8 @@
                     <div id="third_page_crawl">
                         <table id="crawl_table" cellspacing="0">
                             <tr style="width: 5%; text-align: center;">
-                                <th style="width: 10%;">썸네일</th>
-                                <th>제목</th>
+                                <th style="width: 10%;"></th>
+                                <th>아파트 관련 기사 목록</th>
                             </tr>
                             <tr style="width: 10%; text-align: center;">
                             </tr>
@@ -605,7 +603,7 @@
             // // 마커 위에 인포윈도우를 표시합니다. 두번째 파라미터인 marker를 넣어주지 않으면 지도 위에 표시됩니다
             // aptInfo.open(map, marker); 
             circle.setMap(map);
-            $("#txt_address").html("<h>" + address_name + "</h>");
+            $("#txt_address").html("<h>" + apt_Name + "</h>");
             function category(){
                 return {
                     place_name_1: "",
@@ -705,14 +703,6 @@
             for(var i = 0; i < codes.length; i++){
                 ps.categorySearch(codes[i].place_name_1, placeSearchCB, {
                     page: 1, size: 15, y: y, x: x,
-                    radius: active * 1000
-                });
-                ps.categorySearch(codes[i].place_name_1, placeSearchCB, {
-                    page: 2, size: 15, y: y, x: x,
-                    radius: active * 1000
-                });
-                ps.categorySearch(codes[i].place_name_1, placeSearchCB, {
-                    page: 3, size: 15, y: y, x: x,
                     radius: active * 1000
                 });
             }
@@ -933,8 +923,8 @@
                         article_img_src[i] = "https://www.cchannel.com/images/noimg.gif";
                         article_img_alt[i] = "이미지가 없습니다!";
                     }
-                    $("#crawl_table").append("<tr><td>" + "<image height=50px src=" + article_img_src[i] + " title=" + article_img_alt[i] + "/>" + "</td><td>" 
-                        + "<a href=" + article_url[i] + ">" + article_title[i] + "</a>" + "</td></tr>");
+                    $("#crawl_table").append("<tr><td>" + "<image height=55px src=" + article_img_src[i] + " title=" + article_img_alt[i] + "/>" + "</td><td>" 
+                        + "<a style='font-size: 25px; font-weight: 700; color: black; text-decoration: none;' href=" + article_url[i] + ">" + article_title[i] + "</a>" + "</td></tr>");
                 });
                 $('#crawl_table tr')
             }

@@ -130,7 +130,7 @@
             }
             #third_page_top{
                 margin-top: 15px;
-                height: 10%;
+                height: 6%;
                 text-align: center;
                 float:top;
             }
@@ -149,19 +149,19 @@
             }
             #crawl_table th{
                 font-size: 30px; font-weight: 700px;
-                padding: 10px;
-  color: rgb(6, 158, 218);
-  border-bottom: 5px solid #168;
-  text-align: center;
+                padding: 10px 0px 30px 0px;
+                color: rgb(6, 158, 218);
+                border-bottom: 5px solid #168;
+                text-align: center;
             }
             #crawl_table td {
                 color: #669;
-  padding: 10px;
-  border-bottom: 1px solid #ddd;
+                padding: 10px;
+                border-bottom: 1px solid #ddd;
             }
-            #crawl_table tr:hover td {
-  color: white;
-}
+            #crawl_table tbody:hover tr:hover td{
+                background: rgb(127, 219, 239);
+            }
             .checks {position: relative;}
 
             .checks input[type="checkbox"] {  /* 실제 체크박스는 화면에서 숨김 */
@@ -518,8 +518,8 @@
                 <div id="third_page_crawl">
                     <table id="crawl_table" cellspacing="0">
                         <tr style="width: 5%; text-align: center;">
-                            <th style="width: 10%;">썸네일</th>
-                            <th>제목</th>
+                            <th style="width: 10%;"></th>
+                            <th>동네 관련 기사 목록</th>
                         </tr>
                         <tr style="width: 10%; text-align: center;">
                         </tr>
@@ -908,7 +908,7 @@
                         article_img_alt[i] = "이미지가 없습니다!";
                     }
                     $("#crawl_table").append("<tr><td>" + "<image height=55px src=" + article_img_src[i] + " title=" + article_img_alt[i] + "/>" + "</td><td>" 
-                        + "<a style='font-size: 25px; font-weight: 700; color: black; text-decoration: none;' href=" + article_url[i] + ">" + article_title[i] + "</a>" + "</td></tr>");
+                        + "<a style='font-size: 25px; font-weight: 700; color: white; text-decoration: none;' href=" + article_url[i] + ">" + article_title[i] + "</a>" + "</td></tr>");
                 });
                 $('#crawl_table tr')
             }
@@ -957,11 +957,11 @@
                 weight_5 * mart_5;
 
                 category_score[3] = 
-                weight_1 * culture_1 +
+                (weight_1 * culture_1 +
                 weight_2 * culture_2 +
                 weight_3 * culture_3 +
                 weight_4 * culture_4 +
-                weight_5 * culture_5;
+                weight_5 * culture_5) * 10 / active;
 
                 category_score[4] = 
                 weight_1 * restaurant_1 +
@@ -978,25 +978,25 @@
                 weight_5 * cafe_5;
                 
                 category_score[5] = 
-                weight_1 * public_place_1 +
+                (weight_1 * public_place_1 +
                 weight_2 * public_place_2 +
                 weight_3 * public_place_3 +
                 weight_4 * public_place_4 +
-                weight_5 * public_place_5;
+                weight_5 * public_place_5) * 10 / active;
 
                 category_score[6] = 
-                weight_1 * subway_1 * 10 / active +
-                weight_2 * subway_2 * 10 / active +
-                weight_3 * subway_3 * 10 / active +
-                weight_4 * subway_4 * 10 / active +
-                weight_5 * subway_5 * 10 / active;
+                (weight_1 * subway_1 +
+                weight_2 * subway_2 +
+                weight_3 * subway_3 +
+                weight_4 * subway_4 +
+                weight_5 * subway_5) * 15 / active;
 
                 category_score[7] = 
-                weight_1 * travel_1 +
+                (weight_1 * travel_1 +
                 weight_2 * travel_2 +
                 weight_3 * travel_3 +
                 weight_4 * travel_4 +
-                weight_5 * travel_5;
+                weight_5 * travel_5) * 10 / active;
 
                 category_score[8] = 
                 weight_1 * motel_1 +
