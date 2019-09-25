@@ -143,29 +143,25 @@
             }
             #crawl_table{
                 width: 100%;
-                border-collapse: separate;
-                border-spacing: 4px;
+                border-collapse: collapse;
                 text-align: center;
-                line-height: 1.5;
-                margin: 20px 5%;
-                background-color: white;
+                margin: 20px 10%;
             }
             #crawl_table th{
+                font-size: 30px; font-weight: 700px;
                 padding: 10px;
-                font-weight: bold;
-                vertical-align: top;
-                color: #fff;
-                background: #7f77c9;
-                font: 20px bold; color:black;
+  color: rgb(6, 158, 218);
+  border-bottom: 5px solid #168;
+  text-align: center;
             }
-            #crawl_table td{
-                padding: 10px;
-                font-weight: bold;
-                vertical-align: top;
-                color: black;
-                background: lightgoldenrodyellow;
-                font: 20px bold;
+            #crawl_table td {
+                color: #669;
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
             }
+            #crawl_table tr:hover td {
+  color: white;
+}
             .checks {position: relative;}
 
             .checks input[type="checkbox"] {  /* 실제 체크박스는 화면에서 숨김 */
@@ -911,8 +907,8 @@
                         article_img_src[i] = "https://www.cchannel.com/images/noimg.gif";
                         article_img_alt[i] = "이미지가 없습니다!";
                     }
-                    $("#crawl_table").append("<tr><td>" + "<image height=50px src=" + article_img_src[i] + " title=" + article_img_alt[i] + "/>" + "</td><td>" 
-                        + "<a href=" + article_url[i] + ">" + article_title[i] + "</a>" + "</td></tr>");
+                    $("#crawl_table").append("<tr><td>" + "<image height=55px src=" + article_img_src[i] + " title=" + article_img_alt[i] + "/>" + "</td><td>" 
+                        + "<a style='font-size: 25px; font-weight: 700; color: black; text-decoration: none;' href=" + article_url[i] + ">" + article_title[i] + "</a>" + "</td></tr>");
                 });
                 $('#crawl_table tr')
             }
