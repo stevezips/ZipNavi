@@ -69,49 +69,101 @@
                 position: fixed; 
                 text-align: center;
             }
-            .infoBox{
-                /* 작업중 */
-                /* position:relative;
-                bottom: 85px;
-                border-radius : 6px;
-                border : 1px solid #ccc;
-                border-bottom: 2px solid #ddd;
-                float:left; */
-                
-                /* 구버젼 중 최신 */
-                background-image: url('../images/main_marker_info.png') no-repeat;
-                background: url('../images/main_marker_info.png') no-repeat;
-                position: relative;
-                background: #131313;
-
-                /* background: url('../images/main_marker_info.png') no-repeat; */
-                /* background:url('http://t1.daumcdn.net/localimg/localimages/07/mapapidoc/box_movie.png') no-repeat;*/
-                /* margin-bottom : 250%; */
-
-                /* position: absolute; */
-                /* width:360px; */
-                /* height:350px; */
-                /* background:url('http://t1.daumcdn.net/localimg/localimages/07/mapapidoc/box_movie.png') no-repeat; */
-                /* padding:15px 10px; */
-            }
-            .infoBox .boxTitle{
-                display: block;
-                background: #fff;
-                margin-right : 35px;
-                padding: 10px 15px;
-                font-weight : bold;
-                font-size: 18px;
+            /* 여기부터 건드림 */
+            .wrap {
+                position: absolute;
+                left: 0;
+                bottom: 100px;
+                width: 288px;
+                height: 140px;
+                margin-left: -144px;
                 text-align: center;
-            }
-            .infoBox .boxContent{
-                display: block;
-                background: #fff;
-                margin-right : 35px;
-                padding: 10px 15px;
-                font-weight : bold;
+                overflow: hidden;
                 font-size: 12px;
-                text-align: center;
+                font-family: 'Malgun Gothic', dotum, '돋움', sans-serif;
+                line-height: 1.5;
             }
+            .wrap * {
+                padding: 0;
+                margin: 0;
+            }
+            .wrap .info {
+                width: 286px;
+                height: 200px;
+                border-radius: 5px;
+                border-bottom: 2px solid #ccc;
+                border-right: 1px solid #ccc;
+                overflow: hidden;
+                background: black;
+            }
+            .wrap .info:nth-child(1) {
+                border: 0;
+                box-shadow: 0px 1px 2px #888;
+            }
+            .info .title {
+                /* padding: 5px 0 0 10px; */
+                height: 30px;
+                background: #eee;
+                border-bottom: 1px solid #ddd;
+                font-size: 18px;
+                font-weight: bold;
+            }
+            .info .close {
+                position: absolute;
+                top: 10px;
+                right: 10px;
+                color: #888;
+                width: 17px;
+                height: 17px;
+                background: url('http://t1.daumcdn.net/localimg/localimages/07/mapapidoc/overlay_close.png');
+            }
+            .info .close:hover {
+                cursor: pointer;
+            }
+            .info .body {
+                background:black;
+                position: relative;
+                overflow: hidden;
+            }
+            /* .info .desc {
+                position: relative;
+                height: 200px;
+                overflow:hidden;
+                text-align:center;
+                margin: 13px 0 0 90px;
+            } */
+            .info .body .content1 {
+                font-size : 12px;
+                background : black;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                text-align : center;
+            }
+            /* .info .img {
+                position: absolute;
+                top: 6px;
+                left: 5px;
+                width: 73px;
+                height: 71px;
+                border: 1px solid #ddd;
+                color: #888;
+                overflow: hidden;
+            } */
+            /* 사각형과 마커 잇는 삼각형 */
+            .info:after {
+                background:black;
+                content: '';
+                position: absolute;
+                margin-left: -12px;
+                left: 50%;
+                bottom: -4px;
+                width: 22px;
+                height: 12px;
+                /* background: url('http://t1.daumcdn.net/localimg/localimages/07/mapapidoc/vertex_white.png') */
+            }
+            
+            /* 이 위까지 건드림 */
             .age_range_slider{
                 margin-left: 20px;
                 margin-right: 20px;
@@ -420,6 +472,8 @@
             var main_marker_option = {offset: new kakao.maps.LatLng(80, 50)};   //80, 50 으로 했더니 가장 적절한 위치에 위치함
             var main_marker_image = new kakao.maps.MarkerImage(main_marker_src, main_marker_size, main_marker_option);
             var main_marker_position;
+            var iwContent;
+            var iwOverlay;
             $.ajax({
                     url: "http://admin.zipfund.co/api/address/apartment_info/" + getData.info,
                     contentType: "application/json",
@@ -450,11 +504,39 @@
                         main_marker_position = new kakao.maps.LatLng(y,x);                        
                         main_marker = new kakao.maps.Marker({
                             position: main_marker_position,
-                            image: main_marker_image
+                            image: main_marker_image,
                         });
-                    }
-                });
+                        iwContent = '<div class="wrap">' + 
+                                    '    <div class="info">' + 
+                                    '        <div class="title">' + 
+                                    apt_name + 
+                                    '            <div class="close" onclick="closeOverlay()" title="닫기"></div>' + 
+                                    '        <div class="body">' +
+                                    '            <div class="content1" style = "color : white;"> 완공시기: ' + built_time + '</div>' + 
+                                    '            <div class="content1" style = "color : white;"> 시세기준시기: ' + price_Time + '</div>' + 
+                                    '            <div class="content1" style = "color : white;"> 매매가: ' + price_Buy + '</div>' + 
+                                    '            <div class="content1" style = "color : white;"> 전세가: ' + price_Rent + '</div>' + 
+                                    '            <div class="content1" style = "color : white;"> apt 문의 번호: ' + phoneNum + '</div>' + 
+                                    '            </div>' + 
+                                    '        </div>' + 
+                                    '    </div>' +    
+                                    '</div>';
 
+                        // 마커 위에 커스텀오버레이를 표시합니다
+                        // 마커를 중심으로 커스텀 오버레이를 표시하기위해 CSS를 이용해 위치를 설정했습니다
+                        iwOverlay = new kakao.maps.CustomOverlay({
+                            content: iwContent,
+                            map: map,
+                            position: main_marker_position,
+                        });
+                        
+                        
+                    }   //success 함수꺼다 건드리지마라
+                });     //얜 아약스꺼
+            function closeOverlay() {
+                console.log("!@#!@#");
+                iwOverlay.setMap(null);     
+            }
             function _GET(search){
                 var obj = {};
                 var uri = decodeURI(search);
@@ -492,48 +574,19 @@
                     // circle이 여기서 생성되는 것에 착안하여, 여기서 마커 생성
                     this.circle.setMap(map);
                     main_marker.setMap(map);
-                    var iwContent = '<div class = "infoBox">' +
-                                    '<div class = "boxTitle">' + apt_name +'</div>' +
-                                    '<div class = "boxContent">' + '</br>' +  '완공 시기 : ' + built_time + '</br>'+
-                                    '시세 기준 시기 : ' + price_Time + '</br>' +
-                                    '매매가 : ' + price_Buy + '</br>' +
-                                    '전세가 : ' + price_Rent + '</br>' +
-                                    'apt 문의번호 : ' + phoneNum + 
-                                    '</div>' + '</div>';
-                    
-                    var iwRemoveable = true; // removeable 속성을 ture 로 설정하면 인포윈도우를 닫을 수 있는 x버튼이 표시됩니다
-                    var iwPosition = new kakao.maps.LatLng(y,x);
-                    // 인포윈도우를 생성합니다
-                    var infowindow = new kakao.maps.InfoWindow({
-                        content : iwContent,
-                        removable : iwRemoveable,
-                        position : iwPosition,
-                        xAnchor : 0.3,
-                        yAnchor : 0.91
+                    kakao.maps.event.addListener(map, 'click', function() {
+                            iwOverlay.setMap(map);
                     });
-
-                    // 마커에 클릭이벤트를 등록합니다
-                    kakao.maps.event.addListener(main_marker, 'click', function() {
-                    // 마커 위에 인포윈도우를 표시합니다.
-                    infowindow.open(map, main_marker);
-                    // infowindow.setMap(map);
-            });
-                    $.ajax({
-                    url: "http://admin.zipfund.co/api/address/apartment_info/" + getData.info,
-                    contentType: "application/json",
-                    dataType: 'json',
-                    success: function(result){
-                        x = result.map_info.x;
-                        y = result.map_info.y;
-                        $("#address_name").html("<h>" + result.address + "</h>");
-                        $("#infoAPT_0").html("<br>" + apt_name);
-                        $("#infoAPT_1").html("<br>" + built_time);
-                        $("#infoAPT_2").html("<br>" + price_Time);
-                        $("#infoAPT_3").html("<br>" + price_Buy);
-                        $("#infoAPT_4").html("<br>" + price_Rent);
-                        $("#infoAPT_5").html("<br>" + phoneNum);
-                    }
-                });
+                    kakao.maps.event.addListener(main_marker, 'click', function(){
+                        iwOverlay.setMap(map);
+                    })
+                    $("#address_name").html("<h>" + addr_name + "</h>");
+                    $("#infoAPT_0").html("<br>" + apt_name);
+                    $("#infoAPT_1").html("<br>" + built_time);
+                    $("#infoAPT_2").html("<br>" + price_Time);
+                    $("#infoAPT_3").html("<br>" + price_Buy);
+                    $("#infoAPT_4").html("<br>" + price_Rent);
+                    $("#infoAPT_5").html("<br>" + phoneNum);
                 panTo();
                 }, 500);
             };
