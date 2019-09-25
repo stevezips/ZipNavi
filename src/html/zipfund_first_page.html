@@ -35,7 +35,7 @@
                 z-index: 2;
                 width: 400px;
                 height: 800px;
-                background: #131313;
+                background: #0d92db;
                 opacity: 0.9;
                 margin-right: 50px;
                 float: right;
@@ -452,7 +452,7 @@
                     success: function(result){
                         x = result.map_info.x;
                         y = result.map_info.y;
-                        addr_name = result.address + " / " + result.name;
+                        addr_name = result.address + "</br> " + result.name;
                         apt_name = result.name ;
                         price_Time = result.kb_price_info.month;
                         price_Buy = Math.floor(result.kb_price_info.price /  10000) + "억 " + Math.floor(result.kb_price_info.price % 10000) + "만원";
@@ -544,7 +544,7 @@
                     // circle이 여기서 생성되는 것에 착안하여, 여기서 마커 생성
                     this.circle.setMap(map);
                     main_marker.setMap(map);
-                    kakao.maps.event.addListener(map, 'click', function() {
+                    kakao.maps.event.addListener(main_marker, 'click', function() {
                             iwOverlay.setMap(map);
                     });
                     kakao.maps.event.addListener(main_marker, 'click', function(){
