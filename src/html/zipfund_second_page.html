@@ -705,6 +705,14 @@
                     page: 1, size: 15, y: y, x: x,
                     radius: active * 1000
                 });
+                ps.categorySearch(codes[i].place_name_1, placeSearchCB, {
+                    page: 2, size: 15, location: new kakao.maps.LatLng(y, x),
+                    radius: active * 1000
+                });
+                ps.categorySearch(codes[i].place_name_1, placeSearchCB, {
+                    page: 3, size: 15, location: new kakao.maps.LatLng(y, x),
+                    radius: active * 1000
+                });
             }
             var hospital_1 = 0, hospital_2 = 0, hospital_3 = 0, hospital_4 = 0, hospital_5 = 0;
             var pharmacy_1 = 0, pharmacy_2 = 0, pharmacy_3 = 0, pharmacy_4 = 0, pharmacy_5 = 0;
@@ -973,11 +981,11 @@
                 weight_5 * mart_5;
 
                 category_score[3] = 
-                weight_1 * culture_1 +
+                (weight_1 * culture_1 +
                 weight_2 * culture_2 +
                 weight_3 * culture_3 +
                 weight_4 * culture_4 +
-                weight_5 * culture_5;
+                weight_5 * culture_5) * 10 / active;
 
                 category_score[4] = 
                 weight_1 * restaurant_1 +
@@ -994,25 +1002,25 @@
                 weight_5 * cafe_5;
                 
                 category_score[5] = 
-                weight_1 * public_place_1 +
+                (weight_1 * public_place_1 +
                 weight_2 * public_place_2 +
                 weight_3 * public_place_3 +
                 weight_4 * public_place_4 +
-                weight_5 * public_place_5;
+                weight_5 * public_place_5) * 10 / active;
 
                 category_score[6] = 
-                weight_1 * subway_1 * 10 / active +
-                weight_2 * subway_2 * 10 / active +
-                weight_3 * subway_3 * 10 / active +
-                weight_4 * subway_4 * 10 / active +
-                weight_5 * subway_5 * 10 / active;
+                (weight_1 * subway_1 +
+                weight_2 * subway_2 +
+                weight_3 * subway_3 +
+                weight_4 * subway_4 +
+                weight_5 * subway_5) * 15 / active;
 
                 category_score[7] = 
-                weight_1 * travel_1 +
+                (weight_1 * travel_1 +
                 weight_2 * travel_2 +
                 weight_3 * travel_3 +
                 weight_4 * travel_4 +
-                weight_5 * travel_5;
+                weight_5 * travel_5) * 10 / active;
 
                 category_score[8] = 
                 weight_1 * motel_1 +
