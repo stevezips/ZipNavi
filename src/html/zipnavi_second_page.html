@@ -405,9 +405,9 @@
         </style>
         <div class="dim-layer" style="display: block"></div> 
         <div class="loading-container">
-                <div class="loading"></div>
-                <div id="loading-text">loading</div>
-            </div>
+            <div class="loading"></div>
+            <div id="loading-text">loading</div>
+        </div>
         <main id="container">
             <section id="main_screen">
                 <img src="../images/project_logo.png" style="position:fixed; height: 10%; float: left;" onclick="moveTop()">
@@ -591,7 +591,6 @@
                 codes[i] = new category();
             }
             var ps = new kakao.maps.services.Places(map);
-            console.log(address_name);
             //var infowindow = new kakao.maps.InfoWindow({zIndex:1});
 
             var article_title = [];
@@ -1009,23 +1008,6 @@
                 weight_3 * motel_3 +
                 weight_4 * motel_4 +
                 weight_5 * motel_5;
-                
-                // total_category_num = (hospital.length + pharmacy.length + kindergarten.length +school.length + 
-                //                     academy.length + mart.length + culture.length + restaurant.length + cafe.length +
-                //                     public_place.length + subway.length + travel.length + motel.length) / 13;
-                // category_score[0] *= hospital.length / total_category_num;
-                // category_score[1] *= pharmacy.length / total_category_num;
-                // category_score[2] *= kindergarten.length / total_category_num;
-                // category_score[3] *= school.length / total_category_num;
-                // category_score[4] *= academy.length / total_category_num;
-                // category_score[5] *= mart.length / total_category_num;
-                // category_score[6] *= culture.length / total_category_num;
-                // category_score[7] *= restaurant.length / total_category_num;
-                // category_score[8] *= cafe.length / total_category_num;
-                // category_score[9] *= public_place.length / total_category_num;
-                // category_score[10] *= subway.length / total_category_num;
-                // category_score[11] *= travel.length / total_category_num;
-                // category_score[12] *= motel.length / total_category_num;
 
                 category_score[order_category[0]] *= 1.2;
                 category_score[order_category[1]] *= 1.15;
