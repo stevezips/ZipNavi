@@ -5,26 +5,16 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <title>ZIPNAVI FIRST PAGE</title>
+        <title>ZIPFUND FIRST PAGE</title>
         <script src="../js/jquery.js"></script>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/rangeslider.js/2.3.2/rangeslider.css">
     </head>
-    <body style="background-color: #474747; overflow:hidden;">
+    <body style="background-color: white; overflow:hidden;">
         <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
-        <script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=fb926e363d9a87e9712ed240cb75a7b0&libraries=services"></script>
         <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=fb926e363d9a87e9712ed240cb75a7b0"></script>
+        <script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=fb926e363d9a87e9712ed240cb75a7b0&libraries=services"></script>
         <script type="text/javascript" src="../rangeslider.js-2.3.0/rangeslider.min.js"></script>
         <style>
-            .address_search{
-                font-size: 20px;
-                font-weight: bold;
-                border: #007ac3 5px solid; 
-                text-align: left; 
-                padding-left: 10px; 
-                margin-right: 10px;
-                vertical-align: middle; 
-                width: 600px; height: 50px;
-            }
             #kakao_map{
                 position: absolute;
                 width: 100%;
@@ -51,6 +41,118 @@
                 float: right;
                 border-radius: 30px;
             }
+            #address_name{
+                border: #007ac3 5px solid;
+                background: white;
+                color: #474747;
+                font-weight: bold;
+                font-size: 20px;
+                opacity: 0.8;
+                margin-top: 30px;
+                z-index: 3; 
+                left: 50%; 
+                width: 400px; 
+                margin-left: -200px; 
+                position: fixed; 
+                text-align: center;
+            }
+            /* 여기부터 건드림 */
+            .wrap {
+                position: absolute;
+                left: 0;
+                bottom: 100px;
+                width: 288px;
+                height: 140px;
+                margin-left: -144px;
+                text-align: center;
+                overflow: hidden;
+                font-size: 12px;
+                font-family: 'Malgun Gothic', dotum, '돋움', sans-serif;
+                line-height: 1.5;
+            }
+            .wrap * {
+                padding: 0;
+                margin: 0;
+            }
+            .wrap .info {
+                width: 286px;
+                height: 200px;
+                border-radius: 5px;
+                border-bottom: 2px solid #ccc;
+                border-right: 1px solid #ccc;
+                overflow: hidden;
+                background: black;
+            }
+            .wrap .info:nth-child(1) {
+                border: 0;
+                box-shadow: 0px 1px 2px #888;
+            }
+            .info .title {
+                /* padding: 5px 0 0 10px; */
+                height: 30px;
+                background: #eee;
+                border-bottom: 1px solid #eee;
+                font-size: 18px;
+                font-weight: bold;
+            }
+            .info .close {
+                position: absolute;
+                top: 10px;
+                right: 10px;
+                color: #888;
+                width: 17px;
+                height: 17px;
+                background: url('http://t1.daumcdn.net/localimg/localimages/07/mapapidoc/overlay_close.png');
+            }
+            .info .close:hover {
+                cursor: pointer;
+            }
+            .info .body {
+                background:rgb(139, 190, 238);
+                border-bottom: 5px solid rgb(139, 190, 238);
+                position: relative;
+                overflow: hidden;
+            }
+            /* .info .desc {
+                position: relative;
+                height: 200px;
+                overflow:hidden;
+                text-align:center;
+                margin: 13px 0 0 90px;
+            } */
+            .info .body .content1 {
+                font-size : 12px;
+                background:rgb(139, 190, 238);
+                border-bottom: 5px solid rgb(139, 190, 238);
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                text-align : center;
+            }
+            /* .info .img {
+                position: absolute;
+                top: 6px;
+                left: 5px;
+                width: 73px;
+                height: 71px;
+                border: 1px solid #ddd;
+                color: #888;
+                overflow: hidden;
+            } */
+            /* 사각형과 마커 잇는 삼각형 */
+            /* .info:after {
+                background:rgb(139, 190, 238);
+                content: '';
+                position: absolute;
+                margin-left: -12px;
+                left: 50%;
+                bottom: -4px;
+                width: 22px;
+                height: 12px;
+                background: url('http://t1.daumcdn.net/localimg/localimages/07/mapapidoc/vertex_white.png') 
+            } */
+            
+            /* 이 위까지 건드림 */
             .age_range_slider{
                 margin-left: 20px;
                 margin-right: 20px;
@@ -151,15 +253,18 @@
                 border-radius: 4px;
                 padding: 20px 30px;
             }
+
             a.button {
                 color: rgba(255, 255, 255, 0.85);
                 box-shadow: white 0 0px 0px 2px inset;
             }
+
             a.button:hover {
                 color: rgba(255, 255, 255, 0.85);
                 box-shadow: #007ac3 0 0px 0px 40px inset;
             }
             .checks {position: relative;}
+
             .checks input[type="checkbox"] {  /* 실제 체크박스는 화면에서 숨김 */
             position: absolute;
             width: 1px;
@@ -192,6 +297,7 @@
             border-radius : 3px;
             box-shadow: 0px 1px 2px rgba(0,0,0,0.05), inset 0px -15px 10px -12px rgba(0,0,0,0.05);
             }
+
             .checks.etrans input[type="checkbox"] + label {
             padding-left: 30px;
             }
@@ -206,6 +312,7 @@
             -webkit-transition: all .12s, border-color .08s;
             transition: all .12s, border-color .08s;
             }
+
             .checks.etrans input[type="checkbox"]:checked + label:before {
             position: absolute;
             content: "";
@@ -222,6 +329,7 @@
             -webkit-transform:rotate(45deg);
             transform:rotate(45deg);
             }
+
             .no-csstransforms .checks.etrans input[type="checkbox"]:checked + label:before {
             /*content:"\2713";*/
             content: "\2714";
@@ -247,59 +355,72 @@
             }
             #link {color: #E45635;display:block;font: 12px "Helvetica Neue", Helvetica, Arial, sans-serif;text-align:center; text-decoration: none;}
             #link:hover {color: #CCCCCC}
+
             #link, #link:hover {-webkit-transition: color 0.5s ease-out;-moz-transition: color 0.5s ease-out;-ms-transition: color 0.5s ease-out;-o-transition: color 0.5s ease-out;transition: color 0.5s ease-out;}
+
             /** BEGIN CSS **/
             body {background: #333333;}
             @keyframes rotate-loading {
                 0%  {transform: rotate(0deg);-ms-transform: rotate(0deg); -webkit-transform: rotate(0deg); -o-transform: rotate(0deg); -moz-transform: rotate(0deg);}
                 100% {transform: rotate(360deg);-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); -o-transform: rotate(360deg); -moz-transform: rotate(360deg);}
             }
+
             @-moz-keyframes rotate-loading {
                 0%  {transform: rotate(0deg);-ms-transform: rotate(0deg); -webkit-transform: rotate(0deg); -o-transform: rotate(0deg); -moz-transform: rotate(0deg);}
                 100% {transform: rotate(360deg);-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); -o-transform: rotate(360deg); -moz-transform: rotate(360deg);}
             }
+
             @-webkit-keyframes rotate-loading {
                 0%  {transform: rotate(0deg);-ms-transform: rotate(0deg); -webkit-transform: rotate(0deg); -o-transform: rotate(0deg); -moz-transform: rotate(0deg);}
                 100% {transform: rotate(360deg);-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); -o-transform: rotate(360deg); -moz-transform: rotate(360deg);}
             }
+
             @-o-keyframes rotate-loading {
                 0%  {transform: rotate(0deg);-ms-transform: rotate(0deg); -webkit-transform: rotate(0deg); -o-transform: rotate(0deg); -moz-transform: rotate(0deg);}
                 100% {transform: rotate(360deg);-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); -o-transform: rotate(360deg); -moz-transform: rotate(360deg);}
             }
+
             @keyframes rotate-loading {
                 0%  {transform: rotate(0deg);-ms-transform: rotate(0deg); -webkit-transform: rotate(0deg); -o-transform: rotate(0deg); -moz-transform: rotate(0deg);}
                 100% {transform: rotate(360deg);-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); -o-transform: rotate(360deg); -moz-transform: rotate(360deg);}
             }
+
             @-moz-keyframes rotate-loading {
                 0%  {transform: rotate(0deg);-ms-transform: rotate(0deg); -webkit-transform: rotate(0deg); -o-transform: rotate(0deg); -moz-transform: rotate(0deg);}
                 100% {transform: rotate(360deg);-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); -o-transform: rotate(360deg); -moz-transform: rotate(360deg);}
             }
+
             @-webkit-keyframes rotate-loading {
                 0%  {transform: rotate(0deg);-ms-transform: rotate(0deg); -webkit-transform: rotate(0deg); -o-transform: rotate(0deg); -moz-transform: rotate(0deg);}
                 100% {transform: rotate(360deg);-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); -o-transform: rotate(360deg); -moz-transform: rotate(360deg);}
             }
+
             @-o-keyframes rotate-loading {
                 0%  {transform: rotate(0deg);-ms-transform: rotate(0deg); -webkit-transform: rotate(0deg); -o-transform: rotate(0deg); -moz-transform: rotate(0deg);}
                 100% {transform: rotate(360deg);-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); -o-transform: rotate(360deg); -moz-transform: rotate(360deg);}
             }
+
             @keyframes loading-text-opacity {
                 0%  {opacity: 0}
                 20% {opacity: 0}
                 50% {opacity: 1}
                 100%{opacity: 0}
             }
+
             @-moz-keyframes loading-text-opacity {
                 0%  {opacity: 0}
                 20% {opacity: 0}
                 50% {opacity: 1}
                 100%{opacity: 0}
             }
+
             @-webkit-keyframes loading-text-opacity {
                 0%  {opacity: 0}
                 20% {opacity: 0}
                 50% {opacity: 1}
                 100%{opacity: 0}
             }
+
             @-o-keyframes loading-text-opacity {
                 0%  {opacity: 0}
                 20% {opacity: 0}
@@ -313,7 +434,10 @@
                 width: 100px;
                 border-radius: 100%;
             }
+
+
             .loading-container { position: fixed; top: 45%; left: 45%; margin: 40px auto; display: block; z-index: 99;}
+
             .loading {
                 border: 2px solid transparent;
                 border-color: transparent #fff transparent #FFF;
@@ -326,6 +450,7 @@
                 animation: rotate-loading 1.5s linear 0s infinite normal;
                 transform-origin: 50% 50%;
             }
+
             .loading-container:hover .loading {
                 border-color: transparent #E45635 transparent #E45635;
             }
@@ -337,6 +462,7 @@
                 -o-transition: all 0.5s ease-in-out;
                 transition: all 0.5s ease-in-out;
             }
+
             #loading-text {
                 -moz-animation: loading-text-opacity 2s linear 0s infinite normal;
                 -o-animation: loading-text-opacity 2s linear 0s infinite normal;
@@ -356,18 +482,19 @@
             }
         </style>
         <img src="../images/project_logo.png" style="height: 10%; position: fixed; z-index: 3;">
+        <h id="address_name"></h>
         <div class="dim-layer" style="display: block"></div> 
         <div class="loading-container">
             <div class="loading"></div>
             <div id="loading-text">loading</div>
         </div>
-        <div id="address_search_panel" style="position: fixed; margin-top: 30px; width: 100%; text-align: center; z-index: 3;">
-            <input type="text" id="sample_address" class="address_search" placeholder="찾고자 하는 지역의 '구', '동'을 입력하세요." >
-            <input type="image" onclick="SearchAddress()" src="../images/zoom_2.png" style="vertical-align: middle; width: 30px; height: 30px;" onfocus="this.blur()"><br>
-            <h1 id="txt_address" style="font-size: 18px; font-weight: bold; font-style: italic; color: #007ac3;"> </h1>
-        </div>
         <div id="wrapper">
             <div id="kakao_map" class="map_div"></div>
+            <!-- 여기부터 건드림 -->
+            <div id = "address_name">
+                
+            </div>
+            <!-- 여기까지 건드림 -->
             <div id="filter_box">
                 <div style="margin-top: 50px;">
                     <h style="color: white; font-weight: bold; font-size: 20px;">연령</h><br>
@@ -422,11 +549,11 @@
                 </div>
                 <div style="display: flex; justify-content: center;">
                     <label class="radio">
-                        <input type="radio" name="dog_radio" id="dog_yes" value="yes" checked>
+                        <input type="radio" name="r2" id="dog_yes" value="yes" checked>
                         <span style="color:white; margin-right: 20px;">있음</span>
                     </label>
                     <label class="radio">
-                        <input type="radio" name="dog_radio" id="dog_no" value="no">
+                        <input type="radio" name="r2" id="dog_no" value="no">
                         <span style="color:white;">없음</span>
                     </label>
                 </div>
@@ -438,133 +565,99 @@
                     <h id="active_show" style="color: white;">1km</h>
                 </div>
                 <div>
-                    <a href="#" class="button" style="font-size: 20px; font-weight:bold;" onclick="searchMyArea()">검색해보기</a>
+                    <a href="#" class="button" style="font-size: 20px; font-weight:bold;"onclick="searchMyArea()">검색해보기</a>
                 </div>
             </div>
         </div>
         <script>
             var circle;
+            var container = document.getElementById("kakao_map");
+            var options = {
+                center: new kakao.maps.LatLng(33.450701, 126.570667),
+                level: 4
+            };
+            var map = new kakao.maps.Map(container, options);
+            search = window.location.search;
+            getData = _GET(search);
             var x, y;
-            var addr;
-            var address_name;
-            // var marker, markerPosition;
+            var addr_name;
+
+            var apt_name;
+            var price_Time;
+            var price_Buy;
+            var price_Rent;
+            var built_time;
+            var phoneNum;
             var main_marker;
             var main_marker_src = '../images/main_marker.png';
             var main_marker_size = new kakao.maps.Size(100,100);
             var main_marker_option = {offset: new kakao.maps.LatLng(80, 50)};   //80, 50 으로 했더니 가장 적절한 위치에 위치함
             var main_marker_image = new kakao.maps.MarkerImage(main_marker_src, main_marker_size, main_marker_option);
             var main_marker_position;
-            search = window.location.search;
-            getData = _GET(search);
-            x = getData.x; y = getData.y;
-            circle = new kakao.maps.Circle({
-                center : new kakao.maps.LatLng(y, x),  // 원의 중심좌표 입니다 
-                radius: $('#active_range_slider').val() * 1000, // 미터 단위의 원의 반지름입니다 
-                strokeWeight: 3, // 선의 두께입니다 
-                strokeColor: '#007ac3', // 선의 색깔입니다
-                strokeOpacity: 1, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
-                strokeStyle: 'dashed', // 선의 스타일 입니다
-                fillColor: '#CFE7FF', // 채우기 색깔입니다
-                fillOpacity: 0.7  // 채우기 불투명도 입니다   
-            });
-            main_marker_position = new kakao.maps.LatLng(y,x);                        
-            main_marker = new kakao.maps.Marker({
-                position: main_marker_position,
-                image: main_marker_image,
-                draggable:true
-            });
-            // marker = new kakao.maps.Marker({
-            //     map: map,
-            //     position: new kakao.maps.LatLng(y, x),
-            //     draggable: true
-            // });
-            kakao.maps.event.addListener(this.main_marker, 'dragend', function(){
-                var Lng = main_marker.getPosition().getLng();
-                var Lat = main_marker.getPosition().getLat();
-                x = Lng; y = Lat;
-                searchAddrFromCoords(new kakao.maps.LatLng(y,x), displayCenterInfo);
-                //console.log(marker.getPosition());
-                if(circle) circle.setMap(null);
-                if(x){
-                    circle = new kakao.maps.Circle({
-                    center : new kakao.maps.LatLng(y, x),  // 원의 중심좌표 입니다 
-                    radius: $('#active_range_slider').val() * 1000, // 미터 단위의 원의 반지름입니다 
-                    strokeWeight: 3, // 선의 두께입니다 
-                    strokeColor: '#007ac3', // 선의 색깔입니다
-                    strokeOpacity: 1, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
-                    strokeStyle: 'dashed', // 선의 스타일 입니다
-                    fillColor: '#CFE7FF', // 채우기 색깔입니다
-                    fillOpacity: 0.7  // 채우기 불투명도 입니다   
-                    });
-                    circle.setMap(map);
-                    map.panTo(new kakao.maps.LatLng(y,x));
-                }
-                else{
-                    search = window.location.search;
-                    getData = _GET(search);
-                    console.log(getData);
-                    circle = new kakao.maps.Circle({
-                    center : new kakao.maps.LatLng(getData.y, getData.x),  // 원의 중심좌표 입니다 
-                    radius: $('#active_range_slider').val() * 1000, // 미터 단위의 원의 반지름입니다 
-                    strokeWeight: 3, // 선의 두께입니다 
-                    strokeColor: '#007ac3', // 선의 색깔입니다
-                    strokeOpacity: 1, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
-                    strokeStyle: 'dashed', // 선의 스타일 입니다
-                    fillColor: '#CFE7FF', // 채우기 색깔입니다
-                    fillOpacity: 0.7  // 채우기 불투명도 입니다   
-                    });
-                }
-                circle.setMap(map);
-            });
-            $('input[type="range"]').rangeslider({polyfill: false});
-            $('#age_range_slider').on('input', function(){
-                $("#age_show").html("<h>" + $('#age_range_slider').val() + "대</h>");
-            })
-            $('#active_range_slider').on('input', function(){
-                $("#active_show").html("<h>" + $('#active_range_slider').val() + "km</h>");
-                if(circle) circle.setMap(null);
-                if(x){
-                    circle = new kakao.maps.Circle({
-                    center : new kakao.maps.LatLng(y, x),  // 원의 중심좌표 입니다 
-                    radius: $('#active_range_slider').val() * 1000, // 미터 단위의 원의 반지름입니다 
-                    strokeWeight: 3, // 선의 두께입니다 
-                    strokeColor: '#007ac3', // 선의 색깔입니다
-                    strokeOpacity: 1, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
-                    strokeStyle: 'dashed', // 선의 스타일 입니다
-                    fillColor: '#CFE7FF', // 채우기 색깔입니다
-                    fillOpacity: 0.7  // 채우기 불투명도 입니다   
-                    });
-                }
-                else{
-                    search = window.location.search;
-                    getData = _GET(search);
-                    console.log(getData);
-                    circle = new kakao.maps.Circle({
-                    center : new kakao.maps.LatLng(getData.y, getData.x),  // 원의 중심좌표 입니다 
-                    radius: $('#active_range_slider').val() * 1000, // 미터 단위의 원의 반지름입니다 
-                    strokeWeight: 3, // 선의 두께입니다 
-                    strokeColor: '#007ac3', // 선의 색깔입니다
-                    strokeOpacity: 1, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
-                    strokeStyle: 'dashed', // 선의 스타일 입니다
-                    fillColor: '#CFE7FF', // 채우기 색깔입니다
-                    fillOpacity: 0.7  // 채우기 불투명도 입니다   
-                    });
-                }
-                circle.setMap(map);
-            })
-            
-            window.onload = function(){
-                setTimeout(() => {
-                    panTo();
-                $('.loading-container').hide();
-                $('.dim-layer').hide();
-                this.circle.setMap(map);
-                this.main_marker.setMap(map);
-                searchAddrFromCoords(new kakao.maps.LatLng(y,x), displayCenterInfo);
-                }, 500);
-                
-            };  
-            
+            var iwContent;
+            var iwOverlay;
+            $.ajax({
+                    url: "http://admin.zipfund.co/api/address/apartment_info/" + getData.info,
+                    contentType: "application/json",
+                    dataType: 'json',
+                    success: function(result){
+                        x = result.map_info.x;
+                        y = result.map_info.y;
+                        addr_name = result.address + "</br> " + result.name;
+                        apt_name = result.name ;
+                        price_Time = result.kb_price_info.month;
+                        price_Buy = Math.floor(result.kb_price_info.price /  10000) + "억 " + Math.floor(result.kb_price_info.price % 10000) + "만원";
+                        price_Rent = Math.floor(result.kb_price_info.rent / 10000) + "억 " + Math.floor(result.kb_price_info.rent % 10000) + "만원";
+                        built_time = result.built_year;
+                        phoneNum = result.office_phone;
+
+                        console.log(result);
+                        circle = new kakao.maps.Circle({
+                        center : new kakao.maps.LatLng(y, x),  // 원의 중심좌표 입니다 
+                        radius: $('#active_range_slider').val() * 1000, // 미터 단위의 원의 반지름입니다 
+                        strokeWeight: 3, // 선의 두께입니다 
+                        strokeColor: '#007ac3', // 선의 색깔입니다
+                        strokeOpacity: 1, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
+                        strokeStyle: 'dashed', // 선의 스타일 입니다
+                        fillColor: '#CFE7FF', // 채우기 색깔입니다
+                        fillOpacity: 0.7  // 채우기 불투명도 입니다   
+                        });                        
+                        // 좌표의 경우, circle이 여기서 받아오는 것에 착안하여, 이곳에서 좌표를 받고
+                        main_marker_position = new kakao.maps.LatLng(y,x);                        
+                        main_marker = new kakao.maps.Marker({
+                            position: main_marker_position,
+                            image: main_marker_image,
+                        });
+                        iwContent = '<div class="wrap">' + 
+                                    '    <div class="info">' + 
+                                    '        <div class="title">' + 
+                                    apt_name + 
+                                    '            <div class="close" onclick="closeOverlay()" title="닫기"></div>' + 
+                                    '        <div class="body">' +
+                                    '            <div class="content1" style = "color : white;"> 완공시기: ' + built_time + '</div>' + 
+                                    '            <div class="content1" style = "color : white;"> 시세기준시기: ' + price_Time + '</div>' + 
+                                    '            <div class="content1" style = "color : white;"> 매매가: ' + price_Buy + '</div>' + 
+                                    '            <div class="content1" style = "color : white;"> 전세가: ' + price_Rent + '</div>' + 
+                                    '            <div class="content1" style = "color : white;"> apt 문의 번호: ' + phoneNum + '</div>' + 
+                                    '            </div>' + 
+                                    '        </div>' + 
+                                    '    </div>' +    
+                                    '</div>';
+
+                        // 마커 위에 커스텀오버레이를 표시합니다
+                        // 마커를 중심으로 커스텀 오버레이를 표시하기위해 CSS를 이용해 위치를 설정했습니다
+                        iwOverlay = new kakao.maps.CustomOverlay({
+                            content: iwContent,
+                            map: map,
+                            position: main_marker_position,
+                        });
+                        
+                        
+                    }   //success 함수꺼다 건드리지마라
+                });     //얜 아약스꺼
+            function closeOverlay() {
+                iwOverlay.setMap(null);     
+            }
             function _GET(search){
                 var obj = {};
                 var uri = decodeURI(search);
@@ -576,57 +669,54 @@
                 }
                 return obj;
             }
-            //$('#age_range_slider').rangeslider({polyfill: false});
-            var container = document.getElementById("kakao_map");
-            var options = {
-                center: new kakao.maps.LatLng(33.450701, 126.570667),
-                level: 4
-            };
-            var map = new kakao.maps.Map(container, options);
-            var geocoder = new daum.maps.services.Geocoder();
-            function SearchAddress(){
-                var addr = $("#sample_address").val();
-                address_name = addr;
-                geocoder.addressSearch(addr, function(results, status){
-                    if(status === kakao.maps.services.Status.OK){
-                        y = results[0].y;
-                        x = results[0].x;
-                        this.main_marker.setPosition(new kakao.maps.LatLng(y,x));
-                        var moveLatLon = new kakao.maps.LatLng(y, x);
-                        map.panTo(moveLatLon);
-                        this.circle.setPosition(new kakao.maps.LatLng(y,x));
-                        searchAddrFromCoords(new kakao.maps.LatLng(y,x), displayCenterInfo);
-                    }
-                    else{
-                        $("#txt_address").html("<h>" + "결과를 찾지 못했습니다" + "</h>");
-                    }
+            $('input[type="range"]').rangeslider({polyfill: false});
+
+            $('#age_range_slider').on('input', function(){
+                $("#age_show").html("<h>" + $('#age_range_slider').val() + "대</h>");
+            })
+
+            $('#active_range_slider').on('input', function(){
+                $("#active_show").html("<h>" + $('#active_range_slider').val() + "km</h>");
+                circle.setMap(null);
+                circle = new kakao.maps.Circle({
+                    center : new kakao.maps.LatLng(y, x),  // 원의 중심좌표 입니다 
+                    radius: $('#active_range_slider').val() * 1000, // 미터 단위의 원의 반지름입니다 
+                    strokeWeight: 3, // 선의 두께입니다 
+                    strokeColor: '#007ac3', // 선의 색깔입니다
+                    strokeOpacity: 1, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
+                    strokeStyle: 'dashed', // 선의 스타일 입니다
+                    fillColor: '#CFE7FF', // 채우기 색깔입니다
+                    fillOpacity: 0.7  // 채우기 불투명도 입니다   
                 });
-            }
+                circle.setMap(map);
+            })
+            window.onload = function(){
+                setTimeout(function(){
+                    // circle이 여기서 생성되는 것에 착안하여, 여기서 마커 생성
+                    this.circle.setMap(map);
+                    main_marker.setMap(map);
+                    kakao.maps.event.addListener(main_marker, 'click', function() {
+                            iwOverlay.setMap(map);
+                    });
+                    kakao.maps.event.addListener(main_marker, 'click', function(){
+                        iwOverlay.setMap(map);
+                    })
+                    $("#address_name").html("<h>" + addr_name + "</h>");
+                    $("#infoAPT_0").html("<br>" + apt_name);
+                    $("#infoAPT_1").html("<br>" + built_time);
+                    $("#infoAPT_2").html("<br>" + price_Time);
+                    $("#infoAPT_3").html("<br>" + price_Buy);
+                    $("#infoAPT_4").html("<br>" + price_Rent);
+                    $("#infoAPT_5").html("<br>" + phoneNum);
+                    panTo();
+                    $('.loading-container').hide();
+                    $('.dim-layer').hide();
+                }, 500);
+            };
             function panTo() {
-                search = window.location.search;
-                getData = _GET(search);
-                var moveLatLon = new kakao.maps.LatLng(getData.y, getData.x);
-                map.panTo(moveLatLon);            
+                var moveLatLon = new kakao.maps.LatLng(y, x);
+                map.panTo(moveLatLon);
             }
-            function searchAddrFromCoords(coords, callback) {
-                // 좌표로 행정동 주소 정보를 요청합니다
-                geocoder.coord2RegionCode(coords.getLng(), coords.getLat(), callback);         
-            }
-            function displayCenterInfo(result, status) {
-                if (status === kakao.maps.services.Status.OK) {
-                    var infoDiv = document.getElementById('txt_address');
-                    for(var i = 0; i < result.length; i++) {
-                        // 행정동의 region_type 값은 'H' 이므로
-                        if (result[i].region_type === 'H') {
-                            //$("#txt_address").html("<h>" + result[i].address_name + "</h>");
-                            infoDiv.innerHTML = result[i].address_name;
-                            address_name = result[i].address_name;
-                            break;
-                        }
-                    }
-                }    
-            }
-            
             function searchMyArea(){
                 var age = $('#age_range_slider').val();
                 var gender = $("input:radio[name=gender_radio]:checked").val();
@@ -637,11 +727,11 @@
                 var kind = $("input:checkbox[id=check_child]").is(":checked")==true;
                 var dog = $("input:radio[name=dog_radio]:checked").val();
                 var active = $('#active_range_slider').val();
-                var addr = $('#txt_address').val();
-                //console.log(x, y, age, gender, old, high, midd, elem, kind, dog, active);
-                window.open("zipnavi_second_page.html?x=" + x + "&y=" + y + "&age=" + age + "&gender=" + gender + "&old=" + old + 
-                "&high=" + high + "&midd=" + midd + "&elem=" + elem + "&kind=" + kind + "&dog=" + dog + "&active=" + active + "&addr=" + address_name, '_self');
+                window.open("zipfund_second_page.html?x=" + x + "&y=" + y + "&age=" + age + "&gender=" + gender + "&old=" + old + 
+                "&high=" + high + "&midd=" + midd + "&elem=" + elem + "&kind=" + kind + "&dog=" + dog + "&active=" + active + "&addr=" + addr_name +
+                "&apt=" + apt_name + "&priceTime=" + price_Time +"&priceBuy=" + price_Buy + "&priceRent=" + price_Rent + "&bltTime=" +built_time + "&phNum=" + phoneNum, '_self');
             }
+            //$('#age_range_slider').rangeslider({polyfill: false});
             
         </script>
     </body>
