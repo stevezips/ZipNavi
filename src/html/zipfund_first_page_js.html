@@ -35,7 +35,7 @@
                 z-index: 2;
                 width: 400px;
                 height: 800px;
-                background: #0d92db;
+                background: #f5f2f2;
                 opacity: 0.9;
                 margin-right: 50px;
                 float: right;
@@ -164,7 +164,7 @@
                 margin-right: 20px;
             }
             .rangeslider__fill {
-                background: #007ac3;
+                background: lightslategray;
                 position: absolute;
             }
             .rangeslider__handle {
@@ -175,71 +175,7 @@
                 width: 15px;
                 height: 15px;
             }
-            .radio {
-                margin: 16px 0;
-                display: block;
-                cursor: pointer;
-            }
-            .radio input {
-                display: none;
-            }
-            .radio input + span {
-                line-height: 22px;
-                height: 22px;
-                padding-left: 22px;
-                position: relative;
-            }
-            .radio input + span:not(:empty) {
-                padding-left: 30px;
-            }
-            .radio input + span:before, .radio input + span:after {
-                content: '';
-                width: 22px;
-                height: 22px;
-                display: block;
-                border-radius: 50%;
-                left: 0;
-                top: 0;
-                position: absolute;
-            }
-            .radio input + span:before {
-                background: #D1D7E3;
-                transition: background 0.2s ease, -webkit-transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 2);
-                transition: background 0.2s ease, transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 2);
-                transition: background 0.2s ease, transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 2), -webkit-transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 2);
-            }
-            .radio input + span:after {
-                background: #fff;
-                -webkit-transform: scale(0.78);
-                        transform: scale(0.78);
-                transition: -webkit-transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.4);
-                transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.4);
-                transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.4), -webkit-transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.4);
-            }
-            .radio input:checked + span:before {
-                -webkit-transform: scale(1.04);
-                        transform: scale(1.04);
-                background: #007ac3;
-            }
-            .radio input:checked + span:after {
-                -webkit-transform: scale(0.4);
-                        transform: scale(0.4);
-                transition: -webkit-transform .3s ease;
-                transition: transform .3s ease;
-                transition: transform .3s ease, -webkit-transform .3s ease;
-            }
-            .radio:hover input + span:before {
-                -webkit-transform: scale(0.92);
-                        transform: scale(0.92);
-            }
-            .radio:hover input + span:after {
-                -webkit-transform: scale(0.74);
-                        transform: scale(0.74);
-            }
-            .radio:hover input:checked + span:after {
-                -webkit-transform: scale(0.4);
-                        transform: scale(0.4);
-            }
+
             a {
                 -webkit-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
                 -moz-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
@@ -308,7 +244,7 @@
             margin-top: 0;
             opacity: .6;
             box-shadow: none;
-            border-color: #6cc0e5;
+            border-color: lightslategray;
             -webkit-transition: all .12s, border-color .08s;
             transition: all .12s, border-color .08s;
             }
@@ -322,7 +258,7 @@
             border-radius: 0;
             opacity:1; 
             background: transparent;
-            border-color:transparent #6cc0e5 #6cc0e5 transparent;
+            border-color:transparent lightslategray lightslategray transparent;
             border-top-color:transparent;
             border-left-color:transparent;
             -ms-transform:rotate(45deg);
@@ -337,9 +273,9 @@
             left: 0;
             width: 21px;
             line-height: 21px;
-            color: #6cc0e5;
+            color: lightslategray;
             text-align: center;
-            border: 1px solid #6cc0e5;
+            border: 1px solid lightgray;
             }
             .dim-layer{
                 display: none;
@@ -480,6 +416,95 @@
                 top: 0;
                 width: 100px;
             }
+            .radiobtn {
+                position: relative;
+                display: block;
+            }
+            .radiobtn span {
+                width : 120px;
+                height: 20px;
+                display: block;
+                background: lightgray;
+                color: #444;
+                border-radius: 5px;
+                padding: 10px 20px;
+                border: none;
+                margin-bottom: 5px;
+                cursor: pointer;
+            }
+            .radiobtn span:after, .radiobtn span:before {
+                content: "";
+                position: absolute;
+                right: 20px;
+                top: 13px;
+                width: 20px;
+                height: 20px;
+                border-radius: 3px;
+                background: #4d4d4d;
+            }
+            .radiobtn span:before {
+                background: transparent;
+                transition: 0.1s width cubic-bezier(0.075, 0.82, 0.165, 1) 0s, 0.3s height cubic-bezier(0.075, 0.82, 0.165, 2) 0.1s;
+                z-index: 2;
+                overflow: hidden;
+                background-repeat: no-repeat;
+                background-size: 13px;
+                background-position: center;
+                width: 0;
+                height: 0;
+                background-image: url("/checking.png");
+            }
+            .radiobtn input[type="radio"] {
+                display: none;
+                position: absolute;
+                width: 100%;
+                appearance: none;
+            }
+            .radiobtn input[type="radio"]:checked + span {
+                background: #4d4d4d;
+                animation-name: blink;
+                animation-duration: 1s;
+                border-color: #4d4d4d;
+            }
+            .radiobtn input[type="radio"]:checked + span:after {
+                background: #4d4d4d;
+            }
+            .radiobtn input[type="radio"]:checked + span:before {
+                width: 20px;
+                height: 20px;
+            }
+            /*
+            @keyframes blink {
+                0% {
+                    background-color: #fdcb77;
+            }
+                10% {
+                    background-color: #fdcb77;
+            }
+                11% {
+                    background-color: #fdd591;
+            }
+                29% {
+                    background-color: #fdd591;
+            }
+                30% {
+                    background-color: #fdcb77;
+            }
+                50% {
+                    background-color: #fdd591;
+            }
+                45% {
+                    background-color: #fdcb77;
+            }
+                50% {
+                    background-color: #fdd591;
+            }
+                100% {
+                    background-color: #fdcb77;
+            }
+            }*/
+
+
         </style>
         <img src="../images/project_logo.png" style="height: 10%; position: fixed; z-index: 3;">
         <h id="address_name"></h>
@@ -496,73 +521,76 @@
             </div>
             <!-- 여기까지 건드림 -->
             <div id="filter_box">
-                <div style="margin-top: 50px;">
-                    <h style="color: white; font-weight: bold; font-size: 20px;">연령</h><br>
+                <div style="margin-top: 50px; text-align: left; margin-left : 20px">
+                    <h style="color: rgb(127,127,127); font-weight: bold; font-size: 20px;">연령</h><br>
                 </div>
                 <div style="display: flex; margin-top: 10px;">
                     <input id="age_range_slider" type="range" min="20" max="60" step="10" value="20">
                     <h id="age_show" style="color: white;">20대</h>
                 </div>
-                <div style="margin-top: 25px;">
-                    <h style="color: white; font-weight: bold; font-size: 20px;">성별</h><br>
+                <div style="margin-top: 25px; text-align: left; margin-left : 20px">
+                    <h style="color: rgb(127,127,127); font-weight: bold; font-size: 20px; ">성별</h><br>
                 </div>
-                <div style="display: flex; justify-content: center;">
-                    <label class="radio">
+                <div class = "radiobtn" style="display: flex; justify-content: center;">
+                    <label class="radiobtn" >
                         <input type="radio" name="gender_radio" id="male_button" value="male" checked>
-                        <span style="color:white; margin-right: 20px;">남성</span>
+                        <span style="color:rgb(127,127,127); margin-right: 10px;">남성</span>
                     </label>
-                    <label class="radio">
+
+                    <label class="radiobtn">
                         <input type="radio" name="gender_radio" id="female_button" value="female">
-                        <span style="color:white;">여성</span>
+                        <span style="color:rgb(127,127,127); margin-right: 10px;">여성</span>
                     </label>
                 </div>
-                <div style="margin-top: 25px;">
-                    <h style="color: white; font-weight: bold; font-size: 20px;">노인</h><br>
+                <div style="margin-top: 25px; text-align: left; margin-left : 20px">
+                    <h style="color: rgb(127,127,127); font-weight: bold; font-size: 20px;">노인</h><br>
                 </div>
-                <div style="display: flex; justify-content: center;">
-                    <label class="radio">
+                <div class = "radiobtn" style="display: flex; justify-content: center;">
+                    <label class="radiobtn" >
                         <input type="radio" name="old_radio" id="old_yes" value="yes" checked>
-                        <span style="color:white; margin-right: 20px;">있음</span>
+                        <span style="color:rgb(127,127,127); margin-right: 10px;">있음</span>
                     </label>
-                    <label class="radio">
-                        <input type="radio" name="old_radio" id="old_no" value="no">
-                        <span style="color:white;">없음</span>
+
+                    <label class="radiobtn">
+                        <input type="radio" name="old_radio" id="old_radio" value="no">
+                        <span style="color:rgb(127,127,127); margin-right: 10px;">없음</span>
                     </label>
                 </div>
-                <div style="margin-top: 25px;">
-                    <h style="color: white; font-weight: bold; font-size: 20px;">아이</h><br>
+                <div style="margin-top: 25px; text-align: left; margin-left : 20px">
+                    <h style="color: rgb(127,127,127); font-weight: bold; font-size: 20px;">아이</h><br>
                 </div>
                 <div style="display: flex; justify-content: center;">
                     <div class="checks etrans" style="margin-top: 10px;">
                         <input type="checkbox" id="check_high"> 
-                        <label for="check_high" style="color: white;">고등학생</label> 
+                        <label for="check_high" style="color: rgb(127,127,127);">고등학생</label> 
                         <input type="checkbox" id="check_middle"> 
-                        <label for="check_middle" style="color: white;">중학생</label>
+                        <label for="check_middle" style="color: rgb(127,127,127);">중학생</label>
                         <input type="checkbox" id="check_elementary"> 
-                        <label for="check_elementary" style="color: white;">초등학생</label>
+                        <label for="check_elementary" style="color: rgb(127,127,127);">초등학생</label>
                         <input type="checkbox" id="check_child"> 
-                        <label for="check_child" style="color: white;">유아</label>
+                        <label for="check_child" style="color: rgb(127,127,127);">유아</label>
                     </div>
                 </div>
-                <div style="margin-top: 25px;">
-                    <h style="color: white; font-weight: bold; font-size: 20px;">반려동물</h><br>
+                <div style="margin-top: 25px ;text-align: left; margin-left : 20px;">
+                    <h style="color: rgb(127,127,127); font-weight: bold; font-size: 20px;">반려동물</h><br>
                 </div>
-                <div style="display: flex; justify-content: center;">
-                    <label class="radio">
-                        <input type="radio" name="r2" id="dog_yes" value="yes" checked>
-                        <span style="color:white; margin-right: 20px;">있음</span>
+                <div class = "radiobtn" style="display: flex; justify-content: center;">
+                    <label class="radiobtn" >
+                        <input type="radio" name="dog_radio" id="dog_yes" value="yes" checked>
+                        <span style="color:rgb(127,127,127); margin-right: 10px;">있음</span>
                     </label>
-                    <label class="radio">
-                        <input type="radio" name="r2" id="dog_no" value="no">
-                        <span style="color:white;">없음</span>
+
+                    <label class="radiobtn">
+                        <input type="radio" name="dog_radio" id="dog_no" value="no">
+                        <span style="color:rgb(127,127,127); margin-right: 10px;">없음</span>
                     </label>
                 </div>
-                <div style="margin-top: 25px;">
-                    <h style="color: white; font-weight: bold; font-size: 20px;">활동 반경</h><br>
+                <div style="margin-top: 25px; text-align: left; margin-left : 20px">
+                    <h style="color: rgb(127,127,127); font-weight: bold; font-size: 20px;">활동 반경</h><br>
                 </div>
                 <div style="display: flex; margin-top: 10px;">
                     <input id="active_range_slider" type="range" min="0.5" max="3" step="0.5" value="1">
-                    <h id="active_show" style="color: white;">1km</h>
+                    <h id="active_show" style="color: rgb(127,127,127);">1km</h>
                 </div>
                 <div>
                     <a href="#" class="button" style="font-size: 20px; font-weight:bold;"onclick="searchMyArea()">검색해보기</a>
