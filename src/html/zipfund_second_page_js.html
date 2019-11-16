@@ -9,7 +9,7 @@
         <link href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" rel="stylesheet" type="text/css"/>
         <script src="../js/jquery.js"></script>
     </head>
-    <body style="background-color: #474747; overflow: hidden;">
+    <body style="background-color: white; overflow: hidden;">
         <script src="https://underscorejs.org/underscore.js"></script>
         <script src="https://code.highcharts.com/highcharts.js"></script>
         <script src="https://code.highcharts.com/modules/exporting.js"></script>
@@ -166,6 +166,7 @@
                 background: rgb(127, 219, 239);
             }
             .checks {position: relative;}
+
             .checks input[type="checkbox"] {  /* 실제 체크박스는 화면에서 숨김 */
                 position: absolute;
                 width: 1px;
@@ -198,6 +199,7 @@
                 border-radius : 3px;
                 box-shadow: 0px 1px 2px rgba(0,0,0,0.05), inset 0px -15px 10px -12px rgba(0,0,0,0.05);
             }
+
             .checks.etrans input[type="checkbox"] + label {
                 padding-left: 30px;
             }
@@ -212,6 +214,7 @@
                 -webkit-transition: all .12s, border-color .08s;
                 transition: all .12s, border-color .08s;
             }
+
             .checks.etrans input[type="checkbox"]:checked + label:before {
             position: absolute;
             content: "";
@@ -228,6 +231,7 @@
             -webkit-transform:rotate(45deg);
             transform:rotate(45deg);
             }
+
             .no-csstransforms .checks.etrans input[type="checkbox"]:checked + label:before {
             /*content:"\2713";*/
             content: "\2714";
@@ -243,7 +247,7 @@
                 margin-top: 50px;
             }
             .highcharts-background{
-                fill: #474747
+                fill: white
             }
             g.highcharts-legend-item.highcharts-pie-series text tspan {
                 font: bold 20px sans-serif; fill: white;
@@ -268,59 +272,72 @@
             }
             #link {color: #E45635;display:block;font: 12px "Helvetica Neue", Helvetica, Arial, sans-serif;text-align:center; text-decoration: none;}
             #link:hover {color: #CCCCCC}
+
             #link, #link:hover {-webkit-transition: color 0.5s ease-out;-moz-transition: color 0.5s ease-out;-ms-transition: color 0.5s ease-out;-o-transition: color 0.5s ease-out;transition: color 0.5s ease-out;}
+
             /** BEGIN CSS **/
             body {background: #333333;}
             @keyframes rotate-loading {
                 0%  {transform: rotate(0deg);-ms-transform: rotate(0deg); -webkit-transform: rotate(0deg); -o-transform: rotate(0deg); -moz-transform: rotate(0deg);}
                 100% {transform: rotate(360deg);-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); -o-transform: rotate(360deg); -moz-transform: rotate(360deg);}
             }
+
             @-moz-keyframes rotate-loading {
                 0%  {transform: rotate(0deg);-ms-transform: rotate(0deg); -webkit-transform: rotate(0deg); -o-transform: rotate(0deg); -moz-transform: rotate(0deg);}
                 100% {transform: rotate(360deg);-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); -o-transform: rotate(360deg); -moz-transform: rotate(360deg);}
             }
+
             @-webkit-keyframes rotate-loading {
                 0%  {transform: rotate(0deg);-ms-transform: rotate(0deg); -webkit-transform: rotate(0deg); -o-transform: rotate(0deg); -moz-transform: rotate(0deg);}
                 100% {transform: rotate(360deg);-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); -o-transform: rotate(360deg); -moz-transform: rotate(360deg);}
             }
+
             @-o-keyframes rotate-loading {
                 0%  {transform: rotate(0deg);-ms-transform: rotate(0deg); -webkit-transform: rotate(0deg); -o-transform: rotate(0deg); -moz-transform: rotate(0deg);}
                 100% {transform: rotate(360deg);-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); -o-transform: rotate(360deg); -moz-transform: rotate(360deg);}
             }
+
             @keyframes rotate-loading {
                 0%  {transform: rotate(0deg);-ms-transform: rotate(0deg); -webkit-transform: rotate(0deg); -o-transform: rotate(0deg); -moz-transform: rotate(0deg);}
                 100% {transform: rotate(360deg);-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); -o-transform: rotate(360deg); -moz-transform: rotate(360deg);}
             }
+
             @-moz-keyframes rotate-loading {
                 0%  {transform: rotate(0deg);-ms-transform: rotate(0deg); -webkit-transform: rotate(0deg); -o-transform: rotate(0deg); -moz-transform: rotate(0deg);}
                 100% {transform: rotate(360deg);-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); -o-transform: rotate(360deg); -moz-transform: rotate(360deg);}
             }
+
             @-webkit-keyframes rotate-loading {
                 0%  {transform: rotate(0deg);-ms-transform: rotate(0deg); -webkit-transform: rotate(0deg); -o-transform: rotate(0deg); -moz-transform: rotate(0deg);}
                 100% {transform: rotate(360deg);-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); -o-transform: rotate(360deg); -moz-transform: rotate(360deg);}
             }
+
             @-o-keyframes rotate-loading {
                 0%  {transform: rotate(0deg);-ms-transform: rotate(0deg); -webkit-transform: rotate(0deg); -o-transform: rotate(0deg); -moz-transform: rotate(0deg);}
                 100% {transform: rotate(360deg);-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); -o-transform: rotate(360deg); -moz-transform: rotate(360deg);}
             }
+
             @keyframes loading-text-opacity {
                 0%  {opacity: 0}
                 20% {opacity: 0}
                 50% {opacity: 1}
                 100%{opacity: 0}
             }
+
             @-moz-keyframes loading-text-opacity {
                 0%  {opacity: 0}
                 20% {opacity: 0}
                 50% {opacity: 1}
                 100%{opacity: 0}
             }
+
             @-webkit-keyframes loading-text-opacity {
                 0%  {opacity: 0}
                 20% {opacity: 0}
                 50% {opacity: 1}
                 100%{opacity: 0}
             }
+
             @-o-keyframes loading-text-opacity {
                 0%  {opacity: 0}
                 20% {opacity: 0}
@@ -334,7 +351,10 @@
                 width: 100px;
                 border-radius: 100%;
             }
+
+
             .loading-container { position: fixed; top: 45%; left: 45%; margin: 40px auto; display: block; z-index: 99;}
+
             .loading {
                 border: 2px solid transparent;
                 border-color: transparent #fff transparent #FFF;
@@ -347,6 +367,7 @@
                 animation: rotate-loading 1.5s linear 0s infinite normal;
                 transform-origin: 50% 50%;
             }
+
             .loading-container:hover .loading {
                 border-color: transparent #E45635 transparent #E45635;
             }
@@ -358,6 +379,7 @@
                 -o-transition: all 0.5s ease-in-out;
                 transition: all 0.5s ease-in-out;
             }
+
             #loading-text {
                 -moz-animation: loading-text-opacity 2s linear 0s infinite normal;
                 -o-animation: loading-text-opacity 2s linear 0s infinite normal;
@@ -410,7 +432,7 @@
                                 <input type="checkbox" id="check_subway">
                                 <label for="check_subway" style="margin-right: 40px; color: white; font-size: 21px; font-weight:bold;">지하철</label>
                                 <input type="checkbox" id="check_culture">
-                                <label for="check_culture" style="margin-right: 66px; color: white; font-size: 21px; font-weight:bold;">문화시설</label>
+                                <label for="check_culture" style="margin-right: 77px; color: white; font-size: 21px; font-weight:bold;">문화시설</label>
                                 <input type="checkbox" id="check_motel">
                                 <label for="check_motel" style="color: white; font-size: 21px; font-weight:bold;">관광명소 및 숙박</label>
                             </div>
@@ -554,8 +576,10 @@
                 map: map,
                 position: new kakao.maps.LatLng(y, x)
             });
+
             var infoContent = apt_Name + '<br>' + '시세 기준 시기 : ' + price_Time + '<br>' + '매매가 : ' + price_Buy + '<br>' + '전세가 : ' + price_Rent + '<br>';
             var infoPosition = new kakao.maps.LatLng(y, x); //인포윈도우 표시 위치입니다
+
             // 인포윈도우를 생성합니다
             aptInfo = new kakao.maps.InfoWindow({
                                 position : infoPosition, 
@@ -592,6 +616,7 @@
             }
             var ps = new kakao.maps.services.Places(map);
             //var infowindow = new kakao.maps.InfoWindow({zIndex:1});
+
             var article_title = [];
             var article_img_src = [];
             var article_img_alt = [];
@@ -609,6 +634,7 @@
                         })
                     }
                 });
+
             // 병원 관련
             codes[0].place_name_1="HP8";  // 병원
             var hospital = [];
@@ -673,6 +699,7 @@
             var motel = [];
             var motel_markers = [];
             var image_mot = '../images/motel_marker.png';
+
             for(var i = 0; i < codes.length; i++){
                 ps.categorySearch(codes[i].place_name_1, placeSearchCB, {
                     page: 1, size: 15, y: y, x: x,
@@ -763,6 +790,7 @@
                 }
                 return objectsArray;
             }
+
             function getNumber(){
                 for(item in hospital){
                     var temp = parseInt(hospital[item][1][1]);
@@ -896,6 +924,7 @@
                     $('.dim-layer').hide();
                 }, 1000);
             }
+
             function crawlNewsInput(){
                 article_title.forEach((v,i) => {
                     if(article_img_src[i] === null){
@@ -907,6 +936,7 @@
                 });
                 $('#crawl_table tr')
             }
+
             function getScore(){
                 category_score[0] = 
                 weight_1 * hospital_1 +
@@ -914,48 +944,56 @@
                 weight_3 * hospital_3 +
                 weight_4 * hospital_4 +
                 weight_5 * hospital_5;
+
                 category_score[0] += 
                 weight_1 * pharmacy_1 +
                 weight_2 * pharmacy_2 +
                 weight_3 * pharmacy_3 +
                 weight_4 * pharmacy_4 +
                 weight_5 * pharmacy_5;
+
                 category_score[1] = 
                 weight_1 * kindergarten_1 +
                 weight_2 * kindergarten_2 +
                 weight_3 * kindergarten_3 +
                 weight_4 * kindergarten_4 +
                 weight_5 * kindergarten_5;
+
                 category_score[1] += 
                 weight_1 * school_1 +
                 weight_2 * school_2 +
                 weight_3 * school_3 +
                 weight_4 * school_4 +
                 weight_5 * school_5;
+
                 category_score[1] += 
                 weight_1 * academy_1 +
                 weight_2 * academy_2 +
                 weight_3 * academy_3 +
                 weight_4 * academy_4 +
                 weight_5 * academy_5;
+
                 category_score[2] = 
                 weight_1 * mart_1 +
                 weight_2 * mart_2 +
                 weight_3 * mart_3 +
                 weight_4 * mart_4 +
                 weight_5 * mart_5;
+
                 category_score[3] = 
                 (weight_1 * culture_1 +
                 weight_2 * culture_2 +
                 weight_3 * culture_3 +
                 weight_4 * culture_4 +
                 weight_5 * culture_5) * 10 / active;
+
                 category_score[4] = 
                 weight_1 * restaurant_1 +
                 weight_2 * restaurant_2 +
                 weight_3 * restaurant_3 +
                 weight_4 * restaurant_4 +
                 weight_5 * restaurant_5;
+
                 category_score[4] += 
                 weight_1 * cafe_1 +
                 weight_2 * cafe_2 +
@@ -969,34 +1007,41 @@
                 weight_3 * public_place_3 +
                 weight_4 * public_place_4 +
                 weight_5 * public_place_5) * 10 / active;
+
                 category_score[6] = 
                 (weight_1 * subway_1 +
                 weight_2 * subway_2 +
                 weight_3 * subway_3 +
                 weight_4 * subway_4 +
                 weight_5 * subway_5) * 15 / active;
+
                 category_score[7] = 
                 (weight_1 * travel_1 +
                 weight_2 * travel_2 +
                 weight_3 * travel_3 +
                 weight_4 * travel_4 +
                 weight_5 * travel_5) * 10 / active;
+
                 category_score[8] = 
                 weight_1 * motel_1 +
                 weight_2 * motel_2 +
                 weight_3 * motel_3 +
                 weight_4 * motel_4 +
                 weight_5 * motel_5;
+
                 category_score[order_category[0]] *= 1.2;
                 category_score[order_category[1]] *= 1.15;
                 category_score[order_category[2]] *= 1.1;
+
                 category_score[order_category[3]] *= 1.05;
                 category_score[order_category[4]] *= 1.0;
                 category_score[order_category[5]] *= 1.0;
+
                 category_score[order_category[6]] *= 0.95;
                 category_score[order_category[7]] *= 0.95;
                 category_score[order_category[8]] *= 0.9;
             }
+
             $("#check_medical").change(function(){
                 if($("#check_medical").is(":checked")){
                     for(var item in hospital){
@@ -1044,6 +1089,7 @@
                     hospital_markers = []; pharmacy_markers = [];
                 }
             });
+
             $("#check_school").change(function(){
                 if($("#check_school").is(":checked")){
                     for(var item in kindergarten){
@@ -1113,6 +1159,7 @@
                     academy_markers = [];
                 }
             });
+
             $("#check_market").change(function(){
                 if($("#check_market").is(":checked")){
                     for(var item in mart){
@@ -1140,6 +1187,7 @@
                     mart_markers = [];
                 }
             });
+
             $("#check_restaurant").change(function(){
                 if($("#check_restaurant").is(":checked")){
                     for(var item in restaurant){
@@ -1187,6 +1235,7 @@
                     cafe_markers = [];
                 }
             });
+
             $("#check_public").change(function(){
                 if($("#check_public").is(":checked")){
                     for(var item in public_place){
@@ -1214,6 +1263,7 @@
                     public_place_markers = [];
                 }
             });
+
             $("#check_subway").change(function(){
                 if($("#check_subway").is(":checked")){
                     for(var item in subway){
@@ -1241,6 +1291,7 @@
                     subway_markers = [];
                 }
             });
+
             $("#check_culture").change(function(){
                 if($("#check_culture").is(":checked")){
                     for(var item in culture){
@@ -1268,6 +1319,7 @@
                     culture_markers = [];
                 }
             });
+
             $("#check_motel").change(function(){
                 if($("#check_motel").is(":checked")){
                     for(var item in travel){
@@ -1316,11 +1368,13 @@
                     motel_markers = [];
                 }
             });
+
             function makeOverListener(map, marker, infowindow) {
                 return function() {
                     infowindow.open(map, marker);
                 };
             }
+
             // 인포윈도우를 닫는 클로저를 만드는 함수입니다 
             function makeOutListener(infowindow) {
                 return function() {
@@ -1513,6 +1567,7 @@
                         }
                         if(old == 'true') category_score[0] += 3;
                         if(dog == 'true') category_score[0] += 3;
+
                         if(age >= 60){
                             //숙박업소 감점, 학군 감점, 병원 가산점
                             category_score[8] *= 0.8;

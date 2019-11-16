@@ -46,6 +46,19 @@
                 width: 400px;
                 height: 800px;
                 background: #0d92db;
+                opacity: 0.1;
+                margin-right: 50px;
+                float: right;
+                border-radius: 30px;
+            }
+            #filter_box:hover{
+                position: relative;
+                top: 50%;
+                margin-top: -400px;
+                z-index: 2;
+                width: 400px;
+                height: 800px;
+                background: #0d92db;
                 opacity: 0.9;
                 margin-right: 50px;
                 float: right;
@@ -151,15 +164,18 @@
                 border-radius: 4px;
                 padding: 20px 30px;
             }
+
             a.button {
                 color: rgba(255, 255, 255, 0.85);
                 box-shadow: white 0 0px 0px 2px inset;
             }
+
             a.button:hover {
                 color: rgba(255, 255, 255, 0.85);
                 box-shadow: #007ac3 0 0px 0px 40px inset;
             }
             .checks {position: relative;}
+
             .checks input[type="checkbox"] {  /* 실제 체크박스는 화면에서 숨김 */
             position: absolute;
             width: 1px;
@@ -192,6 +208,7 @@
             border-radius : 3px;
             box-shadow: 0px 1px 2px rgba(0,0,0,0.05), inset 0px -15px 10px -12px rgba(0,0,0,0.05);
             }
+
             .checks.etrans input[type="checkbox"] + label {
             padding-left: 30px;
             }
@@ -206,6 +223,7 @@
             -webkit-transition: all .12s, border-color .08s;
             transition: all .12s, border-color .08s;
             }
+
             .checks.etrans input[type="checkbox"]:checked + label:before {
             position: absolute;
             content: "";
@@ -222,6 +240,7 @@
             -webkit-transform:rotate(45deg);
             transform:rotate(45deg);
             }
+
             .no-csstransforms .checks.etrans input[type="checkbox"]:checked + label:before {
             /*content:"\2713";*/
             content: "\2714";
@@ -247,59 +266,72 @@
             }
             #link {color: #E45635;display:block;font: 12px "Helvetica Neue", Helvetica, Arial, sans-serif;text-align:center; text-decoration: none;}
             #link:hover {color: #CCCCCC}
+
             #link, #link:hover {-webkit-transition: color 0.5s ease-out;-moz-transition: color 0.5s ease-out;-ms-transition: color 0.5s ease-out;-o-transition: color 0.5s ease-out;transition: color 0.5s ease-out;}
+
             /** BEGIN CSS **/
             body {background: #333333;}
             @keyframes rotate-loading {
                 0%  {transform: rotate(0deg);-ms-transform: rotate(0deg); -webkit-transform: rotate(0deg); -o-transform: rotate(0deg); -moz-transform: rotate(0deg);}
                 100% {transform: rotate(360deg);-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); -o-transform: rotate(360deg); -moz-transform: rotate(360deg);}
             }
+
             @-moz-keyframes rotate-loading {
                 0%  {transform: rotate(0deg);-ms-transform: rotate(0deg); -webkit-transform: rotate(0deg); -o-transform: rotate(0deg); -moz-transform: rotate(0deg);}
                 100% {transform: rotate(360deg);-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); -o-transform: rotate(360deg); -moz-transform: rotate(360deg);}
             }
+
             @-webkit-keyframes rotate-loading {
                 0%  {transform: rotate(0deg);-ms-transform: rotate(0deg); -webkit-transform: rotate(0deg); -o-transform: rotate(0deg); -moz-transform: rotate(0deg);}
                 100% {transform: rotate(360deg);-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); -o-transform: rotate(360deg); -moz-transform: rotate(360deg);}
             }
+
             @-o-keyframes rotate-loading {
                 0%  {transform: rotate(0deg);-ms-transform: rotate(0deg); -webkit-transform: rotate(0deg); -o-transform: rotate(0deg); -moz-transform: rotate(0deg);}
                 100% {transform: rotate(360deg);-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); -o-transform: rotate(360deg); -moz-transform: rotate(360deg);}
             }
+
             @keyframes rotate-loading {
                 0%  {transform: rotate(0deg);-ms-transform: rotate(0deg); -webkit-transform: rotate(0deg); -o-transform: rotate(0deg); -moz-transform: rotate(0deg);}
                 100% {transform: rotate(360deg);-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); -o-transform: rotate(360deg); -moz-transform: rotate(360deg);}
             }
+
             @-moz-keyframes rotate-loading {
                 0%  {transform: rotate(0deg);-ms-transform: rotate(0deg); -webkit-transform: rotate(0deg); -o-transform: rotate(0deg); -moz-transform: rotate(0deg);}
                 100% {transform: rotate(360deg);-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); -o-transform: rotate(360deg); -moz-transform: rotate(360deg);}
             }
+
             @-webkit-keyframes rotate-loading {
                 0%  {transform: rotate(0deg);-ms-transform: rotate(0deg); -webkit-transform: rotate(0deg); -o-transform: rotate(0deg); -moz-transform: rotate(0deg);}
                 100% {transform: rotate(360deg);-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); -o-transform: rotate(360deg); -moz-transform: rotate(360deg);}
             }
+
             @-o-keyframes rotate-loading {
                 0%  {transform: rotate(0deg);-ms-transform: rotate(0deg); -webkit-transform: rotate(0deg); -o-transform: rotate(0deg); -moz-transform: rotate(0deg);}
                 100% {transform: rotate(360deg);-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); -o-transform: rotate(360deg); -moz-transform: rotate(360deg);}
             }
+
             @keyframes loading-text-opacity {
                 0%  {opacity: 0}
                 20% {opacity: 0}
                 50% {opacity: 1}
                 100%{opacity: 0}
             }
+
             @-moz-keyframes loading-text-opacity {
                 0%  {opacity: 0}
                 20% {opacity: 0}
                 50% {opacity: 1}
                 100%{opacity: 0}
             }
+
             @-webkit-keyframes loading-text-opacity {
                 0%  {opacity: 0}
                 20% {opacity: 0}
                 50% {opacity: 1}
                 100%{opacity: 0}
             }
+
             @-o-keyframes loading-text-opacity {
                 0%  {opacity: 0}
                 20% {opacity: 0}
@@ -313,7 +345,10 @@
                 width: 100px;
                 border-radius: 100%;
             }
+
+
             .loading-container { position: fixed; top: 45%; left: 45%; margin: 40px auto; display: block; z-index: 99;}
+
             .loading {
                 border: 2px solid transparent;
                 border-color: transparent #fff transparent #FFF;
@@ -326,6 +361,7 @@
                 animation: rotate-loading 1.5s linear 0s infinite normal;
                 transform-origin: 50% 50%;
             }
+
             .loading-container:hover .loading {
                 border-color: transparent #E45635 transparent #E45635;
             }
@@ -337,6 +373,7 @@
                 -o-transition: all 0.5s ease-in-out;
                 transition: all 0.5s ease-in-out;
             }
+
             #loading-text {
                 -moz-animation: loading-text-opacity 2s linear 0s infinite normal;
                 -o-animation: loading-text-opacity 2s linear 0s infinite normal;
@@ -478,6 +515,7 @@
             //     position: new kakao.maps.LatLng(y, x),
             //     draggable: true
             // });
+
             kakao.maps.event.addListener(this.main_marker, 'dragend', function(){
                 var Lng = main_marker.getPosition().getLng();
                 var Lat = main_marker.getPosition().getLat();
@@ -516,7 +554,9 @@
                 }
                 circle.setMap(map);
             });
+
             $('input[type="range"]').rangeslider({polyfill: false});
+
             $('#age_range_slider').on('input', function(){
                 $("#age_show").html("<h>" + $('#age_range_slider').val() + "대</h>");
             })
@@ -608,10 +648,12 @@
                 var moveLatLon = new kakao.maps.LatLng(getData.y, getData.x);
                 map.panTo(moveLatLon);            
             }
+
             function searchAddrFromCoords(coords, callback) {
                 // 좌표로 행정동 주소 정보를 요청합니다
                 geocoder.coord2RegionCode(coords.getLng(), coords.getLat(), callback);         
             }
+
             function displayCenterInfo(result, status) {
                 if (status === kakao.maps.services.Status.OK) {
                     var infoDiv = document.getElementById('txt_address');
