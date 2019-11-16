@@ -9,22 +9,35 @@
         <script src="../js/jquery.js"></script>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/rangeslider.js/2.3.2/rangeslider.css">
     </head>
-    <body style="background-color: #474747; overflow:hidden;">
+    <body style="background-color: #f5f2f2; overflow:hidden;">
         <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
         <script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=fb926e363d9a87e9712ed240cb75a7b0&libraries=services"></script>
         <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=fb926e363d9a87e9712ed240cb75a7b0"></script>
         <script type="text/javascript" src="../rangeslider.js-2.3.0/rangeslider.min.js"></script>
         <style>
+            @font-face {
+                font-family: 'myfont';
+                src: url('./font/myfont.ttf');
+            }
             .address_search{
-                margin-top: 10px;
-                font-size: 20px;
+                margin-top: 15px;
+                font-size: 15px;
                 font-weight: bold;
-                border: #007ac3 5px solid; 
+                border: none;
+                background: white;
+                border-radius: 12px;
                 text-align: left; 
                 padding-left: 10px; 
                 margin-right: 10px;
                 vertical-align: middle; 
                 width: 300px; height: 50px;
+            }
+            #txt_address{
+                font-size: 36px; 
+                font-weight: 900;
+                font-family: 'myfont';
+                color: #007ac3;
+                text-shadow: 3px 5px 2px lightgray;
             }
             #kakao_map{
                 position: absolute;
@@ -46,24 +59,15 @@
                 z-index: 2;
                 width: 400px;
                 height: 800px;
-                background: #0d92db;
+                background: rgb(12, 190, 234);
                 opacity: 0.2;
                 margin-right: 50px;
                 float: right;
                 border-radius: 30px;
+                transition: opacity 1s;
             }
             #filter_box:hover{
-                position: relative;
-                top: 50%;
-                margin-top: -400px;
-                z-index: 2;
-                width: 400px;
-                height: 800px;
-                background: #0d92db;
                 opacity: 0.9;
-                margin-right: 50px;
-                float: right;
-                border-radius: 30px;
             }
             .age_range_slider{
                 margin-left: 20px;
@@ -400,16 +404,13 @@
             <div id="loading-text">loading</div>
         </div>
         <div id="address_search_panel" style="position: fixed; margin-top: 30px; width: 100%; text-align: center; z-index: 3;">
-            <!--<input type="text" id="sample_address" class="address_search" placeholder="찾고자 하는 지역의 '구', '동'을 입력하세요." >
-            <input type="image" onclick="SearchAddress()" src="../images/zoom_2.png" style="vertical-align: middle; width: 30px; height: 30px;" onfocus="this.blur()"><br>
-            <h1 id="txt_address" style="font-size: 18px; font-weight: bold; font-style: italic; color: #007ac3;"> </h1>-->
+            <h1 id="txt_address"></h1>
         </div>
         <div id="wrapper">
             <div id="kakao_map" class="map_div"></div>
             <div id="filter_box">
                 <input type="text" id="sample_address" class="address_search" placeholder="찾고자 하는 지역의 '구', '동'을 입력하세요." >
                 <input type="image" onclick="SearchAddress()" src="../images/zoom_2.png" style="vertical-align: middle; width: 30px; height: 30px;" onfocus="this.blur()"><br>
-                <h1 id="txt_address" style="font-size: 18px; font-weight: bold; font-style: italic; color: #007ac3;"> </h1>
                 <div style="margin-top: 25px;">
                     <h style="color: white; font-weight: bold; font-size: 20px;">연령</h><br>
                 </div>
@@ -501,7 +502,7 @@
             circle = new kakao.maps.Circle({
                 center : new kakao.maps.LatLng(y, x),  // 원의 중심좌표 입니다 
                 radius: $('#active_range_slider').val() * 1000, // 미터 단위의 원의 반지름입니다 
-                strokeWeight: 3, // 선의 두께입니다 
+                strokeWeight: 0, // 선의 두께입니다 
                 strokeColor: '#007ac3', // 선의 색깔입니다
                 strokeOpacity: 1, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
                 strokeStyle: 'dashed', // 선의 스타일 입니다
@@ -531,7 +532,7 @@
                     circle = new kakao.maps.Circle({
                     center : new kakao.maps.LatLng(y, x),  // 원의 중심좌표 입니다 
                     radius: $('#active_range_slider').val() * 1000, // 미터 단위의 원의 반지름입니다 
-                    strokeWeight: 3, // 선의 두께입니다 
+                    strokeWeight: 0, // 선의 두께입니다 
                     strokeColor: '#007ac3', // 선의 색깔입니다
                     strokeOpacity: 1, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
                     strokeStyle: 'dashed', // 선의 스타일 입니다
@@ -548,7 +549,7 @@
                     circle = new kakao.maps.Circle({
                     center : new kakao.maps.LatLng(getData.y, getData.x),  // 원의 중심좌표 입니다 
                     radius: $('#active_range_slider').val() * 1000, // 미터 단위의 원의 반지름입니다 
-                    strokeWeight: 3, // 선의 두께입니다 
+                    strokeWeight: 0, // 선의 두께입니다 
                     strokeColor: '#007ac3', // 선의 색깔입니다
                     strokeOpacity: 1, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
                     strokeStyle: 'dashed', // 선의 스타일 입니다
@@ -571,7 +572,7 @@
                     circle = new kakao.maps.Circle({
                     center : new kakao.maps.LatLng(y, x),  // 원의 중심좌표 입니다 
                     radius: $('#active_range_slider').val() * 1000, // 미터 단위의 원의 반지름입니다 
-                    strokeWeight: 3, // 선의 두께입니다 
+                    strokeWeight: 0, // 선의 두께입니다 
                     strokeColor: '#007ac3', // 선의 색깔입니다
                     strokeOpacity: 1, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
                     strokeStyle: 'dashed', // 선의 스타일 입니다
@@ -586,7 +587,7 @@
                     circle = new kakao.maps.Circle({
                     center : new kakao.maps.LatLng(getData.y, getData.x),  // 원의 중심좌표 입니다 
                     radius: $('#active_range_slider').val() * 1000, // 미터 단위의 원의 반지름입니다 
-                    strokeWeight: 3, // 선의 두께입니다 
+                    strokeWeight: 0, // 선의 두께입니다 
                     strokeColor: '#007ac3', // 선의 색깔입니다
                     strokeOpacity: 1, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
                     strokeStyle: 'dashed', // 선의 스타일 입니다

@@ -8,17 +8,52 @@
         <title>First Page</title>
         <script src="js/jquery.js"></script>
     </head>
-    <body style="background-color: lightgray; overflow: hidden;">
+    <body style="background-color: #f5f2f2; overflow: hidden;">
         <style>
+            @font-face {
+                font-family: 'myfont';
+                src: url('./font/myfont.ttf');
+            }
+            .proj-text{
+                width: 50%;
+                border: none;
+                background: none;
+                font-family: 'myfont';
+                font-size: 20px;
+                color: rgb(127,127,127);
+                font-weight: bold;
+                text-align: center;
+            }
+            .check_house{
+                border: none;
+                border-radius: 12px;
+                background: white;
+                height: 50%;
+                width: 20%;
+                font-family: 'myfont';
+                font-size: 25px;
+                font-weight: 900;
+                color: rgb(12, 190, 234);
+                transition: color 1s;
+            }
+            .check_house:hover{
+                color: lightcoral;
+            }
+            .check_house:focus {
+                outline: none
+            }
             .address_search{
+                font-family: 'myfont';
                 font-size: 20px;
                 font-weight: bold;
-                border: #007ac3 5px solid; 
+                border: rgb(12, 190, 234) 5px solid;
+                border-radius: 12px;
                 text-align: left; 
                 padding-left: 10px; 
                 margin-right: 10px;
                 vertical-align: middle; 
                 width: 600px; height: 50px;
+                transition: border 1s;
             }
             .item{
                 overflow: hidden;
@@ -26,6 +61,7 @@
                 scroll-snap-align: start;
             }
             .select_area_box {
+                font-family: 'myfont';
                 border: 1px solid #000000;
                 border-radius: 5px;
                 font-size: 19px;
@@ -36,62 +72,86 @@
                 outline: none
             }
             .remote-controller{
-                opacity: 0.5;
+                padding-top: 20%;
+                opacity: 0.2;
                 position: fixed;
                 height:100%;
-                width: 5%;
+                width: 1%;
                 top: 0;
                 right: 0;
-                background: #3c3c3c;
+                background: rgb(12, 190, 234);
+                transition: width 1s, opacity 1s;
             }
             .remote-controller:hover{
+                width: 8%;
                 opacity: 1.0;
-                position: fixed;
-                height:100%;
-                width: 5%;
-                top: 0;
-                right: 0;
-                background: #3c3c3c;
             }
-        
+            .control-button{
+                margin: 30px 5px auto;
+                width: 90%;
+                border: none;
+                border-radius: 12px;
+                background: white;
+                color:rgb(12, 190, 234);
+                text-align: center;
+                transition-property: font-size;
+                transition-duration: 0.5s;
+                font-size: 20px;
+                transition-property: font-weight;
+                transition-duration: 0.5s;
+                font-weight: 800;
+                transition: font 0.5s, color 1s;
+            }
+            .control-button:hover{
+                color: lightcoral;
+                font-size: 25px;
+                font-weight: 900;   
+            }
+            .control-button:focus {
+                outline: none
+            }
+            .address_search:focus {
+                outline: none;
+            }
         </style>
         <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
         <script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=fb926e363d9a87e9712ed240cb75a7b0&libraries=services"></script>
         <div class="remote-controller">
-
+            <button class="control-button" onclick="moveTop()">위로<br>가기</button>
+            <button class="control-button" onclick="moveMine()">우리 집<br>보기</button>
+            <button class="control-button" onclick="moveOthers()">다른 동네<br>보기</button>
         </div>
         <main id="container">
             <section id="main_screen" class="box">
                 <div id="team_logo_panel" style="width:100%; height:10%; text-align: left; position: fixed;" >
-                    <input type="image" src="images/project_logo.png" style="height:100%;" onclick="moveTop()">
+                    <input type="image" src="images/team_logo.png" style="height:100%;" onclick="moveTop()">
                 </div>
-                <div id="logo_panel" style="padding-top:10%; width: 100%; height:50%; text-align: center;">
-                    <input type="image" src="images/team_logo.png" style="height: 80%;" disabled="true">
+                <div id="logo_panel" style="padding-top:10%; width: 100%; height:40%; text-align: center;">
+                    <input type="image" src="images/project_logo.png" style="width: 20%;" disabled="true"><br>
+                    <input type="text" class="proj-text" value="사용자 맞춤형 동네 상권 분석 서비스" disabled="true">
                 </div>
                 <div id="search_method_panel" style="margin-top: 0px; width: 100%; height:10%; text-align: center;">
                     <div id="check_my_house_panel" style="width: 100%; height:100%; text-align: center; float: top;">
-                        <input id="check_my_house" type="image" src="images/check_my_house.png" onfocus="this.blur()" onclick="moveMine()"
-                        onmouseover="this.src='images/check_my_house_white.png'" onmouseout="this.src='images/check_my_house.png'">
+                        <button class="check_house" onclick="moveMine()">우리 집 보기</button>
                     </div>
                     <div id="check_other_house_panel" style="width: 100%; height:100%; text-align: center; float: bottom;">
-                        <input id="check_others_house" type="image" src="images/check_others_house.png" onfocus="this.blur()" onclick="moveOthers()"
-                        onmouseover="this.src='images/check_others_house_white.png'" onmouseout="this.src='images/check_others_house.png'">
+                        <button class="check_house" onclick="moveOthers()">다른 동네 보기</button>
                     </div>
                 </div>
                 <div style="height: 20%;"></div>
             </section>
             <section id="first_screen" class="box">
                 <div id="first_screen_first_line" style="padding-top:15%; height:10%; text-align: center;">
-                    <input type="image" src="images/first_screen_first_line.png" disabled="true">
+                    <input type="image" style="height: 80%;" src="images/first_screen_first_line.png" disabled="true">
                 </div>
                 <div id="first_screen_second_line"style="height:10%; text-align:center;">
-                    <input type="image" src="images/first_screen_second_line.png"disabled="true">
+                    <input type="image" style="height: 80%;" src="images/first_screen_second_line.png"disabled="true">
                 </div>
                 <div id="first_screen_third_line"style="height:10%; text-align:center;">
-                    <input type="image" src="images/first_screen_third_line.png"disabled="true">
+                    <input type="image" style="height: 80%;" src="images/first_screen_third_line.png"disabled="true">
                 </div>
                 <div id="first_screen_fourth_line"style="height:10%; text-align:center;">
-                    <input type="image" src="images/first_screen_fourth_line.png"disabled="true">
+                    <input type="image" style="height: 80%;" src="images/first_screen_fourth_line.png"disabled="true">
                 </div>
                 <div id="zipfund_search_area" style="height: 20%; text-align: center;"> 
                     <select id="select_area_province" class="select_area_box">
@@ -132,16 +192,16 @@
             </section>
             <section id="second_screen" class="box">
                 <div id="second_screen_first_line" style="padding-top:15%; height:10%; text-align: center;">
-                    <input type="image" src="images/second_screen_first_line.png" disabled="true">
+                    <input type="image" style="height: 80%;" src="images/second_screen_first_line.png" disabled="true">
                 </div>
                 <div id="second_screen_second_line"style="height:10%; text-align:center;">
-                    <input type="image" src="images/second_screen_second_line.png"disabled="true">
+                    <input type="image" style="height: 80%;" src="images/second_screen_second_line.png"disabled="true">
                 </div>
                 <div id="second_screen_third_line"style="height:10%; text-align:center;">
-                    <input type="image" src="images/second_screen_third_line.png"disabled="true">
+                    <input type="image" style="height: 80%;" src="images/second_screen_third_line.png"disabled="true">
                 </div>
                 <div id="second_screen_fourth_line"style="height:10%; text-align:center;">
-                    <input type="image" src="images/second_screen_fourth_line.png"disabled="true">
+                    <input type="image" style="height: 80%;" src="images/second_screen_fourth_line.png"disabled="true">
                 </div>
                 <div id="address_search_panel" style="margin-top: 25px; width: 100%; height: 30%; text-align: center;">
                     <input type="text" id="sample_address" class="address_search" placeholder="찾고자 하는 지역의 '구', '동'을 입력하세요.">
@@ -150,57 +210,6 @@
                 </div>
             </section>
             <section id="item2" class="item" style="height:0%">
-                <div id="area_panel" style="text-align: center; padding-top: 5%;">
-                    <h1 style="font-size: 30px;">거래 형태</h1>
-                </div>
-                <fieldset>
-                    <legend style="font-size: 25;font-weight: bold">거주형태</legend><!-- life form -->
-                    <div id="life_form">
-                        <input type="radio" id="lfOne" name="lifeForm" value="lfOne" checked><label for="lfOne">원룸</label>
-                        <input type="radio" id="lfTwo" name="lifeForm" value="lfTwo"><label for="lfTwo">투룸</label>
-                        <input type="radio" id="lfOffice" name="lifeForm" value="lfOffice"><label for="lfOffice">오피스텔</label>
-                        <input type="radio" id="lfApartment" name="lifeForm" value="lfApartment"><label for="lfApartment">아파트</label>
-                        <input type="radio" id="lfNone" name="lifeForm" value="lfNone"><label for="lfNone">무관</label>
-                    </div>
-                </fieldset>
-                <fieldset>
-                    <legend style="font-size: 25;font-weight: bold">매매형태</legend><!-- trade form -->
-                    <div id="trade_form">
-                        <input type="radio" id="tfMonth" name="tradeForm" value="tfMonth" checked><label for="tfMonth">월세</label>
-                        <input type="radio" id="tfJeon" name="tradeForm" value="tfJeon"><label for="tfJeon">전세</label>
-                        <input type="radio" id="tfPurchase" name="tradeForm" value="tfPurchase"><label for="tfPurchase">매매</label>
-                        <input type="radio" id="tfNone" name="tradeForm" value="tfNone"><label for="tfNone">무관</label>
-                    </div>
-                    <div id="trade_form_range">
-                        <input type="range" id="valuePurchase" min="0" max="10000000000" step="100000000" value="300000000" name="valuePurchase">매매가</input><br>
-                        <input type="range" id="valueMonth" min="0" max="10000000" step="100000" value="1000000" name="valueMonth">월세</input><br>
-                        <input type="range" id="valueDeposit" min="0" max="100000000" step="1000000" value="10000000" name="valueDeposit">보증금</input>
-                    </div>
-                </fieldset>
-                <fieldset>
-                    <legend style="font-size: 25;font-weight: bold">추가 정보</legend><!-- additional information -->
-                    <div id="gender">
-                        <h>성별</h><br> <!-- gender -->
-                        <input type="radio" id="gMale" name="gender" value="gMale" checked><label for="gMale">남자</label>
-                        <input type="radio" id="gFemale" name="gender" value="gFemale"><label for="gFemale">여자</label>
-                        <input type="radio" id="gNone" name="gender" value="gNone"><label for="gNone">무관</label>
-                    </div>
-                    <div id="age">
-                        <h>연령</h><br> <!-- age -->
-                        <input type="range" id="aiAge" name="age" min="20" max="90" step="10" value="30">세</input>
-                    </div>
-                    <div id="elder">
-                        <h>노인</h><br> <!-- elder -->
-                        <input type="radio" id="eYes" name="old" value="eYes"><label for="eYes">있음</label>
-                        <input type="radio" id="eNo" name="old" value="eNo" checked><label for="eNo">없음</label>
-                    </div>
-                    <div id="dog">
-                        <h>반려견</h><br> <!-- dog -->
-                        <input type="radio" id="dYes" name="dog" value="dYes"><label for="dYes">있음</label>
-                        <input type="radio" id="dNo" name="dog" value="dNo" checked><label for="dNo">없음</label>
-                    </div>
-                </fieldset>
-                <button id="btnConfirm" onclick="SearchApartment()" style="margin-top: 10px;" disabled=true>확인</button>
             </section>
         </main>
         <script>
@@ -353,7 +362,7 @@
                     contentType: "application/json",
                     dataType: 'json',
                     success: function(result){
-                        window.open("html/zipfund_first_page.html?info=" + value, '_self');
+                        window.open("html/zipfund_first_page_se.html?info=" + value, '_self');
                         console.log(result.map_info.x, result.map_info.y);
                         apt_name = result.name;
                         price_Time = result.kb_price_info.month;

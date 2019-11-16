@@ -1,0 +1,949 @@
+<HTML:5>
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>ZIPFUND FIRST PAGE</title>
+        <script src="../js/jquery.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/rangeslider.js/2.3.2/rangeslider.css">
+    </head>
+    <body style="background-color: #f5f2f2; overflow:hidden;">
+        <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
+        <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=fb926e363d9a87e9712ed240cb75a7b0"></script>
+        <script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=fb926e363d9a87e9712ed240cb75a7b0&libraries=services"></script>
+        <script type="text/javascript" src="../rangeslider.js-2.3.0/rangeslider.min.js"></script>
+        <style>
+            @font-face {
+                font-family: 'myfont';
+                src: url('./font/myfont.ttf');
+            }
+            #kakao_map{
+                position: absolute;
+                width: 100%;
+                height: 100%;
+                float: left;
+                z-index: 1;
+            }
+            .apt-change-panel{
+                position: fixed;
+                width: 50%;
+                height: 1%;
+                bottom: 0;
+                background:black;
+                opacity: 0.1;
+                left: 25%;
+                z-index: 4;
+                border-radius: 12px;
+                transition: height 1s, opacity 1s;
+                text-align:center;
+            }
+            .apt-change-panel:hover{
+                opacity: 0.9;
+                height: 10%;
+            }
+            .select_area_box {
+                margin: 15px 0px auto;
+                font-family: 'myfont';
+                border: 1px solid #000000;
+                border-radius: 5px;
+                font-size: 19px;
+                height: 40px;
+                line-height: 40px;
+            }
+            .select_area_box:focus {
+                outline: none
+            }
+            #wrapper{
+                position: absolute;
+                width:100%;
+                height:100%;
+                text-align: center;    
+            }
+            #filter_box{
+                padding-top: 25px;
+                position: relative;
+                top: 50%;
+                margin-top: -400px;
+                z-index: 2;
+                width: 400px;
+                height: 800px;
+                background: rgb(12, 190, 234);
+                opacity: 0.2;
+                margin-right: 50px;
+                float: right;
+                border-radius: 30px;
+                transition: opacity 1s;
+            }
+            #filter_box:hover{
+                opacity: 0.9;
+            }
+            #address_name{
+                font-size: 36px; 
+                font-weight: 900;
+                font-family: 'myfont';
+                color: #007ac3;
+                text-shadow: 3px 5px 2px lightgray;
+            }
+            #apt_name{
+                font-size: 30px; 
+                font-weight: 900;
+                font-family: 'myfont';
+                color: white;
+            }
+            /* 여기부터 건드림 */
+            .wrap {
+                position: absolute;
+                left: 0;
+                bottom: 100px;
+                width: 288px;
+                height: 140px;
+                margin-left: -144px;
+                text-align: center;
+                overflow: hidden;
+                font-size: 12px;
+                font-family: 'Malgun Gothic', dotum, '돋움', sans-serif;
+                line-height: 1.5;
+            }
+            .wrap * {
+                padding: 0;
+                margin: 0;
+            }
+            .wrap .info {
+                width: 286px;
+                height: 200px;
+                border-radius: 5px;
+                border-bottom: 2px solid #ccc;
+                border-right: 1px solid #ccc;
+                overflow: hidden;
+                background: black;
+            }
+            .wrap .info:nth-child(1) {
+                border: 0;
+                box-shadow: 0px 1px 2px #888;
+            }
+            .info .title {
+                /* padding: 5px 0 0 10px; */
+                height: 30px;
+                background: #eee;
+                border-bottom: 1px solid #ddd;
+                font-size: 18px;
+                font-weight: bold;
+            }
+            .info .close {
+                position: absolute;
+                top: 10px;
+                right: 10px;
+                color: #888;
+                width: 17px;
+                height: 17px;
+                background: url('http://t1.daumcdn.net/localimg/localimages/07/mapapidoc/overlay_close.png');
+            }
+            .info .close:hover {
+                cursor: pointer;
+            }
+            .info .body {
+                background:black;
+                position: relative;
+                overflow: hidden;
+            }
+            /* .info .desc {
+                position: relative;
+                height: 200px;
+                overflow:hidden;
+                text-align:center;
+                margin: 13px 0 0 90px;
+            } */
+            .info .body .content1 {
+                font-size : 12px;
+                background : black;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                text-align : center;
+            }
+            /* .info .img {
+                position: absolute;
+                top: 6px;
+                left: 5px;
+                width: 73px;
+                height: 71px;
+                border: 1px solid #ddd;
+                color: #888;
+                overflow: hidden;
+            } */
+            /* 사각형과 마커 잇는 삼각형 */
+            .info:after {
+                background:black;
+                content: '';
+                position: absolute;
+                margin-left: -12px;
+                left: 50%;
+                bottom: -4px;
+                width: 22px;
+                height: 12px;
+                /* background: url('http://t1.daumcdn.net/localimg/localimages/07/mapapidoc/vertex_white.png') */
+            }
+            
+            /* 이 위까지 건드림 */
+            .age_range_slider{
+                margin-left: 20px;
+                margin-right: 20px;
+            }
+            .rangeslider--horizontal {
+                height: 15px;
+                width: 300px;
+                margin-left: 20px;
+                margin-right: 20px;
+            }
+            .rangeslider__fill {
+                background: #007ac3;
+                position: absolute;
+            }
+            .rangeslider__handle {
+                width: 30px;
+                height: 30px;
+            }
+            .rangeslider__handle:after {
+                width: 15px;
+                height: 15px;
+            }
+            .radio {
+                margin: 16px 0;
+                display: block;
+                cursor: pointer;
+            }
+            .radio input {
+                display: none;
+            }
+            .radio input + span {
+                line-height: 22px;
+                height: 22px;
+                padding-left: 22px;
+                position: relative;
+            }
+            .radio input + span:not(:empty) {
+                padding-left: 30px;
+            }
+            .radio input + span:before, .radio input + span:after {
+                content: '';
+                width: 22px;
+                height: 22px;
+                display: block;
+                border-radius: 50%;
+                left: 0;
+                top: 0;
+                position: absolute;
+            }
+            .radio input + span:before {
+                background: #D1D7E3;
+                transition: background 0.2s ease, -webkit-transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 2);
+                transition: background 0.2s ease, transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 2);
+                transition: background 0.2s ease, transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 2), -webkit-transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 2);
+            }
+            .radio input + span:after {
+                background: #fff;
+                -webkit-transform: scale(0.78);
+                        transform: scale(0.78);
+                transition: -webkit-transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.4);
+                transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.4);
+                transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.4), -webkit-transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.4);
+            }
+            .radio input:checked + span:before {
+                -webkit-transform: scale(1.04);
+                        transform: scale(1.04);
+                background: #007ac3;
+            }
+            .radio input:checked + span:after {
+                -webkit-transform: scale(0.4);
+                        transform: scale(0.4);
+                transition: -webkit-transform .3s ease;
+                transition: transform .3s ease;
+                transition: transform .3s ease, -webkit-transform .3s ease;
+            }
+            .radio:hover input + span:before {
+                -webkit-transform: scale(0.92);
+                        transform: scale(0.92);
+            }
+            .radio:hover input + span:after {
+                -webkit-transform: scale(0.74);
+                        transform: scale(0.74);
+            }
+            .radio:hover input:checked + span:after {
+                -webkit-transform: scale(0.4);
+                        transform: scale(0.4);
+            }
+            a {
+                -webkit-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+                -moz-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+                -ms-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+                -o-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+                transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+                display: block;
+                margin: 60px auto;
+                max-width: 180px;
+                text-decoration: none;
+                border-radius: 4px;
+                padding: 20px 30px;
+            }
+            a.button {
+                color: rgba(255, 255, 255, 0.85);
+                box-shadow: white 0 0px 0px 2px inset;
+            }
+            a.button:hover {
+                color: rgba(255, 255, 255, 0.85);
+                box-shadow: #007ac3 0 0px 0px 40px inset;
+            }
+            .checks {position: relative;}
+            .checks input[type="checkbox"] {  /* 실제 체크박스는 화면에서 숨김 */
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip:rect(0,0,0,0);
+            border: 0
+            }
+            .checks input[type="checkbox"] + label {
+            display: inline-block;
+            position: relative;
+            cursor: pointer;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            }
+            .checks input[type="checkbox"] + label:before {  /* 가짜 체크박스 */
+            content: ' ';
+            display: inline-block;
+            width: 21px;  /* 체크박스의 너비를 지정 */
+            height: 21px;  /* 체크박스의 높이를 지정 */
+            line-height: 21px; /* 세로정렬을 위해 높이값과 일치 */
+            margin: -2px 8px 0 0;
+            text-align: center; 
+            vertical-align: middle;
+            background: #fafafa;
+            border: 1px solid #cacece;
+            border-radius : 3px;
+            box-shadow: 0px 1px 2px rgba(0,0,0,0.05), inset 0px -15px 10px -12px rgba(0,0,0,0.05);
+            }
+            .checks.etrans input[type="checkbox"] + label {
+            padding-left: 30px;
+            }
+            .checks.etrans input[type="checkbox"] + label:before {
+            position: absolute;
+            left: 0;
+            top: 0;
+            margin-top: 0;
+            opacity: .6;
+            box-shadow: none;
+            border-color: #6cc0e5;
+            -webkit-transition: all .12s, border-color .08s;
+            transition: all .12s, border-color .08s;
+            }
+            .checks.etrans input[type="checkbox"]:checked + label:before {
+            position: absolute;
+            content: "";
+            width: 10px;
+            top: -5px;
+            left: 5px;
+            border-radius: 0;
+            opacity:1; 
+            background: transparent;
+            border-color:transparent #6cc0e5 #6cc0e5 transparent;
+            border-top-color:transparent;
+            border-left-color:transparent;
+            -ms-transform:rotate(45deg);
+            -webkit-transform:rotate(45deg);
+            transform:rotate(45deg);
+            }
+            .no-csstransforms .checks.etrans input[type="checkbox"]:checked + label:before {
+            /*content:"\2713";*/
+            content: "\2714";
+            top: 0;
+            left: 0;
+            width: 21px;
+            line-height: 21px;
+            color: #6cc0e5;
+            text-align: center;
+            border: 1px solid #6cc0e5;
+            }
+            .dim-layer{
+                display: none;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: #000;
+                opacity: .5;
+                filter: alpha(opacity=50);
+                z-index: 80;
+            }
+            #link {color: #E45635;display:block;font: 12px "Helvetica Neue", Helvetica, Arial, sans-serif;text-align:center; text-decoration: none;}
+            #link:hover {color: #CCCCCC}
+            #link, #link:hover {-webkit-transition: color 0.5s ease-out;-moz-transition: color 0.5s ease-out;-ms-transition: color 0.5s ease-out;-o-transition: color 0.5s ease-out;transition: color 0.5s ease-out;}
+            /** BEGIN CSS **/
+            body {background: #333333;}
+            @keyframes rotate-loading {
+                0%  {transform: rotate(0deg);-ms-transform: rotate(0deg); -webkit-transform: rotate(0deg); -o-transform: rotate(0deg); -moz-transform: rotate(0deg);}
+                100% {transform: rotate(360deg);-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); -o-transform: rotate(360deg); -moz-transform: rotate(360deg);}
+            }
+            @-moz-keyframes rotate-loading {
+                0%  {transform: rotate(0deg);-ms-transform: rotate(0deg); -webkit-transform: rotate(0deg); -o-transform: rotate(0deg); -moz-transform: rotate(0deg);}
+                100% {transform: rotate(360deg);-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); -o-transform: rotate(360deg); -moz-transform: rotate(360deg);}
+            }
+            @-webkit-keyframes rotate-loading {
+                0%  {transform: rotate(0deg);-ms-transform: rotate(0deg); -webkit-transform: rotate(0deg); -o-transform: rotate(0deg); -moz-transform: rotate(0deg);}
+                100% {transform: rotate(360deg);-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); -o-transform: rotate(360deg); -moz-transform: rotate(360deg);}
+            }
+            @-o-keyframes rotate-loading {
+                0%  {transform: rotate(0deg);-ms-transform: rotate(0deg); -webkit-transform: rotate(0deg); -o-transform: rotate(0deg); -moz-transform: rotate(0deg);}
+                100% {transform: rotate(360deg);-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); -o-transform: rotate(360deg); -moz-transform: rotate(360deg);}
+            }
+            @keyframes rotate-loading {
+                0%  {transform: rotate(0deg);-ms-transform: rotate(0deg); -webkit-transform: rotate(0deg); -o-transform: rotate(0deg); -moz-transform: rotate(0deg);}
+                100% {transform: rotate(360deg);-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); -o-transform: rotate(360deg); -moz-transform: rotate(360deg);}
+            }
+            @-moz-keyframes rotate-loading {
+                0%  {transform: rotate(0deg);-ms-transform: rotate(0deg); -webkit-transform: rotate(0deg); -o-transform: rotate(0deg); -moz-transform: rotate(0deg);}
+                100% {transform: rotate(360deg);-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); -o-transform: rotate(360deg); -moz-transform: rotate(360deg);}
+            }
+            @-webkit-keyframes rotate-loading {
+                0%  {transform: rotate(0deg);-ms-transform: rotate(0deg); -webkit-transform: rotate(0deg); -o-transform: rotate(0deg); -moz-transform: rotate(0deg);}
+                100% {transform: rotate(360deg);-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); -o-transform: rotate(360deg); -moz-transform: rotate(360deg);}
+            }
+            @-o-keyframes rotate-loading {
+                0%  {transform: rotate(0deg);-ms-transform: rotate(0deg); -webkit-transform: rotate(0deg); -o-transform: rotate(0deg); -moz-transform: rotate(0deg);}
+                100% {transform: rotate(360deg);-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); -o-transform: rotate(360deg); -moz-transform: rotate(360deg);}
+            }
+            @keyframes loading-text-opacity {
+                0%  {opacity: 0}
+                20% {opacity: 0}
+                50% {opacity: 1}
+                100%{opacity: 0}
+            }
+            @-moz-keyframes loading-text-opacity {
+                0%  {opacity: 0}
+                20% {opacity: 0}
+                50% {opacity: 1}
+                100%{opacity: 0}
+            }
+            @-webkit-keyframes loading-text-opacity {
+                0%  {opacity: 0}
+                20% {opacity: 0}
+                50% {opacity: 1}
+                100%{opacity: 0}
+            }
+            @-o-keyframes loading-text-opacity {
+                0%  {opacity: 0}
+                20% {opacity: 0}
+                50% {opacity: 1}
+                100%{opacity: 0}
+            }
+            .loading-container,
+            .loading {
+                height: 100px;
+                position: relative;
+                width: 100px;
+                border-radius: 100%;
+            }
+            .loading-container { position: fixed; top: 45%; left: 45%; margin: 40px auto; display: block; z-index: 99;}
+            .loading {
+                border: 2px solid transparent;
+                border-color: transparent #fff transparent #FFF;
+                -moz-animation: rotate-loading 1.5s linear 0s infinite normal;
+                -moz-transform-origin: 50% 50%;
+                -o-animation: rotate-loading 1.5s linear 0s infinite normal;
+                -o-transform-origin: 50% 50%;
+                -webkit-animation: rotate-loading 1.5s linear 0s infinite normal;
+                -webkit-transform-origin: 50% 50%;
+                animation: rotate-loading 1.5s linear 0s infinite normal;
+                transform-origin: 50% 50%;
+            }
+            .loading-container:hover .loading {
+                border-color: transparent #E45635 transparent #E45635;
+            }
+            .loading-container:hover .loading,
+            .loading-container .loading {
+                -webkit-transition: all 0.5s ease-in-out;
+                -moz-transition: all 0.5s ease-in-out;
+                -ms-transition: all 0.5s ease-in-out;
+                -o-transition: all 0.5s ease-in-out;
+                transition: all 0.5s ease-in-out;
+            }
+            #loading-text {
+                -moz-animation: loading-text-opacity 2s linear 0s infinite normal;
+                -o-animation: loading-text-opacity 2s linear 0s infinite normal;
+                -webkit-animation: loading-text-opacity 2s linear 0s infinite normal;
+                animation: loading-text-opacity 2s linear 0s infinite normal;
+                color: #ffffff;
+                font-family: "Helvetica Neue, "Helvetica", ""arial";
+                font-size: 10px;
+                font-weight: bold;
+                margin-top: 45px;
+                opacity: 0;
+                position: absolute;
+                text-align: center;
+                text-transform: uppercase;
+                top: 0;
+                width: 100px;
+            }
+        </style>
+        <img src="../images/project_logo.png" style="height: 10%; position: fixed; z-index: 3;">
+        <div id="address_search_panel" style="position: fixed; margin-top: 30px; width: 100%; text-align: center; z-index: 3;">
+            <h id="address_name"></h>
+        </div>
+        <div class="dim-layer" style="display: block"></div> 
+        <div class="loading-container">
+            <div class="loading"></div>
+            <div id="loading-text">loading</div>
+        </div>
+        <div class="apt-change-panel">
+            <select id="select_area_province" class="select_area_box">
+                    <option value disabled class selected="selected">시/도 선택</option>]   
+                    <option label="서울특별시" value="11">서울특별시</option>
+                    <option label="부산광역시" value="26">부산광역시</option>
+                    <option label="대구광역시" value="27">대구광역시</option>
+                    <option label="인천광역시" value="28">인천광역시</option>
+                    <option label="광주광역시" value="29">광주광역시</option>
+                    <option label="대전광역시" value="30">대전광역시</option>
+                    <option label="울산광역시" value="31">울산광역시</option>
+                    <option label="세종특별자치시" value="36">세종특별자치시</option>
+                    <option label="경기도" value="41">경기도</option>
+                    <option label="강원도" value="42">강원도</option>
+                    <option label="충청북도" value="43">충청북도</option>
+                    <option label="충청남도" value="44">충청남도</option>
+                    <option label="전라북도" value="45">전라북도</option>
+                    <option label="전라남도" value="46">전라남도</option>
+                    <option label="경상북도" value="47">경상북도</option>
+                    <option label="경상남도" value="48">경상남도</option>
+                    <option label="제주특별자치도" value="50">제주특별자치도</option>
+                </select>
+                <select id="select_area_city" class="select_area_box">
+                    <option value disabled class selected="selected">시/군/구 선택</option>
+                </select>
+                <select id="select_area_town" class="select_area_box">
+                    <option value disabled class selected="selected">읍/면/동 선택</option>
+                </select>
+                <select id="select_area_apart" class="select_area_box">
+                    <option value disabled class selected="selected">아파트 선택</option>
+                </select>
+                <select id="select_area_meter" class="select_area_box">
+                    <option value disabled class selected="selected">평방미터 선택</option>
+                </select>
+                <input type="image" onclick="SearchApartment()" src="../images/zoom_2.png" style="vertical-align: middle; width: 30px; height: 30px;" onfocus="this.blur()"><br>
+        </div>
+        <div id="wrapper">
+            <div id="kakao_map" class="map_div"></div>
+            <div id="filter_box">
+                <h id="apt_name">아파트 이름</h>
+                <div style="margin-top: 25px;">
+                    <h style="color: white; font-weight: bold; font-size: 20px;">연령</h><br>
+                </div>
+                <div style="display: flex; margin-top: 10px;">
+                    <input id="age_range_slider" type="range" min="20" max="60" step="10" value="20">
+                    <h id="age_show" style="color: white;">20대</h>
+                </div>
+                <div style="margin-top: 25px;">
+                    <h style="color: white; font-weight: bold; font-size: 20px;">성별</h><br>
+                </div>
+                <div style="display: flex; justify-content: center;">
+                    <label class="radio">
+                        <input type="radio" name="gender_radio" id="male_button" value="male" checked>
+                        <span style="color:white; margin-right: 20px;">남성</span>
+                    </label>
+                    <label class="radio">
+                        <input type="radio" name="gender_radio" id="female_button" value="female">
+                        <span style="color:white;">여성</span>
+                    </label>
+                </div>
+                <div style="margin-top: 25px;">
+                    <h style="color: white; font-weight: bold; font-size: 20px;">노인</h><br>
+                </div>
+                <div style="display: flex; justify-content: center;">
+                    <label class="radio">
+                        <input type="radio" name="old_radio" id="old_yes" value="yes" checked>
+                        <span style="color:white; margin-right: 20px;">있음</span>
+                    </label>
+                    <label class="radio">
+                        <input type="radio" name="old_radio" id="old_no" value="no">
+                        <span style="color:white;">없음</span>
+                    </label>
+                </div>
+                <div style="margin-top: 25px;">
+                    <h style="color: white; font-weight: bold; font-size: 20px;">아이</h><br>
+                </div>
+                <div style="display: flex; justify-content: center;">
+                    <div class="checks etrans" style="margin-top: 10px;">
+                        <input type="checkbox" id="check_high"> 
+                        <label for="check_high" style="color: white;">고등학생</label> 
+                        <input type="checkbox" id="check_middle"> 
+                        <label for="check_middle" style="color: white;">중학생</label>
+                        <input type="checkbox" id="check_elementary"> 
+                        <label for="check_elementary" style="color: white;">초등학생</label>
+                        <input type="checkbox" id="check_child"> 
+                        <label for="check_child" style="color: white;">유아</label>
+                    </div>
+                </div>
+                <div style="margin-top: 25px;">
+                    <h style="color: white; font-weight: bold; font-size: 20px;">반려동물</h><br>
+                </div>
+                <div style="display: flex; justify-content: center;">
+                    <label class="radio">
+                        <input type="radio" name="r2" id="dog_yes" value="yes" checked>
+                        <span style="color:white; margin-right: 20px;">있음</span>
+                    </label>
+                    <label class="radio">
+                        <input type="radio" name="r2" id="dog_no" value="no">
+                        <span style="color:white;">없음</span>
+                    </label>
+                </div>
+                <div style="margin-top: 25px;">
+                    <h style="color: white; font-weight: bold; font-size: 20px;">활동 반경</h><br>
+                </div>
+                <div style="display: flex; margin-top: 10px;">
+                    <input id="active_range_slider" type="range" min="0.5" max="3" step="0.5" value="1">
+                    <h id="active_show" style="color: white;">1km</h>
+                </div>
+                <div>
+                    <a href="#" class="button" style="font-size: 20px; font-weight:bold;"onclick="searchMyArea()">검색해보기</a>
+                </div>
+            </div>
+        </div>
+        <script>
+            var circle;
+            var container = document.getElementById("kakao_map");
+            var options = {
+                center: new kakao.maps.LatLng(33.450701, 126.570667),
+                level: 4
+            };
+            var map = new kakao.maps.Map(container, options);
+            search = window.location.search;
+            getData = _GET(search);
+            var x, y;
+            var addr_name;
+            var apt_name;
+            var addr_only;
+            var price_Time;
+            var price_Buy;
+            var price_Rent;
+            var built_time;
+            var phoneNum;
+            var main_marker;
+            var main_marker_src = '../images/main_marker.png';
+            var main_marker_size = new kakao.maps.Size(100,100);
+            var main_marker_option = {offset: new kakao.maps.LatLng(80, 50)};   //80, 50 으로 했더니 가장 적절한 위치에 위치함
+            var main_marker_image = new kakao.maps.MarkerImage(main_marker_src, main_marker_size, main_marker_option);
+            var main_marker_position;
+            var iwContent;
+            var iwOverlay;
+
+            /*시 선택*/
+            $('#select_area_province').change(function(){
+                $.ajax({
+                    /*
+                    서울시로 바꾸고 
+                    */
+                    url: "http://admin.zipfund.co/api/address/city/" + $('#select_area_province').val(),
+                    contentType: "application/json",
+                    dataType: 'json',
+                    success: function(result){
+                        $('#select_area_city').empty();
+                        $('#select_area_city').append(`<option value disabled class selected="selected">시/군/구 선택</option>`);
+                        $('#select_area_town').empty();
+                        $('#select_area_town').append(`<option value disabled class selected="selected">읍/면/동 선택</option>`);
+                        $('#select_area_apart').empty();
+                        $('#select_area_apart').append(`<option value disabled class selected="selected">아파트 선택</option>`);
+                        $('#select_area_meter').empty();
+                        $('#select_area_meter').append(`<option value disabled class selected="selected">평방미터 선택</option>`);
+                        result.codes.map((value) => {
+                            var option = $(`<option value=${value.code}>` + value.name +"</option>");
+                            $('#select_area_city').append(option);
+                        })
+                    }
+                })
+            });
+            /*구 선택*/
+            $('#select_area_city').change(function(){
+                $.ajax({
+                    /*
+                    서울시 XX구 (11215등이 들어옴) ~동을 받아올 차례
+                    */
+                    url: "http://admin.zipfund.co/api/address/district/" + $('#select_area_city').val(),
+                    contentType: "application/json",
+                    dataType: 'json',
+                    success: function(result){
+                        $('#select_area_town').empty();
+                        $('#select_area_town').append(`<option value disabled class selected="selected">읍/면/동 선택</option>`);
+                        $('#select_area_apart').empty();
+                        $('#select_area_apart').append(`<option value disabled class selected="selected">아파트 선택</option>`);
+                        $('#select_area_meter').empty();
+                        $('#select_area_meter').append(`<option value disabled class selected="selected">평방미터 선택</option>`);
+                        result.codes.map((value) => {
+                            var option = $(`<option value=${value.code}>` + value.name + "</option>");
+                            $('#select_area_town').append(option);
+                        })
+                    }
+                })
+            });
+            /*동 선택*/
+            $('#select_area_town').change(function(){
+                $.ajax({
+                    url: "http://admin.zipfund.co/api/address/apartment/" + $('#select_area_town').val(),
+                    contentType: "application/json",
+                    dataType: 'json',
+                    success: function(result){
+                        $('#select_area_apart').empty();
+                        $('#select_area_apart').append(`<option value disabled class selected="selected">아파트 선택</option>`);
+                        $('#select_area_meter').empty();
+                        $('#select_area_meter').append(`<option value disabled class selected="selected">평방미터 선택</option>`);
+                        result.codes.map((value) => {
+                            var option = $(`<option value=${value.code}>` + value.name + "</option>");
+                            $('#select_area_apart').append(option);
+                        })
+                    }
+                })
+            });
+            /*아파트 선택*/
+            $('#select_area_apart').change(function(){
+                $.ajax({
+                    url: "http://admin.zipfund.co/api/address/unit_type/" + $('#select_area_apart').val(),
+                    contentType: "application/json",
+                    dataType: 'json',
+                    success: function(result){
+                        $('#select_area_meter').empty();
+                        $('#select_area_meter').append(`<option value disabled class selected="selected">평방미터 선택</option>`);
+                        result.codes.map((value) => {
+                            var option = $(`<option value=${value.code}>` + value.name + "</option>");
+                            $('#select_area_meter').append(option);
+                        })
+                    }
+                })
+            });
+            /*새로운 아파트 검색*/
+            function SearchApartment(){
+                var value = $('#select_area_meter').val();
+                $.ajax({
+                    url: "http://admin.zipfund.co/api/address/apartment_info/" + $('#select_area_meter').val(),
+                    contentType: "application/json",
+                    dataType: 'json',
+                    success: function(result){
+                        closeOverlay();
+                        x = result.map_info.x;
+                        y = result.map_info.y;
+                        panTo();
+                        circle.setMap(null);
+                        addr_name = result.address + "</br> " + result.name;
+                        addr_only = result.address;
+                        $("#address_name").html("<h>" + addr_only + "</h>");
+                        apt_name = result.name;
+                        $('#apt_name').html("<h>" + apt_name + "</h>");
+                        price_Time = result.kb_price_info.month;
+                        price_Buy = Math.floor(result.kb_price_info.price /  10000) + "억 " + Math.floor(result.kb_price_info.price % 10000) + "만원";
+                        price_Rent = Math.floor(result.kb_price_info.rent / 10000) + "억 " + Math.floor(result.kb_price_info.rent % 10000) + "만원";
+                        built_time = result.built_year;
+                        phoneNum = result.office_phone;
+                        // 좌표의 경우, circle이 여기서 받아오는 것에 착안하여, 이곳에서 좌표를 받고
+                        if(main_marker) main_marker.setMap(null);
+                        main_marker_position = new kakao.maps.LatLng(y,x);                        
+                        main_marker = new kakao.maps.Marker({
+                            position: main_marker_position,
+                            image: main_marker_image,
+                        });
+                        main_marker.setMap(map);
+                        iwContent = '<div class="wrap">' + 
+                                    '    <div class="info">' + 
+                                    '        <div class="title">' + 
+                                    apt_name + 
+                                    '            <div class="close" onclick="closeOverlay()" title="닫기"></div>' + 
+                                    '        <div class="body">' +
+                                    '            <div class="content1" style = "color : white;"> 완공시기: ' + built_time + '</div>' + 
+                                    '            <div class="content1" style = "color : white;"> 시세기준시기: ' + price_Time + '</div>' + 
+                                    '            <div class="content1" style = "color : white;"> 매매가: ' + price_Buy + '</div>' + 
+                                    '            <div class="content1" style = "color : white;"> 전세가: ' + price_Rent + '</div>' + 
+                                    '            <div class="content1" style = "color : white;"> apt 문의 번호: ' + phoneNum + '</div>' + 
+                                    '            </div>' + 
+                                    '        </div>' + 
+                                    '    </div>' +    
+                                    '</div>';
+                        // 마커 위에 커스텀오버레이를 표시합니다
+                        // 마커를 중심으로 커스텀 오버레이를 표시하기위해 CSS를 이용해 위치를 설정했습니다
+                        iwOverlay = new kakao.maps.CustomOverlay({
+                            content: iwContent,
+                            map: map,
+                            position: main_marker_position,
+                        });
+                        if(circle) circle.setMap(null);
+                        if(x){
+                            circle = new kakao.maps.Circle({
+                            center : new kakao.maps.LatLng(y, x),  // 원의 중심좌표 입니다 
+                            radius: $('#active_range_slider').val() * 1000, // 미터 단위의 원의 반지름입니다 
+                            strokeWeight: 0, // 선의 두께입니다 
+                            strokeColor: '#007ac3', // 선의 색깔입니다
+                            strokeOpacity: 1, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
+                            strokeStyle: 'dashed', // 선의 스타일 입니다
+                            fillColor: '#CFE7FF', // 채우기 색깔입니다
+                            fillOpacity: 0.7  // 채우기 불투명도 입니다   
+                            });
+                            circle.setMap(map);
+                            map.panTo(new kakao.maps.LatLng(y,x));
+                        }
+                        else{
+                            search = window.location.search;
+                            getData = _GET(search);
+                            console.log(getData);
+                            circle = new kakao.maps.Circle({
+                            center : new kakao.maps.LatLng(getData.y, getData.x),  // 원의 중심좌표 입니다 
+                            radius: $('#active_range_slider').val() * 1000, // 미터 단위의 원의 반지름입니다 
+                            strokeWeight: 0, // 선의 두께입니다 
+                            strokeColor: '#007ac3', // 선의 색깔입니다
+                            strokeOpacity: 1, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
+                            strokeStyle: 'dashed', // 선의 스타일 입니다
+                            fillColor: '#CFE7FF', // 채우기 색깔입니다
+                            fillOpacity: 0.7  // 채우기 불투명도 입니다   
+                            });
+                        }
+                        circle.setMap(map);
+                    }
+                });
+            }
+
+            $.ajax({
+                    url: "http://admin.zipfund.co/api/address/apartment_info/" + getData.info,
+                    contentType: "application/json",
+                    dataType: 'json',
+                    success: function(result){
+                        x = result.map_info.x;
+                        y = result.map_info.y;
+                        addr_name = result.address + "</br> " + result.name;
+                        addr_only = result.address;
+                        apt_name = result.name;
+                        price_Time = result.kb_price_info.month;
+                        price_Buy = Math.floor(result.kb_price_info.price /  10000) + "억 " + Math.floor(result.kb_price_info.price % 10000) + "만원";
+                        price_Rent = Math.floor(result.kb_price_info.rent / 10000) + "억 " + Math.floor(result.kb_price_info.rent % 10000) + "만원";
+                        built_time = result.built_year;
+                        phoneNum = result.office_phone;
+                        console.log(result);
+                        circle = new kakao.maps.Circle({
+                        center : new kakao.maps.LatLng(y, x),  // 원의 중심좌표 입니다 
+                        radius: $('#active_range_slider').val() * 1000, // 미터 단위의 원의 반지름입니다 
+                        strokeWeight: 0, // 선의 두께입니다 
+                        strokeColor: '#007ac3', // 선의 색깔입니다
+                        strokeOpacity: 1, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
+                        strokeStyle: 'dashed', // 선의 스타일 입니다
+                        fillColor: '#CFE7FF', // 채우기 색깔입니다
+                        fillOpacity: 0.7  // 채우기 불투명도 입니다   
+                        });                        
+                        // 좌표의 경우, circle이 여기서 받아오는 것에 착안하여, 이곳에서 좌표를 받고
+                        main_marker_position = new kakao.maps.LatLng(y,x);                        
+                        main_marker = new kakao.maps.Marker({
+                            position: main_marker_position,
+                            image: main_marker_image,
+                        });
+                        iwContent = '<div class="wrap">' + 
+                                    '    <div class="info">' + 
+                                    '        <div class="title">' + 
+                                    apt_name + 
+                                    '            <div class="close" onclick="closeOverlay()" title="닫기"></div>' + 
+                                    '        <div class="body">' +
+                                    '            <div class="content1" style = "color : white;"> 완공시기: ' + built_time + '</div>' + 
+                                    '            <div class="content1" style = "color : white;"> 시세기준시기: ' + price_Time + '</div>' + 
+                                    '            <div class="content1" style = "color : white;"> 매매가: ' + price_Buy + '</div>' + 
+                                    '            <div class="content1" style = "color : white;"> 전세가: ' + price_Rent + '</div>' + 
+                                    '            <div class="content1" style = "color : white;"> apt 문의 번호: ' + phoneNum + '</div>' + 
+                                    '            </div>' + 
+                                    '        </div>' + 
+                                    '    </div>' +    
+                                    '</div>';
+                        // 마커 위에 커스텀오버레이를 표시합니다
+                        // 마커를 중심으로 커스텀 오버레이를 표시하기위해 CSS를 이용해 위치를 설정했습니다
+                        iwOverlay = new kakao.maps.CustomOverlay({
+                            content: iwContent,
+                            map: map,
+                            position: main_marker_position,
+                        });
+                    }   //success 함수꺼다 건드리지마라
+            });     //얜 아약스꺼
+            function closeOverlay() {
+                iwOverlay.setMap(null);     
+            }
+            function _GET(search){
+                var obj = {};
+                var uri = decodeURI(search);
+                uri=uri.slice(1,uri.length);
+                var param = uri.split('&');
+                for(var i = 0; i < param.length; i++){
+                    var devide = param[i].split('=');
+                    obj[devide[0]] = devide[1];
+                }
+                return obj;
+            }
+            $('input[type="range"]').rangeslider({polyfill: false});
+            $('#age_range_slider').on('input', function(){
+                $("#age_show").html("<h>" + $('#age_range_slider').val() + "대</h>");
+            })
+            $('#active_range_slider').on('input', function(){
+                $("#active_show").html("<h>" + $('#active_range_slider').val() + "km</h>");
+                circle.setMap(null);
+                circle = new kakao.maps.Circle({
+                    center : new kakao.maps.LatLng(y, x),  // 원의 중심좌표 입니다 
+                    radius: $('#active_range_slider').val() * 1000, // 미터 단위의 원의 반지름입니다 
+                    strokeWeight: 0, // 선의 두께입니다 
+                    strokeColor: '#007ac3', // 선의 색깔입니다
+                    strokeOpacity: 1, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
+                    strokeStyle: 'dashed', // 선의 스타일 입니다
+                    fillColor: '#CFE7FF', // 채우기 색깔입니다
+                    fillOpacity: 0.7  // 채우기 불투명도 입니다   
+                });
+                circle.setMap(map);
+            })
+            window.onload = function(){
+                setTimeout(function(){
+                    // circle이 여기서 생성되는 것에 착안하여, 여기서 마커 생성
+                    this.circle.setMap(map);
+                    main_marker.setMap(map);
+                    kakao.maps.event.addListener(main_marker, 'click', function() {
+                            iwOverlay.setMap(map);
+                    });
+                    kakao.maps.event.addListener(main_marker, 'click', function(){
+                        iwOverlay.setMap(map);
+                    })
+                    $("#address_name").html("<h>" + addr_only + "</h>");
+                    $('#apt_name').html("<h>" + apt_name + "</h>");
+                    $("#infoAPT_0").html("<br>" + apt_name);
+                    $("#infoAPT_1").html("<br>" + built_time);
+                    $("#infoAPT_2").html("<br>" + price_Time);
+                    $("#infoAPT_3").html("<br>" + price_Buy);
+                    $("#infoAPT_4").html("<br>" + price_Rent);
+                    $("#infoAPT_5").html("<br>" + phoneNum);
+                    panTo();
+                    $('.loading-container').hide();
+                    $('.dim-layer').hide();
+                }, 500);
+            };
+            function panTo() {
+                var moveLatLon = new kakao.maps.LatLng(y, x);
+                map.panTo(moveLatLon);
+            }
+            function searchMyArea(){
+                var age = $('#age_range_slider').val();
+                var gender = $("input:radio[name=gender_radio]:checked").val();
+                var old = $("input:radio[name=old_radio]:checked").val();
+                var high = $("input:checkbox[id=check_high]").is(":checked")==true;
+                var midd = $("input:checkbox[id=check_middle]").is(":checked")==true;
+                var elem = $("input:checkbox[id=check_elementary]").is(":checked")==true; 
+                var kind = $("input:checkbox[id=check_child]").is(":checked")==true;
+                var dog = $("input:radio[name=dog_radio]:checked").val();
+                var active = $('#active_range_slider').val();
+                window.open("zipfund_second_page.html?x=" + x + "&y=" + y + "&age=" + age + "&gender=" + gender + "&old=" + old + 
+                "&high=" + high + "&midd=" + midd + "&elem=" + elem + "&kind=" + kind + "&dog=" + dog + "&active=" + active + "&addr=" + addr_name +
+                "&apt=" + apt_name + "&priceTime=" + price_Time +"&priceBuy=" + price_Buy + "&priceRent=" + price_Rent + "&bltTime=" +built_time + "&phNum=" + phoneNum, '_self');
+            }
+            //$('#age_range_slider').rangeslider({polyfill: false});
+            
+        </script>
+    </body>
+    </html>
+</HTML:5>
