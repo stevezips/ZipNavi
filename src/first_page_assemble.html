@@ -1,0 +1,415 @@
+<HTML:5>
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>First Page</title>
+        <script src="js/jquery.js"></script>
+    </head>
+    <body style="background-color: #f5f2f2; overflow: hidden;">
+        <style>
+            @font-face {
+                font-family: 'myfont';
+                src: url('./font/myfont.ttf');
+            }
+            @font-face {
+                font-family: 'myfont2';
+                src: url('./font/myfont2.ttf');
+            }
+            .proj-text{
+                width: 50%;
+                border: none;
+                background: none;
+                font-family: 'myfont';
+                font-size: 20px;
+                color: rgb(127,127,127);
+                font-weight: bold;
+                text-align: center;
+            }
+            .check_house{
+                border: none;
+                border-radius: 12px;
+                background: white;
+                height: 50%;
+                width: 20%;
+                font-family: 'myfont';
+                font-size: 25px;
+                font-weight: 900;
+                color: rgb(12, 190, 234);
+                transition: color 1s;
+            }
+            .check_house:hover{
+                color: lightcoral;
+            }
+            .check_house:focus {
+                outline: none
+            }
+            .address_search{
+                font-family: 'myfont';
+                font-size: 20px;
+                font-weight: bold;
+                border: rgb(12, 190, 234) 5px solid;
+                border-radius: 12px;
+                text-align: left; 
+                padding-left: 10px; 
+                margin-right: 10px;
+                vertical-align: middle; 
+                width: 600px; height: 50px;
+                transition: border 1s;
+            }
+            .item{
+                overflow: hidden;
+                height:100%;
+                scroll-snap-align: start;
+            }
+            .select_area_box {
+                font-family: 'myfont';
+                border: 1px solid #000000;
+                border-radius: 5px;
+                font-size: 19px;
+                height: 40px;
+                line-height: 40px;
+            }
+            .select_area_box:focus {
+                outline: none
+            }
+            .remote-controller{
+                padding-top: 20%;
+                opacity: 0.2;
+                position: fixed;
+                height:100%;
+                width: 1%;
+                top: 0;
+                right: 0;
+                background: rgb(12, 190, 234);
+                transition: width 1s, opacity 1s;
+            }
+            .remote-controller:hover{
+                width: 8%;
+                opacity: 1.0;
+            }
+            .control-button{
+                margin: 30px 5px auto;
+                width: 90%;
+                border: none;
+                border-radius: 12px;
+                background: white;
+                color:rgb(12, 190, 234);
+                text-align: center;
+                transition-property: font-size;
+                transition-duration: 0.5s;
+                font-size: 20px;
+                transition-property: font-weight;
+                transition-duration: 0.5s;
+                font-weight: 800;
+                transition: font 0.5s, color 1s;
+            }
+            .control-button:hover{
+                color: lightcoral;
+                font-size: 25px;
+                font-weight: 900;   
+            }
+            .control-button:focus {
+                outline: none
+            }
+            .address_search:focus {
+                outline: none;
+            }
+        </style>
+        <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
+        <script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=fb926e363d9a87e9712ed240cb75a7b0&libraries=services"></script>
+        <div class="remote-controller">
+            <button class="control-button" onclick="moveTop()">위로<br>가기</button>
+            <button class="control-button" onclick="moveMine()">우리 집<br>보기</button>
+            <button class="control-button" onclick="moveOthers()">다른 동네<br>보기</button>
+        </div>
+        <main id="container">
+            <section id="main_screen" class="box">
+                <div id="team_logo_panel" style="width:100%; height:10%; text-align: left; position: fixed;" >
+                    <input type="image" src="images/team_logo.png" style="height:100%;" onclick="moveTop()">
+                </div>
+                <div id="logo_panel" style="padding-top:10%; width: 100%; height:40%; text-align: center;">
+                    <input type="image" src="images/project_logo.png" style="width: 20%;" disabled="true"><br>
+                    <input type="text" class="proj-text" value="사용자 맞춤형 동네 상권 분석 서비스" disabled="true">
+                </div>
+                <div id="search_method_panel" style="margin-top: 0px; width: 100%; height:10%; text-align: center;">
+                    <div id="check_my_house_panel" style="width: 100%; height:100%; text-align: center; float: top;">
+                        <button class="check_house" onclick="moveMine()">우리 집 보기</button>
+                    </div>
+                    <div id="check_other_house_panel" style="width: 100%; height:100%; text-align: center; float: bottom;">
+                        <button class="check_house" onclick="moveOthers()">다른 동네 보기</button>
+                    </div>
+                </div>
+                <div style="height: 20%;"></div>
+            </section>
+            <section id="first_screen" class="box">
+                <div id="first_screen_first_line" style="padding-top:15%; height:10%; text-align: center;">
+                    <input type="image" style="height: 80%;" src="images/first_screen_first_line.png" disabled="true">
+                </div>
+                <div id="first_screen_second_line"style="height:10%; text-align:center;">
+                    <input type="image" style="height: 80%;" src="images/first_screen_second_line.png"disabled="true">
+                </div>
+                <div id="first_screen_third_line"style="height:10%; text-align:center;">
+                    <input type="image" style="height: 80%;" src="images/first_screen_third_line.png"disabled="true">
+                </div>
+                <div id="first_screen_fourth_line"style="height:10%; text-align:center;">
+                    <input type="image" style="height: 80%;" src="images/first_screen_fourth_line.png"disabled="true">
+                </div>
+                <div id="zipfund_search_area" style="height: 20%; text-align: center;"> 
+                    <select id="select_area_province" class="select_area_box">
+                        <option value disabled class selected="selected">시/도 선택</option>]   
+                        <option label="서울특별시" value="11">서울특별시</option>
+                        <option label="부산광역시" value="26">부산광역시</option>
+                        <option label="대구광역시" value="27">대구광역시</option>
+                        <option label="인천광역시" value="28">인천광역시</option>
+                        <option label="광주광역시" value="29">광주광역시</option>
+                        <option label="대전광역시" value="30">대전광역시</option>
+                        <option label="울산광역시" value="31">울산광역시</option>
+                        <option label="세종특별자치시" value="36">세종특별자치시</option>
+                        <option label="경기도" value="41">경기도</option>
+                        <option label="강원도" value="42">강원도</option>
+                        <option label="충청북도" value="43">충청북도</option>
+                        <option label="충청남도" value="44">충청남도</option>
+                        <option label="전라북도" value="45">전라북도</option>
+                        <option label="전라남도" value="46">전라남도</option>
+                        <option label="경상북도" value="47">경상북도</option>
+                        <option label="경상남도" value="48">경상남도</option>
+                        <option label="제주특별자치도" value="50">제주특별자치도</option>
+                    </select>
+                    <select id="select_area_city" class="select_area_box">
+                        <option value disabled class selected="selected">시/군/구 선택</option>
+                    </select>
+                    <select id="select_area_town" class="select_area_box">
+                        <option value disabled class selected="selected">읍/면/동 선택</option>
+                    </select>
+                    <select id="select_area_apart" class="select_area_box">
+                        <option value disabled class selected="selected">아파트 선택</option>
+                    </select>
+                    <select id="select_area_meter" class="select_area_box">
+                        <option value disabled class selected="selected">평방미터 선택</option>
+                    </select>
+                    <input type="image" onclick="SearchApartment()" src="images/zoom_2.png" style="vertical-align: middle; width: 30px; height: 30px;" onfocus="this.blur()"><br>
+                </div>
+                <div id="zipfund_search_button" style="height:30%; text-align: center;">
+            </section>
+            <section id="second_screen" class="box">
+                <div id="second_screen_first_line" style="padding-top:15%; height:10%; text-align: center;">
+                    <input type="image" style="height: 80%;" src="images/second_screen_first_line.png" disabled="true">
+                </div>
+                <div id="second_screen_second_line"style="height:10%; text-align:center;">
+                    <input type="image" style="height: 80%;" src="images/second_screen_second_line.png"disabled="true">
+                </div>
+                <div id="second_screen_third_line"style="height:10%; text-align:center;">
+                    <input type="image" style="height: 80%;" src="images/second_screen_third_line.png"disabled="true">
+                </div>
+                <div id="second_screen_fourth_line"style="height:10%; text-align:center;">
+                    <input type="image" style="height: 80%;" src="images/second_screen_fourth_line.png"disabled="true">
+                </div>
+                <div id="address_search_panel" style="margin-top: 25px; width: 100%; height: 30%; text-align: center;">
+                    <input type="text" id="sample_address" class="address_search" placeholder="찾고자 하는 지역의 '구', '동'을 입력하세요.">
+                    <input type="image" onclick="SearchAddress()" src="images/zoom_2.png" style="vertical-align: middle; width: 30px; height: 30px;" onfocus="this.blur()"><br>
+                    <h1 id="txt_address" style="font-size: 18px; font-weight: bold; font-style: italic; color: #007ac3;"> </h1>
+                </div>
+            </section>
+            <section id="item2" class="item" style="height:0%">
+            </section>
+        </main>
+        <script>
+            var geocoder = new daum.maps.services.Geocoder();
+            var coords, lf, tf, tfvp, tfvm, tfvd, aig, aia, aie, aid, coordX, coordY;
+            var windowObj;
+
+            var apt_name;
+            var price_Time;
+            var price_Buy;
+            var price_Rent;
+            var built_time;
+            var phoneNum;
+            /*마우스 스크롤로 페이지 이동*/
+            window.onload= function(){
+                $('.box').each(function (index){
+                    $(this).on("mousewheel DOMMouseScroll", function (e) {
+                        e.preventDefault();
+                        var delta = 0;
+                        if (!event) event = window.event;
+                        if (event.wheelDelta) {
+                            delta = event.wheelDelta / 120;
+                            if (window.opera) delta = -delta;
+                        } 
+                        else if (event.detail)
+                            delta = -event.detail / 3;
+                        var moveTop = $(window).scrollTop();
+                        var elmSelecter = $('.box').eq(index);
+                        // 마우스휠을 위에서 아래로
+                        if (delta < 0) {
+                            if ($(elmSelecter).next() != undefined) {
+                                try{
+                                    moveTop = $(elmSelecter).next().offset().top;
+                                }catch(e){}
+                            }
+                        // 마우스휠을 아래에서 위로
+                        } else {
+                            if ($(elmSelecter).prev() != undefined) {
+                                try{
+                                    moveTop = $(elmSelecter).prev().offset().top;
+                                }catch(e){}
+                            }
+                        }
+                        // 화면 이동 0.8초(800)
+                        $("html,body").stop().animate({
+                            scrollTop: moveTop + 'px'
+                        }, {
+                            duration: 300, complete: function () {
+                            }
+                        }); 
+                    })
+                })
+            }
+
+            $('#select_area_province').change(function(){
+                $.ajax({
+                    /*
+                    서울시로 바꾸고 
+                    */
+                    url: "http://admin.zipfund.co/api/address/city/" + $('#select_area_province').val(),
+                    contentType: "application/json",
+                    dataType: 'json',
+                    success: function(result){
+                        $('#select_area_city').empty();
+                        $('#select_area_city').append(`<option value disabled class selected="selected">시/군/구 선택</option>`);
+                        $('#select_area_town').empty();
+                        $('#select_area_town').append(`<option value disabled class selected="selected">읍/면/동 선택</option>`);
+                        $('#select_area_apart').empty();
+                        $('#select_area_apart').append(`<option value disabled class selected="selected">아파트 선택</option>`);
+                        $('#select_area_meter').empty();
+                        $('#select_area_meter').append(`<option value disabled class selected="selected">평방미터 선택</option>`);
+                        result.codes.map((value) => {
+                            var option = $(`<option value=${value.code}>` + value.name +"</option>");
+                            $('#select_area_city').append(option);
+                        })
+                    }
+                })
+            });
+            $('#select_area_city').change(function(){
+                $.ajax({
+                    /*
+                    서울시 XX구 (11215등이 들어옴) ~동을 받아올 차례
+                    */
+                    url: "http://admin.zipfund.co/api/address/district/" + $('#select_area_city').val(),
+                    contentType: "application/json",
+                    dataType: 'json',
+                    success: function(result){
+                        $('#select_area_town').empty();
+                        $('#select_area_town').append(`<option value disabled class selected="selected">읍/면/동 선택</option>`);
+                        $('#select_area_apart').empty();
+                        $('#select_area_apart').append(`<option value disabled class selected="selected">아파트 선택</option>`);
+                        $('#select_area_meter').empty();
+                        $('#select_area_meter').append(`<option value disabled class selected="selected">평방미터 선택</option>`);
+                        result.codes.map((value) => {
+                            var option = $(`<option value=${value.code}>` + value.name + "</option>");
+                            $('#select_area_town').append(option);
+                        })
+                    }
+                })
+            });
+            $('#select_area_town').change(function(){
+                $.ajax({
+                    url: "http://admin.zipfund.co/api/address/apartment/" + $('#select_area_town').val(),
+                    contentType: "application/json",
+                    dataType: 'json',
+                    success: function(result){
+                        $('#select_area_apart').empty();
+                        $('#select_area_apart').append(`<option value disabled class selected="selected">아파트 선택</option>`);
+                        $('#select_area_meter').empty();
+                        $('#select_area_meter').append(`<option value disabled class selected="selected">평방미터 선택</option>`);
+                        result.codes.map((value) => {
+                            var option = $(`<option value=${value.code}>` + value.name + "</option>");
+                            $('#select_area_apart').append(option);
+                        })
+                    }
+                })
+            });
+            $('#select_area_apart').change(function(){
+                $.ajax({
+                    url: "http://admin.zipfund.co/api/address/unit_type/" + $('#select_area_apart').val(),
+                    contentType: "application/json",
+                    dataType: 'json',
+                    success: function(result){
+                        $('#select_area_meter').empty();
+                        $('#select_area_meter').append(`<option value disabled class selected="selected">평방미터 선택</option>`);
+                        result.codes.map((value) => {
+                            var option = $(`<option value=${value.code}>` + value.name + "</option>");
+                            $('#select_area_meter').append(option);
+                        })
+                    }
+                })
+            });
+            function moveTop(){
+                var offset=$("#main_screen").offset();
+                $("html body").animate({scrollTop:offset.top}, 500);
+            }
+            function moveMine(){
+                var offset=$("#first_screen").offset();
+                $("html body").animate({scrollTop:offset.top}, 500);
+            }
+            function moveOthers(){
+                var offset=$("#second_screen").offset();
+                $("html body").animate({scrollTop:offset.top}, 500);
+            }
+            function SearchApartment(){
+                var value = $('#select_area_meter').val();
+                console.log(value);
+                $.ajax({
+                    url: "http://admin.zipfund.co/api/address/apartment_info/" + $('#select_area_meter').val(),
+                    contentType: "application/json",
+                    dataType: 'json',
+                    success: function(result){
+                        window.open("html/zipfund_first_page_assemble.html?info=" + value, '_self');
+                        console.log(result.map_info.x, result.map_info.y);
+                        apt_name = result.name;
+                        price_Time = result.kb_price_info.month;
+                        price_Buy = result.kb_price_info.price;
+                        price_Rent = result.kb_price_info.rent;
+                        built_time = result.built_year;
+                        phoneNum = result.office_phone;
+                    }
+                });
+            }
+            function viewInfoTable(){
+                $("#infoAPT_0").html(apt_Name);
+                $("#infoAPT_1").html(built_time);
+                $("#infoAPT_2").html(price_Time);
+                $("#infoAPT_3").html(price_Buy);
+                $("#infoAPT_4").html(price_Rent);
+                $("#infoAPT_5").html(phoneNum);
+            }
+            function SearchAddress(){
+                var addr = $("#sample_address").val();
+                geocoder.addressSearch(addr, function(results, status){
+                    if(status === kakao.maps.services.Status.OK){
+                        var coords = new kakao.maps.LatLng(results[0].y, results[0].x);
+                        coordY = results[0].y;
+                        coordX = results[0].x;
+                        $("#txt_address").html("<h>" + results[0].address_name + "</h>");
+                        $("#txt_address").text = results[0].address_name;
+                        $("#btnConfirm").attr('disabled', false);
+                        var offset=$("#item2").offset();
+                        $("html body").animate({scrollTop:offset.top},500);
+                        openChildWindow();
+                    }
+                    else{
+                        $("#txt_address").html("<h>" + "결과를 찾지 못했습니다" + "</h>");
+                        $("#btnConfirm").attr('disabled', true);
+                        $("#btnConfirm").fadeOut();
+                    }
+                });
+            }
+            function openChildWindow(){
+                window.open("html/zipnavi_first_page_assemble.html?x=" + coordX + "&y=" + coordY, '_self');
+            }
+        </script>
+    </body>
+    </html>
+</HTML:5>
