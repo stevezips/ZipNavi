@@ -17,7 +17,10 @@
         <style>
             @font-face {
                 font-family: 'myfont';
-                src: url('./font/myfont.ttf');
+                src: url('../font/myfont.ttf');
+            }
+            body{
+                font-family: 'myfont';
             }
             #kakao_map{
                 position: absolute;
@@ -42,6 +45,7 @@
             .apt-change-panel:hover{
                 opacity: 0.9;
                 height: 10%;
+                display: block;
             }
             .select_area_box {
                 margin: 15px 0px auto;
@@ -937,7 +941,7 @@
                 var kind = $("input:checkbox[id=check_child]").is(":checked")==true;
                 var dog = $("input:radio[name=dog_radio]:checked").val();
                 var active = $('#active_range_slider').val();
-                window.open("zipfund_second_page.html?x=" + x + "&y=" + y + "&age=" + age + "&gender=" + gender + "&old=" + old + 
+                window.open("zipfund_second_page_se.html?x=" + x + "&y=" + y + "&age=" + age + "&gender=" + gender + "&old=" + old + 
                 "&high=" + high + "&midd=" + midd + "&elem=" + elem + "&kind=" + kind + "&dog=" + dog + "&active=" + active + "&addr=" + addr_name +
                 "&apt=" + apt_name + "&priceTime=" + price_Time +"&priceBuy=" + price_Buy + "&priceRent=" + price_Rent + "&bltTime=" +built_time + "&phNum=" + phoneNum, '_self');
             }
