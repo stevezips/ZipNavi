@@ -17,7 +17,11 @@
         <style>
             @font-face {
                 font-family: 'myfont';
-                src: url('./font/myfont.ttf');
+                src: url('../font/myfont.ttf');
+            }
+            @font-face {
+                font-family: 'myfont2';
+                src: url('../font/myfont2.ttf');
             }
             #kakao_map{
                 position: absolute;
@@ -31,7 +35,7 @@
                 width: 50%;
                 height: 1%;
                 bottom: 0;
-                background: rgb(127,127,127);
+                background: rgb(127, 219, 239);
                 opacity: 0.1;
                 left: 25%;
                 z-index: 4;
@@ -46,7 +50,7 @@
             .select_area_box {
                 margin: 15px 0px auto;
                 font-family: 'myfont';
-                border: 1px solid #000000;
+                border: 1px solid white;
                 border-radius: 5px;
                 font-size: 19px;
                 height: 40px;
@@ -62,6 +66,7 @@
                 text-align: center;    
             }
             #filter_box{
+                font-family: 'myfont';
                 padding-top: 25px;
                 position: relative;
                 top: 50%;
@@ -69,8 +74,8 @@
                 z-index: 2;
                 width: 400px;
                 height: 800px;
-                background: #f5f2f2;
-                opacity: 0.2;
+                background: white;
+                opacity: 0.1;
                 margin-right: 50px;
                 float: right;
                 border-radius: 30px;
@@ -80,17 +85,18 @@
                 opacity: 0.9;
             }
             #address_name{
-                font-size: 36px; 
-                font-weight: 900;
-                font-family: 'myfont';
-                color: #007ac3;
-                text-shadow: 3px 5px 2px lightgray;
+                font-family: 'myfont2';
+                font-size: 28px; 
+                font-weight: 400;
+                color: white;
+                border-radius: 5px;
+                /* text-shadow: 3px 5px 2px lightgray; */
             }
             #apt_name{
                 font-size: 30px; 
                 font-weight: 900;
                 font-family: 'myfont';
-                color: rgb(127,127,127);
+                color: rgb(12,191,236);
             }
             /* 여기부터 건드림 */
             .wrap {
@@ -103,8 +109,10 @@
                 text-align: center;
                 overflow: hidden;
                 font-size: 12px;
-                font-family: 'Malgun Gothic', dotum, '돋움', sans-serif;
+                font-family: 'myfont2';
+                font-weight: lighter;
                 line-height: 1.5;
+                border-radius: 10px;
             }
             .wrap * {
                 padding: 0;
@@ -117,7 +125,7 @@
                 border-bottom: 2px solid #ccc;
                 border-right: 1px solid #ccc;
                 overflow: hidden;
-                background: rgb(127,127,127);
+                background: rgb(12,191,236);
             }
             .wrap .info:nth-child(1) {
                 border: 0;
@@ -125,26 +133,29 @@
             }
             .info .title {
                 /* padding: 5px 0 0 10px; */
+                font-family: 'myfont2';
                 height: 30px;
-                background: #eee;
-                border-bottom: 1px solid #ddd;
+                background: white;
+                border-bottom: 1px solid white;
                 font-size: 18px;
                 font-weight: bold;
+                color : rgb(12,191,236);
             }
             .info .close {
                 position: absolute;
                 top: 10px;
                 right: 10px;
-                color: #888;
-                width: 17px;
-                height: 17px;
+                width: 16px;
+                height: 16px;
                 background: url('http://t1.daumcdn.net/localimg/localimages/07/mapapidoc/overlay_close.png');
             }
             .info .close:hover {
                 cursor: pointer;
             }
             .info .body {
-                background:rgb(127,127,127);
+                font-family: 'myfont2';
+                font-weight: lighter;
+                background:rgb(12,191,236);
                 position: relative;
                 overflow: hidden;
             }
@@ -156,12 +167,14 @@
                 margin: 13px 0 0 90px;
             } */
             .info .body .content1 {
-                font-size : 12px;
-                background : rgb(127,127,127);
+                font-size : 14px;
+                background : rgb(12,191,236);
                 overflow: hidden;
                 text-overflow: ellipsis;
                 white-space: nowrap;
                 text-align : center;
+                opacity: 0.9;
+                font-weight: lighter;
             }
             /* .info .img {
                 position: absolute;
@@ -175,7 +188,7 @@
             } */
             /* 사각형과 마커 잇는 삼각형 */
             .info:after {
-                background:rgb(127,127,127);
+                background:rgb(12,191,236);
                 content: '';
                 position: absolute;
                 margin-left: -12px;
@@ -198,7 +211,7 @@
                 margin-right: 20px;
             }
             .rangeslider__fill {
-                background: lightslategray;
+                background: rgb(12,191,236);
                 position: absolute;
             }
             .rangeslider__handle {
@@ -224,12 +237,11 @@
             }
             a.button {
                 color: rgba(255, 255, 255, 0.85);
-                box-shadow: white 0 0px 0px 2px inset;
+                box-shadow: rgb(12,191,236) 0 0px 0px 2px inset;
             }
             a.button:hover {
                 color: rgba(255, 255, 255, 0.85);
-                box-shadow: black 0 0px 0px 40px inset;
-                font-display: white;
+                box-shadow: rgb(12,191,236) 0 0px 0px 40px inset;
             }
             .checks {position: relative;}
             .checks input[type="checkbox"] {  /* 실제 체크박스는 화면에서 숨김 */
@@ -434,15 +446,35 @@
                 width : 120px;
                 height: 20px;
                 display: block;
-                background: lightgray;
-                color: #444;
+                background: white;
+                color: rgb(12,191,236);
                 border-radius: 5px;
                 padding: 10px 20px;
-                border: none;
+                border-style: solid;
+                border-color: rgb(12, 191, 236);
                 margin-bottom: 5px;
                 cursor: pointer;
             }
-            .radiobtn span:after, .radiobtn span:before {
+            .radiobtn input[type="radio"] {
+                display: none;
+                position: absolute;
+                width: 100%;
+                appearance: none;
+            }
+            .radiobtn input[type="radio"]:checked + span {
+                background: rgb(12,191,236);
+                animation-name: blink;
+                animation-duration: 1s;
+            }
+            .radiobtn input[type="radio"]:checked + span:after {
+                background:white;
+            }
+            .radiobtn input[type="radio"]:checked + span:before {
+                width: 20px;
+                height: 20px;
+            }
+            /* 버튼 내의 네모박스였는데 없앰 */
+            /* .radiobtn span:after, .radiobtn span:before {
                 content: "";
                 position: absolute;
                 right: 20px;
@@ -450,7 +482,7 @@
                 width: 20px;
                 height: 20px;
                 border-radius: 3px;
-                background: #4d4d4d;
+                background: rgb(12,191,236);
             }
             .radiobtn span:before {
                 background: transparent;
@@ -463,30 +495,11 @@
                 width: 0;
                 height: 0;
                 background-image: url("/checking.png");
-            }
-            .radiobtn input[type="radio"] {
-                display: none;
-                position: absolute;
-                width: 100%;
-                appearance: none;
-            }
-            .radiobtn input[type="radio"]:checked + span {
-                background: #4d4d4d;
-                animation-name: blink;
-                animation-duration: 1s;
-                border-color: #4d4d4d;
-            }
-            .radiobtn input[type="radio"]:checked + span:after {
-                background: #4d4d4d;
-            }
-            .radiobtn input[type="radio"]:checked + span:before {
-                width: 20px;
-                height: 20px;
-            }
+            } */
         </style>
         <img src="../images/project_logo.png" style="height: 10%; position: fixed; z-index: 3;">
-        <div id="address_search_panel" style="position: fixed; margin-top: 30px; width: 100%; text-align: center; z-index: 3;">
-            <h id="address_name"></h>
+        <div id="address_search_panel" style="position: fixed; margin-top: 100px; margin-left : 20px; width: 100%; text-align: left; z-index: 3; ">
+            <h id="address_name" style=" color : white; background-color: rgb(12,191,236); background-color: rgb(12,191,236); text-align: center;"></h>
         </div>
         <div class="dim-layer" style="display: block"></div> 
         <div class="loading-container">
@@ -530,36 +543,36 @@
         </div>
         <div id="wrapper">
             <div id="kakao_map" class="map_div"></div>
-            <div id="filter_box">
-                <h id="apt_name">아파트 이름</h>
+            <div id="filter_box" style="font-style : 'myfont';">
+                <h id="apt_name" style="font-family: myfont2;">아파트 이름</h>
                 <div style="margin-top: 50px; text-align: left; margin-left : 20px">
-                    <h style="color: black; font-weight: bold; font-size: 20px;">연령</h><br>
+                    <h style="color: rgb(12,191,236); font-weight: bold; font-size: 20px;">연령</h><br>
                 </div>
                 <div style="display: flex; margin-top: 10px;">
                     <input id="age_range_slider" type="range" min="20" max="60" step="10" value="20">
-                    <h id="age_show" style="color: black; font-weight: bold;">20대</h>
+                    <h id="age_show" style="color: rgb(12,191,236); font-weight: bold; ">20대</h>
                 </div>
                 <div style="margin-top: 25px; text-align: left; margin-left : 20px">
-                    <h style="color: black; font-weight: bold; font-size: 20px; ">성별</h><br>
+                    <h style="color: rgb(12,191,236); font-weight: bold; font-size: 20px; ">성별</h><br>
                 </div>
-                <div class = "radiobtn" style="display: flex; justify-content: center;">
+                <div class = "radiobtn" style="display: flex; justify-content: center; ">
                     <label class="radiobtn" >
                         <input type="radio" name="gender_radio" id="male_button" value="male" checked>
-                        <span style="color:rgb(127,127,127); margin-right: 10px;">남성</span>
+                        <span style="color:black; margin-right: 10px;" id="male_checked">남성</span>
                     </label>
 
                     <label class="radiobtn">
                         <input type="radio" name="gender_radio" id="female_button" value="female">
-                        <span style="color:rgb(127,127,127); margin-right: 10px;">여성</span>
+                        <span style="color:rgb(127,127,127); margin-right: 10px; " id = "female_checked">여성</span>
                     </label>
                 </div>
                 <div style="margin-top: 25px; text-align: left; margin-left : 20px">
-                    <h style="color: black; font-weight: bold; font-size: 20px;">노인</h><br>
+                    <h style="color: rgb(12,191,236); font-weight: bold; font-size: 20px;">노인</h><br>
                 </div>
                 <div class = "radiobtn" style="display: flex; justify-content: center;">
                     <label class="radiobtn" >
                         <input type="radio" name="old_radio" id="old_yes" value="yes" checked>
-                        <span style="color:rgb(127,127,127); margin-right: 10px;">있음</span>
+                        <span style="color:white; margin-right: 10px;">있음</span>
                     </label>
 
                     <label class="radiobtn">
@@ -567,28 +580,28 @@
                         <span style="color:rgb(127,127,127); margin-right: 10px;">없음</span>
                     </label>
                 </div>
-                <div style="margin-top: 25px; text-align: left; margin-left : 20px">
-                    <h style="color: black; font-weight: bold; font-size: 20px;">아이</h><br>
+                <div style="margin-top: 25px; text-align: left; margin-left : 20px;">
+                    <h style="color: rgb(12,191,236); font-weight: bold; font-size: 20px;">아이</h><br>
                 </div>
-                <div style="display: flex; justify-content: center;">
+                <div style="display: flex; justify-content: center; ">
                     <div class="checks etrans" style="margin-top: 10px;">
                         <input type="checkbox" id="check_high"> 
-                        <label for="check_high" style="color: black; font-weight: bold;">고등학생</label> 
+                        <label for="check_high" style="color: rgb(12,191,236); font-weight: bold; margin-right : 10px;">고등학생</label> 
                         <input type="checkbox" id="check_middle"> 
-                        <label for="check_middle" style="color: black; font-weight: bold;">중학생</label>
+                        <label for="check_middle" style="color: rgb(12,191,236); font-weight: bold; margin-right : 10px;">중학생</label>
                         <input type="checkbox" id="check_elementary"> 
-                        <label for="check_elementary" style="color: black; font-weight: bold;">초등학생</label>
+                        <label for="check_elementary" style="color: rgb(12,191,236); font-weight: bold; margin-right : 10px;">초등학생</label>
                         <input type="checkbox" id="check_child"> 
-                        <label for="check_child" style="color: black; font-weight: bold;">유아</label>
+                        <label for="check_child" style="color: rgb(12,191,236); font-weight: bold; margin-right : 10px;">유아</label>
                     </div>
                 </div>
                 <div style="margin-top: 25px ;text-align: left; margin-left : 20px;">
-                    <h style="color: rgb(127,127,127)black; font-weight: bold; font-size: 20px;">반려동물</h><br>
+                    <h style="color: rgb(12,191,236); font-weight: bold; font-size: 20px;">반려동물</h><br>
                 </div>
                 <div class = "radiobtn" style="display: flex; justify-content: center;">
                     <label class="radiobtn" >
                         <input type="radio" name="dog_radio" id="dog_yes" value="yes" checked>
-                        <span style="color:rgb(127,127,127); margin-right: 10px;">있음</span>
+                        <span style="color:white; margin-right: 10px;">있음</span>
                     </label>
 
                     <label class="radiobtn">
@@ -597,14 +610,14 @@
                     </label>
                 </div>
                 <div style="margin-top: 25px; text-align: left; margin-left : 20px">
-                    <h style="color: black; font-weight: bold; font-size: 20px;">활동 반경</h><br>
+                    <h style="color: rgb(12,191,236); font-weight: bold; font-size: 20px;">활동 반경</h><br>
                 </div>
                 <div style="display: flex; margin-top: 10px;">
                     <input id="active_range_slider" type="range" min="0.5" max="3" step="0.5" value="1">
-                    <h id="active_show" style="color: black; font-weight: bold;">1km</h>
+                    <h id="active_show" style="color: rgb(12,191,236); font-weight: bold;">1km</h>
                 </div>
                 <div>
-                    <a href="#" class="button" style="color: rgb(127,127,127); font-size: 20px; font-weight:bold;"onclick="searchMyArea()">검색해보기</a>
+                    <a href="#" class="button" style="color: rgb(243, 219, 219); font-size: 20px; font-weight:bold; font-family: myfont2;"onclick="searchMyArea()">검 색 해 보 기</a>
                 </div>
             </div>
         </div>
@@ -628,7 +641,7 @@
             var built_time;
             var phoneNum;
             var main_marker;
-            var main_marker_src = '../images/main_marker.png';
+            var main_marker_src = '../images/main_marker_modified.png';
             var main_marker_size = new kakao.maps.Size(100,100);
             var main_marker_option = {offset: new kakao.maps.LatLng(80, 50)};   //80, 50 으로 했더니 가장 적절한 위치에 위치함
             var main_marker_image = new kakao.maps.MarkerImage(main_marker_src, main_marker_size, main_marker_option);
@@ -754,7 +767,7 @@
                                     '        <div class="title">' + 
                                     apt_name + 
                                     '            <div class="close" onclick="closeOverlay()" title="닫기"></div>' + 
-                                    '        <div class="body">' +
+                                    '        <div class="body">' + 
                                     '            <div class="content1" style = "color : white;"> 완공시기: ' + built_time + '</div>' + 
                                     '            <div class="content1" style = "color : white;"> 시세기준시기: ' + price_Time + '</div>' + 
                                     '            <div class="content1" style = "color : white;"> 매매가: ' + price_Buy + '</div>' + 
@@ -781,7 +794,7 @@
                             strokeOpacity: 1, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
                             strokeStyle: 'dashed', // 선의 스타일 입니다
                             fillColor: '#CFE7FF', // 채우기 색깔입니다
-                            fillOpacity: 0.7  // 채우기 불투명도 입니다   
+                            fillOpacity: 0.1  // 채우기 불투명도 입니다   
                             });
                             circle.setMap(map);
                             map.panTo(new kakao.maps.LatLng(y,x));
