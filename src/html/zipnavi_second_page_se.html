@@ -5,7 +5,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <title>ZipFund Second Page</title>
+        <title>ZipNavi Second Page</title>
         <link href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" rel="stylesheet" type="text/css"/>
         <script src="../js/jquery.js"></script>
     </head>
@@ -610,7 +610,7 @@
                         <table id="crawl_table" cellspacing="0">
                             <tr style="width: 5%; text-align: center;">
                                 <th style="width: 10%;"></th>
-                                <th>아파트 관련 기사 목록</th>
+                                <th>동네 관련 기사 목록</th>
                             </tr>
                             <tr style="width: 10%; text-align: center;">
                             </tr>
@@ -696,7 +696,7 @@
             // // 마커 위에 인포윈도우를 표시합니다. 두번째 파라미터인 marker를 넣어주지 않으면 지도 위에 표시됩니다
             // aptInfo.open(map, marker); 
             circle.setMap(map);
-            $("#txt_address").html("<h>" + apt_Name + "</h>");
+            $("#txt_address").html("<h>" + address_name + "</h>");
             function category(){
                 return {
                     place_name_1: "",
@@ -714,7 +714,7 @@
             var article_img_alt = [];
             var article_url = [];
             $.ajax({
-                    url: "http://13.209.97.253:3000/api/crawl_news/" + apt_Name,
+                    url: "http://13.209.97.253:3000/api/crawl_news/" + address_name,
                     contentType: "application/json",
                     dataType: 'json',
                     success: function(result){
@@ -1066,7 +1066,7 @@
                         article_img_alt[i] = "이미지가 없습니다!";
                     }
                     $("#crawl_table").append("<tr><td>" + "<image height=55px src=" + article_img_src[i] + " title=" + article_img_alt[i] + "/>" + "</td><td>" 
-                        + "<a style='font-size: 25px; font-weight: 700; color: black; text-decoration: none;' href=" + article_url[i] + ">" + article_title[i] + "</a>" + "</td></tr>");
+                        + "<a style='font-size: 20px; font-weight: 700; color: black; text-decoration: none;' href=" + article_url[i] + ">" + article_title[i] + "</a>" + "</td></tr>");
                 });
                 $('#crawl_table tr')
             }

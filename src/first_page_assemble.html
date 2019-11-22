@@ -18,6 +18,9 @@
                 font-family: 'myfont2';
                 src: url('./font/myfont2.ttf');
             }
+            body{
+                font-family: 'myfont';
+            }
             .proj-text{
                 width: 50%;
                 border: none;
@@ -117,6 +120,11 @@
             .address_search:focus {
                 outline: none;
             }
+            .txt_description{
+                color: rgb(9, 188, 233);
+                font-size: 35px;
+                font-weight: 800;
+            }
         </style>
         <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
         <script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=fb926e363d9a87e9712ed240cb75a7b0&libraries=services"></script>
@@ -145,17 +153,21 @@
                 <div style="height: 20%;"></div>
             </section>
             <section id="first_screen" class="box">
-                <div id="first_screen_first_line" style="padding-top:15%; height:10%; text-align: center;">
-                    <input type="image" style="height: 80%;" src="images/first_screen_first_line.png" disabled="true">
+                <div id="first_screen_first_line" style="padding-top: 15%; height:10%; text-align: center;">
+                    <h1 class="txt_description">여러분의 집 생활 환경이 궁금하세요?</h1>
+                    <!-- <input type="image" style="height: 80%;" src="images/first_screen_first_line_1.png" disabled="true"> -->
                 </div>
                 <div id="first_screen_second_line"style="height:10%; text-align:center;">
-                    <input type="image" style="height: 80%;" src="images/first_screen_second_line.png"disabled="true">
+                    <h1 class="txt_description">지금부터 집네비가 안내해드릴게요!!</h1>
+                    <!-- <input type="image" style="height: 80%;" src="images/first_screen_second_line.png"disabled="true"> -->
                 </div>
                 <div id="first_screen_third_line"style="height:10%; text-align:center;">
-                    <input type="image" style="height: 80%;" src="images/first_screen_third_line.png"disabled="true">
+                    <h1 class="txt_description">시, 구, 동, 아파트, 평방미터</h1>
+                    <!-- <input type="image" style="height: 80%;" src="images/first_screen_third_line.png"disabled="true"> -->
                 </div>
                 <div id="first_screen_fourth_line"style="height:10%; text-align:center;">
-                    <input type="image" style="height: 80%;" src="images/first_screen_fourth_line.png"disabled="true">
+                    <h1 class="txt_description">순서대로 조회해주시면 된답니다!</h1>
+                    <!-- <input type="image" style="height: 80%;" src="images/first_screen_fourth_line.png"disabled="true"> -->
                 </div>
                 <div id="zipfund_search_area" style="height: 20%; text-align: center;"> 
                     <select id="select_area_province" class="select_area_box">
@@ -190,7 +202,7 @@
                     <select id="select_area_meter" class="select_area_box">
                         <option value disabled class selected="selected">평방미터 선택</option>
                     </select>
-                    <input type="image" onclick="SearchApartment()" src="images/zoom_2.png" style="vertical-align: middle; width: 30px; height: 30px;" onfocus="this.blur()"><br>
+                    <input type="image" onclick="SearchApartment()" src="images/zoom_3.png" style="vertical-align: middle; width: 30px; height: 30px;" onfocus="this.blur()"><br>
                 </div>
                 <div id="zipfund_search_button" style="height:30%; text-align: center;">
             </section>
@@ -209,8 +221,8 @@
                 </div>
                 <div id="address_search_panel" style="margin-top: 25px; width: 100%; height: 30%; text-align: center;">
                     <input type="text" id="sample_address" class="address_search" placeholder="찾고자 하는 지역의 '구', '동'을 입력하세요.">
-                    <input type="image" onclick="SearchAddress()" src="images/zoom_2.png" style="vertical-align: middle; width: 30px; height: 30px;" onfocus="this.blur()"><br>
-                    <h1 id="txt_address" style="font-size: 18px; font-weight: bold; font-style: italic; color: #007ac3;"> </h1>
+                    <input type="image" onclick="SearchAddress()" src="images/zoom_3.png" style="vertical-align: middle; width: 30px; height: 30px;" onfocus="this.blur()"><br>
+                    <h1 id="txt_address" style="font-size: 18px; font-weight: bold; font-style: italic; color: rgb(9, 188, 233);"> </h1>
                 </div>
             </section>
             <section id="item2" class="item" style="height:0%">
