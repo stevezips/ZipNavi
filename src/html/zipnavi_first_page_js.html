@@ -418,7 +418,7 @@
                 </div>
                 <div style="display: flex; justify-content: center;">
                     <label class="radio">
-                        <input type="radio" name="gender_radio" id="male_button" value="male" checked>
+                        <input type="radio" name="gender_radio" id="male_button" onchange="changeListen()"value="male" checked>
                         <span style="color:white; margin-right: 20px;">남성</span>
                     </label>
                     <label class="radio">
@@ -515,6 +515,8 @@
             //     position: new kakao.maps.LatLng(y, x),
             //     draggable: true
             // });
+            
+            
 
             kakao.maps.event.addListener(this.main_marker, 'dragend', function(){
                 var Lng = main_marker.getPosition().getLng();
@@ -602,7 +604,9 @@
                 this.main_marker.setMap(map);
                 searchAddrFromCoords(new kakao.maps.LatLng(y,x), displayCenterInfo);
                 }, 500);
-                
+                $('#male_button').addEventListener('hover', function(){
+                    console.log("!@#!@#");
+                })
             };  
             
             function _GET(search){

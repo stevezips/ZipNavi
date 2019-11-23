@@ -24,6 +24,10 @@
                 font-family: 'myfont';
                 src: url('../font/myfont.ttf');
             }
+            @font-face {
+                font-family: 'myfont2';
+                src: url('../font/myfont2.ttf');
+            }
             body{
                 font-family: 'myfont'
             }
@@ -45,7 +49,7 @@
                 position: absolute;
                 font-size: 50px; 
                 font-weight: bold;
-                font-family: 'myfont';
+                font-family: 'myfont2';
                 color: rgb(9, 188, 233);
                 margin-top: 20px;
                 margin-left: -500px;
@@ -196,7 +200,7 @@
                 color: #669;
                 padding: 10px;
                 border-bottom: 1px solid #ddd;
-                transition: background 200ms;
+                transition: background 300ms;
             }
             #crawl_table tbody:hover tr:hover td{
                 background: rgb(127, 219, 239);
@@ -610,7 +614,7 @@
                         <table id="crawl_table" cellspacing="0">
                             <tr style="width: 5%; text-align: center;">
                                 <th style="width: 10%;"></th>
-                                <th>동네 관련 기사 목록</th>
+                                <th style="font-family: 'myfont2';">동네 관련 기사 목록</th>
                             </tr>
                             <tr style="width: 10%; text-align: center;">
                             </tr>
@@ -1063,7 +1067,7 @@
                 article_title.forEach((v,i) => {
                     if(article_img_src[i] === null){
                         article_img_src[i] = "https://www.cchannel.com/images/noimg.gif";
-                        article_img_alt[i] = "이미지가 없습니다!";
+                        article_img_alt[i] = "이미지가없습니다!";
                     }
                     $("#crawl_table").append("<tr><td>" + "<image height=55px src=" + article_img_src[i] + " title=" + article_img_alt[i] + "/>" + "</td><td>" 
                         + "<a style='font-size: 20px; font-weight: 700; color: black; text-decoration: none;' href=" + article_url[i] + ">" + article_title[i] + "</a>" + "</td></tr>");

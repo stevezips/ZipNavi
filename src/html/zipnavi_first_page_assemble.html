@@ -28,13 +28,16 @@
                 font-size: 15px;
                 font-weight: bold;
                 border: none;
-                background: white;
+                background: #f5f2f2;
                 border-radius: 12px;
                 text-align: left; 
                 padding-left: 10px; 
                 margin-right: 10px;
                 vertical-align: middle; 
                 width: 300px; height: 50px;
+            }
+            .address_search:focus {
+                outline: none
             }
             #txt_address{
                 font-family: 'myfont2';
@@ -111,11 +114,15 @@
                 padding: 20px 30px;
             }
             a.button {
-                color: rgba(255, 255, 255, 0.85);
+                color: rgb(127,127,127);
+                font-size: 20px; 
+                font-weight: bold; 
+                font-family: 'myfont2'; 
+                margin-top : 20px;
                 box-shadow: rgb(12,191,236) 0 0px 0px 2px inset;
             }
             a.button:hover {
-                color: rgba(255, 255, 255, 0.85);
+                color: white;
                 box-shadow: rgb(12,191,236) 0 0px 0px 40px inset;
             }
             .checks {position: relative;}
@@ -384,7 +391,7 @@
             <div id="kakao_map" class="map_div"></div>
             <div id="filter_box">
                 <input type="text" id="sample_address" class="address_search" placeholder="찾고자 하는 지역의 '구', '동'을 입력하세요." >
-                <input type="image" onclick="SearchAddress()" src="../images/zoom_2.png" style="vertical-align: middle; width: 30px; height: 30px;" onfocus="this.blur()"><br>
+                <input type="image" onclick="SearchAddress()" src="../images/zoom_3.png" style="vertical-align: middle; width: 30px; height: 30px;" onfocus="this.blur()"><br>
                 <div style="margin-top: 50px; text-align: left; margin-left : 20px">
                     <h style="color: rgb(12,191,236); font-weight: bold; font-size: 20px;">연령</h><br>
                 </div>
@@ -398,7 +405,7 @@
                 <div class = "radiobtn" style="display: flex; justify-content: center; ">
                     <label class="radiobtn" >
                         <input type="radio" name="gender_radio" id="male_button" value="male" checked>
-                        <span style="color:black; margin-right: 10px;" id="male_checked">남성</span>
+                        <span style="color:white; margin-right: 10px;" id="male_checked">남성</span>
                     </label>
 
                     <label class="radiobtn">
@@ -412,12 +419,12 @@
                 <div class = "radiobtn" style="display: flex; justify-content: center;">
                     <label class="radiobtn" >
                         <input type="radio" name="old_radio" id="old_yes" value="yes" checked>
-                        <span style="color:white; margin-right: 10px;">있음</span>
+                        <span style="color:white; margin-right: 10px;" id="old_checked_yes">있음</span>
                     </label>
 
                     <label class="radiobtn">
-                        <input type="radio" name="old_radio" id="old_radio" value="no">
-                        <span style="color:rgb(127,127,127); margin-right: 10px;">없음</span>
+                        <input type="radio" name="old_radio" id="old_no" value="no">
+                        <span style="color:rgb(127,127,127); margin-right: 10px;" id="old_checked_no">없음</span>
                     </label>
                 </div>
                 <div style="margin-top: 25px; text-align: left; margin-left : 20px;">
@@ -441,12 +448,12 @@
                 <div class = "radiobtn" style="display: flex; justify-content: center;">
                     <label class="radiobtn" >
                         <input type="radio" name="dog_radio" id="dog_yes" value="yes" checked>
-                        <span style="color:white; margin-right: 10px;">있음</span>
+                        <span style="color:white; margin-right: 10px;" id="dog_checked_yes">있음</span>
                     </label>
 
                     <label class="radiobtn">
                         <input type="radio" name="dog_radio" id="dog_no" value="no">
-                        <span style="color:rgb(127,127,127); margin-right: 10px;">없음</span>
+                        <span style="color:rgb(127,127,127); margin-right: 10px;" id="dog_checked_no">없음</span>
                     </label>
                 </div>
                 <div style="margin-top: 25px; text-align: left; margin-left : 20px">
@@ -457,7 +464,7 @@
                     <h id="active_show" style="color: rgb(12,191,236); font-weight: bold;">1km</h>
                 </div>
                 <div>
-                    <a href="#" class="button" style="color: rgb(243, 219, 219); font-size: 20px; font-weight:bold; font-family: myfont2; margin-top : 20px;"onclick="searchMyArea()">검 색 해 보 기</a>
+                    <a href="#" class="button" onclick="searchMyArea()">검 색 해 보 기</a>
                 </div>
             </div>
         </div>
@@ -584,7 +591,30 @@
                 this.main_marker.setMap(map);
                 searchAddrFromCoords(new kakao.maps.LatLng(y,x), displayCenterInfo);
                 }, 500);
-                
+                $('#male_button').on('click', function(){
+                    document.getElementById('female_checked').style.color= 'rgb(127,127,127)';
+                    document.getElementById('male_checked').style.color = 'white';
+                });
+                $('#female_button').on('click', function(){
+                    document.getElementById('male_checked').style.color= 'rgb(127,127,127)';
+                    document.getElementById('female_checked').style.color = 'white';
+                });
+                $('#old_yes').on('click',function(){
+                    document.getElementById('old_checked_no').style.color= 'rgb(127,127,127)';
+                    document.getElementById('old_checked_yes').style.color = 'white';
+                });
+                $('#old_no').on('click',function(){
+                    document.getElementById('old_checked_yes').style.color= 'rgb(127,127,127)';
+                    document.getElementById('old_checked_no').style.color = 'white';
+                });
+                $('#dog_yes').on('click',function(){
+                    document.getElementById('dog_checked_no').style.color= 'rgb(127,127,127)';
+                    document.getElementById('dog_checked_yes').style.color = 'white';
+                });
+                $('#dog_no').on('click',function(){
+                    document.getElementById('dog_checked_yes').style.color= 'rgb(127,127,127)';
+                    document.getElementById('dog_checked_no').style.color = 'white';
+                });
             };  
             
             function _GET(search){
@@ -663,7 +693,7 @@
                 var active = $('#active_range_slider').val();
                 var addr = $('#txt_address').val();
                 //console.log(x, y, age, gender, old, high, midd, elem, kind, dog, active);
-                window.open("zipnavi_second_page.html?x=" + x + "&y=" + y + "&age=" + age + "&gender=" + gender + "&old=" + old + 
+                window.open("zipnavi_second_page_se.html?x=" + x + "&y=" + y + "&age=" + age + "&gender=" + gender + "&old=" + old + 
                 "&high=" + high + "&midd=" + midd + "&elem=" + elem + "&kind=" + kind + "&dog=" + dog + "&active=" + active + "&addr=" + address_name, '_self');
             }
             

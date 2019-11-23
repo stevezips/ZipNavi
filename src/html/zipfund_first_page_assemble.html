@@ -236,11 +236,15 @@
                 padding: 20px 30px;
             }
             a.button {
-                color: rgba(255, 255, 255, 0.85);
+                color: rgb(127,127,127);
+                font-size: 20px; 
+                font-weight: bold; 
+                font-family: 'myfont2'; 
+                margin-top : 20px;
                 box-shadow: rgb(12,191,236) 0 0px 0px 2px inset;
             }
             a.button:hover {
-                color: rgba(255, 255, 255, 0.85);
+                color: white;
                 box-shadow: rgb(12,191,236) 0 0px 0px 40px inset;
             }
             .checks {position: relative;}
@@ -539,7 +543,7 @@
                 <select id="select_area_meter" class="select_area_box">
                     <option value disabled class selected="selected">평방미터 선택</option>
                 </select>
-                <input type="image" onclick="SearchApartment()" src="../images/zoom_2.png" style="vertical-align: middle; width: 30px; height: 30px;" onfocus="this.blur()"><br>
+                <input type="image" onclick="SearchApartment()" src="../images/zoom_3.png" style="vertical-align: middle; width: 30px; height: 30px;" onfocus="this.blur()"><br>
         </div>
         <div id="wrapper">
             <div id="kakao_map" class="map_div"></div>
@@ -558,7 +562,7 @@
                 <div class = "radiobtn" style="display: flex; justify-content: center; ">
                     <label class="radiobtn" >
                         <input type="radio" name="gender_radio" id="male_button" value="male" checked>
-                        <span style="color:black; margin-right: 10px;" id="male_checked">남성</span>
+                        <span style="color:white; margin-right: 10px;" id="male_checked">남성</span>
                     </label>
 
                     <label class="radiobtn">
@@ -572,12 +576,12 @@
                 <div class = "radiobtn" style="display: flex; justify-content: center;">
                     <label class="radiobtn" >
                         <input type="radio" name="old_radio" id="old_yes" value="yes" checked>
-                        <span style="color:white; margin-right: 10px;">있음</span>
+                        <span style="color:white; margin-right: 10px;" id="old_checked_yes">있음</span>
                     </label>
 
                     <label class="radiobtn">
-                        <input type="radio" name="old_radio" id="old_radio" value="no">
-                        <span style="color:rgb(127,127,127); margin-right: 10px;">없음</span>
+                        <input type="radio" name="old_radio" id="old_no" value="no">
+                        <span style="color:rgb(127,127,127); margin-right: 10px;" id="old_checked_no">없음</span>
                     </label>
                 </div>
                 <div style="margin-top: 25px; text-align: left; margin-left : 20px;">
@@ -601,12 +605,12 @@
                 <div class = "radiobtn" style="display: flex; justify-content: center;">
                     <label class="radiobtn" >
                         <input type="radio" name="dog_radio" id="dog_yes" value="yes" checked>
-                        <span style="color:white; margin-right: 10px;">있음</span>
+                        <span style="color:white; margin-right: 10px;" id="dog_checked_yes">있음</span>
                     </label>
 
                     <label class="radiobtn">
                         <input type="radio" name="dog_radio" id="dog_no" value="no">
-                        <span style="color:rgb(127,127,127); margin-right: 10px;">없음</span>
+                        <span style="color:rgb(127,127,127); margin-right: 10px;" id="dog_checked_no">없음</span>
                     </label>
                 </div>
                 <div style="margin-top: 25px; text-align: left; margin-left : 20px">
@@ -617,7 +621,7 @@
                     <h id="active_show" style="color: rgb(12,191,236); font-weight: bold;">1km</h>
                 </div>
                 <div>
-                    <a href="#" class="button" style="color: rgb(243, 219, 219); font-size: 20px; font-weight:bold; font-family: myfont2;"onclick="searchMyArea()">검 색 해 보 기</a>
+                    <a href="#" class="button" onclick="searchMyArea()">검 색 해 보 기</a>
                 </div>
             </div>
         </div>
@@ -931,6 +935,30 @@
                     $('.loading-container').hide();
                     $('.dim-layer').hide();
                 }, 500);
+                $('#male_button').on('click', function(){
+                    document.getElementById('female_checked').style.color= 'rgb(127,127,127)';
+                    document.getElementById('male_checked').style.color = 'white';
+                });
+                $('#female_button').on('click', function(){
+                    document.getElementById('male_checked').style.color= 'rgb(127,127,127)';
+                    document.getElementById('female_checked').style.color = 'white';
+                });
+                $('#old_yes').on('click',function(){
+                    document.getElementById('old_checked_no').style.color= 'rgb(127,127,127)';
+                    document.getElementById('old_checked_yes').style.color = 'white';
+                });
+                $('#old_no').on('click',function(){
+                    document.getElementById('old_checked_yes').style.color= 'rgb(127,127,127)';
+                    document.getElementById('old_checked_no').style.color = 'white';
+                });
+                $('#dog_yes').on('click',function(){
+                    document.getElementById('dog_checked_no').style.color= 'rgb(127,127,127)';
+                    document.getElementById('dog_checked_yes').style.color = 'white';
+                });
+                $('#dog_no').on('click',function(){
+                    document.getElementById('dog_checked_yes').style.color= 'rgb(127,127,127)';
+                    document.getElementById('dog_checked_no').style.color = 'white';
+                });
             };
             function panTo() {
                 var moveLatLon = new kakao.maps.LatLng(y, x);
@@ -946,7 +974,7 @@
                 var kind = $("input:checkbox[id=check_child]").is(":checked")==true;
                 var dog = $("input:radio[name=dog_radio]:checked").val();
                 var active = $('#active_range_slider').val();
-                window.open("zipfund_second_page.html?x=" + x + "&y=" + y + "&age=" + age + "&gender=" + gender + "&old=" + old + 
+                window.open("zipfund_second_page_se.html?x=" + x + "&y=" + y + "&age=" + age + "&gender=" + gender + "&old=" + old + 
                 "&high=" + high + "&midd=" + midd + "&elem=" + elem + "&kind=" + kind + "&dog=" + dog + "&active=" + active + "&addr=" + addr_name +
                 "&apt=" + apt_name + "&priceTime=" + price_Time +"&priceBuy=" + price_Buy + "&priceRent=" + price_Rent + "&bltTime=" +built_time + "&phNum=" + phoneNum, '_self');
             }
